@@ -64,11 +64,17 @@ PaletteProvider.prototype.getPaletteEntries = function(element) {
   }
 
   assign(actions, {
-    'custom-triangle': createAction(
-      'custom:triangle', 'custom', 'icon-custom-triangle'
+    //'custom-triangle': createAction(
+    //  'custom:triangle', 'custom', 'icon-custom-triangle'
+    //),
+    'custom-circle2': createAction(
+      'custom:circle2', 'custom', 'icon-custom-circle2'
     ),
-    'custom-circle': createAction(
+	'custom-circle': createAction(
       'custom:circle', 'custom', 'icon-custom-circle'
+    ),
+	'custom-circle3': createAction(
+      'custom:circle3', 'custom', 'icon-custom-circle3'
     ),
     'custom-separator': {
       group: 'custom',

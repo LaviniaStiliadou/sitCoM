@@ -68,14 +68,14 @@ export default function CustomRenderer(eventBus, styles) {
     return componentsToPath(trianglePath);
   };
 
-  this.drawCircle = function(p, width, height) {
+  this.drawCircle = function(p, width, height, color) {
     var cx = width / 2,
         cy = height / 2;
 
     var attrs = computeStyle(attrs, {
-      stroke: COLOR_YELLOW,
+      stroke: color,
       strokeWidth: 4,
-      fill: COLOR_YELLOW
+      fill: color
     });
 
     var circle = svgCreate('circle');
@@ -149,23 +149,39 @@ CustomRenderer.prototype.canRender = function(element) {
 CustomRenderer.prototype.drawShape = function(p, element) {
   var type = element.type;
 
-  if (type === 'custom:triangle') {
-    return this.drawTriangle(p, element.width);
-  }
+  // if (type === 'custom:triangle') {
+  //  return this.drawTriangle(p, element.width);
+  //}
 
   if (type === 'custom:circle') {
-    return this.drawCircle(p, element.width, element.height);
+    return this.drawCircle(p, element.width, element.height, COLOR_YELLOW);
+  }
+  
+  if (type === 'custom:circle2') {
+    return this.drawCircle(p, element.width, element.height, COLOR_RED);
+  }
+  
+  if (type === 'custom:circle3') {
+    return this.drawCircle(p, element.width, element.height, COLOR_GREEN);
   }
 };
 
 CustomRenderer.prototype.getShapePath = function(shape) {
   var type = shape.type;
 
-  if (type === 'custom:triangle') {
-    return this.getTrianglePath(shape);
-  }
+  // if (type === 'custom:triangle') {
+  //  return this.getTrianglePath(shape);
+  // }
 
   if (type === 'custom:circle') {
+    return this.getCirclePath(shape);
+  }
+  
+  if (type === 'custom:circle2') {
+    return this.getCirclePath(shape);
+  }
+  
+  if (type === 'custom:circle3') {
     return this.getCirclePath(shape);
   }
 };
