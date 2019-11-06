@@ -12,7 +12,7 @@ This example extends [bpmn-js](https://github.com/bpmn-io/bpmn-js), creating a c
 The renderer ships with custom rules that define which modeling operations are possible on custom shapes and connections.
 It can import custom shapes and connections from a [JSON](http://json.org/) descriptor and updates their properties during modeling.
 
-![demo application screenshot](docs/screenshot.png "bpmn-js custom elements example")
+![demo application screenshot](docs/screenshot.PNG "bpmn-js custom elements example")
 
 
 ## Usage Summary
