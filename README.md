@@ -80,3 +80,7 @@ npm test
 ## License
 
 MIT
+
+## Diagramm
+
+Sollte es zu Änderungen im Diagramm kommen, dann das neue Diagramm in resources hochladen und diagram_2 nennen
