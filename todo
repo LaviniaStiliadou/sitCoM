@@ -6,16 +6,17 @@ Für Property Panel:
           - Violation Feld
           - Priority Feld  
           - bei gleicher Prioirität FIFO
-- Situation Scopes
+- Situation Scopes (als Subprocess)
    - kleben von den Kreisen an den Scope
+   - Kreise kleiner machen (20x20 ?)
+   - Situations via Fenster oder Contextmenu? auswählen (Liste/...?) (Popup)
+   - Kreise als Intermediate-Events 
 - Aggregieren
    - expand, wenn draufgeklickt wird
 - Bilder in die Kreise reinladen
 - Paketabhängigkeiten (dependencies) updaten --> package.json
 - Save button
-
+- aktuelles Diagramm
 
 Was es bisher tut:
 - Kreise (gelb, rot, grün)
-- aktuelles Diagramm ist eingebunden (sollte es zu Änderungen kommen, einfach Diagramm in resources hochladen und diagram_2 nennen.
-So spart ihr euch Zeit)
