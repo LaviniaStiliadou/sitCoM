@@ -11,6 +11,7 @@ Für Property Panel:
 - Aggregieren
    - expand, wenn draufgeklickt wird
 - Bilder in die Kreise reinladen
+- Paketabhängigkeiten (dependencies) updaten --> package.json
 
 
 Was es bisher tut:
