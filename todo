@@ -14,9 +14,11 @@ Für Property Panel:
 - Aggregieren
    - expand, wenn draufgeklickt wird
 - Bilder in die Kreise reinladen
-- Paketabhängigkeiten (dependencies) updaten --> package.json
 - Save button
 - aktuelles Diagramm
+
+Done:
+- Paketabhängigkeiten updaten (package.json) 07.11
 
 Was es bisher tut:
 - Kreise (gelb, rot, grün)
