@@ -67,14 +67,14 @@ PaletteProvider.prototype.getPaletteEntries = function(element) {
     //'custom-triangle': createAction(
     //  'custom:triangle', 'custom', 'icon-custom-triangle'
     //),
-    'custom-circle2': createAction(
-      'custom:circle2', 'custom', 'icon-custom-circle2'
+    'custom-circle-red': createAction(
+      'custom:circle-red', 'custom', 'icon-custom-circle-red'
     ),
-	'custom-circle': createAction(
-      'custom:circle', 'custom', 'icon-custom-circle'
+	'custom-circle-yellow': createAction(
+      'custom:circle-yellow', 'custom', 'icon-custom-circle-yellow'
     ),
-	'custom-circle3': createAction(
-      'custom:circle3', 'custom', 'icon-custom-circle3'
+	'custom-circle-green': createAction(
+      'custom:circle-green', 'custom', 'icon-custom-circle-green'
     ),
     'custom-separator': {
       group: 'custom',

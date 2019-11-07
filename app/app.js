@@ -1,4 +1,4 @@
-import pizzaDiagram from '../resources/diagram_2.bpmn';
+import projectDiagram from '../resources/diagram.bpmn';
 
 import customElements from './custom-elements.json';
 
@@ -11,7 +11,7 @@ var modeler = new CustomModeler({
   }
 });
 
-modeler.importXML(pizzaDiagram, function(err) {
+modeler.importXML(projectDiagram, function(err) {
 
   if (err) {
     console.error('something went wrong:', err);

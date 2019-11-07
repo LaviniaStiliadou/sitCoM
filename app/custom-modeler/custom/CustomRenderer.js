@@ -153,15 +153,15 @@ CustomRenderer.prototype.drawShape = function(p, element) {
   //  return this.drawTriangle(p, element.width);
   //}
 
-  if (type === 'custom:circle') {
+  if (type === 'custom:circle-yellow') {
     return this.drawCircle(p, element.width, element.height, COLOR_YELLOW);
   }
   
-  if (type === 'custom:circle2') {
+  if (type === 'custom:circle-red') {
     return this.drawCircle(p, element.width, element.height, COLOR_RED);
   }
   
-  if (type === 'custom:circle3') {
+  if (type === 'custom:circle-green') {
     return this.drawCircle(p, element.width, element.height, COLOR_GREEN);
   }
 };
@@ -173,15 +173,15 @@ CustomRenderer.prototype.getShapePath = function(shape) {
   //  return this.getTrianglePath(shape);
   // }
 
-  if (type === 'custom:circle') {
+  if (type === 'custom:circle-yellow') {
     return this.getCirclePath(shape);
   }
   
-  if (type === 'custom:circle2') {
+  if (type === 'custom:circle-red') {
     return this.getCirclePath(shape);
   }
   
-  if (type === 'custom:circle3') {
+  if (type === 'custom:circle-green') {
     return this.getCirclePath(shape);
   }
 };
