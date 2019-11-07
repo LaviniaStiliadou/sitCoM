@@ -12,6 +12,7 @@ Für Property Panel:
    - expand, wenn draufgeklickt wird
 - Bilder in die Kreise reinladen
 - Paketabhängigkeiten (dependencies) updaten --> package.json
+- Save button
 
 
 Was es bisher tut:
