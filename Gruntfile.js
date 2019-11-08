@@ -1,9 +1,8 @@
+  var path = require('path');
+
 module.exports = function(grunt) {
 
   require('load-grunt-tasks')(grunt);
-  require('time-grunt')(grunt);
-
-  var path = require('path');
 
   /**
    * Resolve external project resource as file path
@@ -11,6 +10,7 @@ module.exports = function(grunt) {
   function resolvePath(project, file) {
     return path.join(path.dirname(require.resolve(project)), file);
   }
+
 
   grunt.initConfig({
     browserify: {
@@ -21,10 +21,10 @@ module.exports = function(grunt) {
         transform: [
           [ 'stringify', {
             extensions: [ '.bpmn' ]
-          } ],
-          [ 'babelify', {
-            global: true
           } ]
+        ],
+        plugin: [
+          'esmify'
         ]
       },
       watch: {
@@ -32,23 +32,32 @@ module.exports = function(grunt) {
           watch: true
         },
         files: {
-          'dist/app.js': [ 'app/app.js' ]
+          'dist/index.js': [ 'app/**/*.js' ]
         }
       },
       app: {
         files: {
-          'dist/app.js': [ 'app/app.js' ]
+          'dist/index.js': [ 'app/**/*.js' ]
         }
       }
     },
+
     copy: {
+      diagram_js: {
+        files: [
+          {
+            src: resolvePath('diagram-js', 'assets/diagram-js.css'),
+            dest: 'dist/css/diagram-js.css'
+          }
+        ]
+      },
       bpmn_js: {
         files: [
           {
             expand: true,
-            cwd: resolvePath('bpmn-js', 'dist'),
+            cwd: resolvePath('bpmn-js', 'dist/assets'),
             src: ['**/*.*', '!**/*.js'],
-            dest: 'dist/vendor/bpmn-js'
+            dest: 'dist/vendor'
           }
         ]
       },
@@ -63,6 +72,22 @@ module.exports = function(grunt) {
         ]
       }
     },
+
+    less: {
+      options: {
+        dumpLineNumbers: 'comments',
+        paths: [
+          'node_modules'
+        ]
+      },
+
+      styles: {
+        files: {
+          'dist/css/app.css': 'styles/app.less'
+        }
+      }
+    },
+
     watch: {
       options: {
         livereload: true
@@ -71,6 +96,16 @@ module.exports = function(grunt) {
       samples: {
         files: [ 'app/**/*.*' ],
         tasks: [ 'copy:app' ]
+      },
+
+      less: {
+        files: [
+          'styles/**/*.less',
+          'node_modules/bpmn-js-properties-panel/styles/**/*.less'
+        ],
+        tasks: [
+          'less'
+        ]
       },
     },
 
@@ -91,10 +126,11 @@ module.exports = function(grunt) {
 
   // tasks
 
-  grunt.registerTask('build', [ 'copy', 'browserify:app' ]);
+  grunt.registerTask('build', [ 'copy', 'less', 'browserify:app' ]);
 
   grunt.registerTask('auto-build', [
     'copy',
+    'less',
     'browserify:watch',
     'connect:livereload',
     'watch'

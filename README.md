@@ -1,86 +1,76 @@
-> :warning: Should custom elements be serialized within the BPMN 2.0 diagram? If that is the case, this example is not what you are looking for. Checkout our [:notebook: custom elements guide](https://github.com/bpmn-io/bpmn-js-examples/tree/master/custom-elements) to learn how to build custom elements in a BPMN 2.0 compatible way.
+# bpmn-js Modeler + Properties Panel Example
 
+This example uses [bpmn-js](https://github.com/bpmn-io/bpmn-js) and [bpmn-js-properties-panel](https://github.com/bpmn-io/bpmn-js-properties-panel). It implements a BPMN 2.0 modeler that allows you to edit execution related properties via a properties panel.
 
-# bpmn-js example: Custom Shapes
-
-This advanced example shows how to extend [bpmn-js](https://github.com/bpmn-io/bpmn-js) with new shapes and connections that are __not part of the BPMN 2.0 diagram / incompatible with the BPMN 2.0 standard__. Consult our [:notebook: custom elements guide](https://github.com/bpmn-io/bpmn-js-examples/tree/master/custom-elements) to learn how to extend the toolkit in a BPMN 2.0 compliant way.
 
 ## About
 
-This example extends [bpmn-js](https://github.com/bpmn-io/bpmn-js), creating a custom BPMN modeler that can display and add custom shapes and connections to BPMN 2.0 diagrams.
+This example is a node-style web application that builds a user interface around the bpmn-js BPMN 2.0 modeler.
 
-The renderer ships with custom rules that define which modeling operations are possible on custom shapes and connections.
-It can import custom shapes and connections from a [JSON](http://json.org/) descriptor and updates their properties during modeling.
-
-![demo application screenshot](docs/screenshot.PNG "bpmn-js custom elements example")
+![demo application screenshot](https://raw.githubusercontent.com/bpmn-io/bpmn-js-examples/master/properties-panel/docs/screenshot.png "Screenshot of the modeler + properties panel example")
 
 
-## Usage Summary
+## Usage
 
-The example provides a [custom modeler](https://github.com/bpmn-io/bpmn-js-examples/blob/master/custom-elements/app/custom-modeler/index.js). After instantiation, the modeler allows you to add and get custom shapes and connections.
+Add the [properties panel](https://github.com/bpmn-io/bpmn-js-properties-panel) to your project:
 
-```javascript
-// add custom elements
-var customElements = [
-  {
-    type: "custom:triangle",
-    id: "CustomTriangle_1",
-    x: 300,
-    y: 300
-  },
-  {
-    type: "custom:connection",
-    id: "CustomConnection_1",
-    source: "CustomTriangle_1",
-    target: "Task_1",
-    waypoints: [
-      // ...
-    ]
- }
-];
-
-customModeler.addCustomElements(customElements);
-
-
-// get them after modeling
-customModeler.getCustomElements(); // all currently existing custom elements
+```
+npm install --save bpmn-js-properties-panel
 ```
 
-The modeler ships with a [module](https://github.com/bpmn-io/bpmn-js-examples/blob/master/custom-elements/app/custom-modeler/custom/index.js) that provides the following [bpmn-js](https://github.com/bpmn-io/bpmn-js) extensions:
+Additionally, if you'd like to use [Camunda BPM](https://camunda.org) execution related properties, include the [camunda-bpmn-moddle](https://github.com/camunda/camunda-bpmn-moddle) dependency which tells the modeler about `camunda:XXX` extension properties:
 
-* [`CustomContextPadProvider`](app/custom-modeler/custom/CustomContextPadProvider.js): A custom context pad that allows you to connect custom elements to BPMN elements
-* [`CustomElementFactory`](app/custom-modeler/custom/CustomElementFactory.js): A factory that knows about how to create BPMN and custom shapes
-* [`CustomOrderingProvider`](app/custom-modeler/custom/CustomOrderingProvider.js): A provider that ensures custom connections are always rendered on top
-* [`CustomPalette`](app/custom-modeler/custom/CustomPalette.js): A custom palette that allows you to create custom elements
-* [`CustomRenderer`](app/custom-modeler/custom/CustomRenderer.js): A renderer that knows how to draw custom elements
-* [`CustomRules`](app/custom-modeler/custom/CustomRules.js): A rule provider that defines the allowed interaction with custom elements
-* [`CustomUpdater`](app/custom-modeler/custom/CustomUpdater.js): An updater that updates business data while the user interacts with the diagram
+```
+npm install --save camunda-bpmn-moddle
+```
+
+Now extend the [bpmn-js](https://github.com/bpmn-io/bpmn-js) modeler with two properties panel related modules, the panel itself and a provider module that controls which properties are visible for each element. Additionally you must pass an element via `propertiesPanel.parent` into which the properties panel will be rendered (cf. [`app/index.js`](https://github.com/bpmn-io/bpmn-js-examples/blob/master/properties-panel/app/index.js#L16) for details).
+
+```javascript
+var propertiesPanelModule = require('bpmn-js-properties-panel'),
+    // providing camunda executable properties, too
+    propertiesProviderModule = require('bpmn-js-properties-panel/lib/provider/camunda'),
+    camundaModdleDescriptor = require('camunda-bpmn-moddle/resources/camunda');
+
+var bpmnModeler = new BpmnModeler({
+  container: '#js-canvas',
+  propertiesPanel: {
+    parent: '#js-properties-panel'
+  },
+  additionalModules: [
+    propertiesPanelModule,
+    propertiesProviderModule
+  ],
+  // needed if you'd like to maintain camunda:XXX properties in the properties panel
+  moddleExtensions: {
+    camunda: camundaModdleDescriptor
+  }
+});
+```
 
 
-## Run this Example
+## Building the Example
 
-Fetch dependencies:
+You need a [NodeJS](http://nodejs.org) development stack with [npm](https://npmjs.org) and installed to build the project.
+
+To install all project dependencies execute
 
 ```
 npm install
 ```
 
-Build example and open in your browser:
+Build the example using [browserify](http://browserify.org) via
+
+```
+npm run all
+```
+
+You may also spawn a development setup by executing
 
 ```
 npm run dev
 ```
 
-Run tests:
+Both tasks generate the distribution ready client-side modeler application into the `dist` folder.
 
-```
-npm test
-```
-
-## License
-
-MIT
-
-## Diagramm
-
-Sollte es zu Änderungen im Diagramm kommen, dann das neue Diagramm in resources hochladen und diagram_2 nennen
+Serve the application locally or via a web server (nginx, apache, embedded).
