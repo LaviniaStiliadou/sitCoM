@@ -76,6 +76,9 @@ PaletteProvider.prototype.getPaletteEntries = function(element) {
 	'custom-circle-green': createAction(
       'custom:circle-green', 'custom', 'icon-custom-circle-green'
     ),
+    'custom-rect': createAction(
+      'custom:rect', 'activity', 'icon-custom-circle-green'
+    ),
     'custom-separator': {
       group: 'custom',
       separator: true

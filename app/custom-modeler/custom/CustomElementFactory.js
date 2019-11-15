@@ -130,7 +130,8 @@ CustomElementFactory.prototype._getCustomElementSize = function(type) {
     // 'custom:triangle': { width: 40, height: 40 },
     'custom:circle-red': { width: 40, height: 40 },
 	'custom:circle-yellow': { width: 40, height: 40 },
-	'custom:circle-green': { width: 40, height: 40 }
+  'custom:circle-green': { width: 40, height: 40 },
+  'custom:rect': { width: 100, height: 100 }
   };
 
   return shapes[type] || shapes.__default;

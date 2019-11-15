@@ -8,6 +8,10 @@ import {
 } from 'diagram-js/lib/util/RenderUtil';
 
 import {
+  getRectPath,
+} from 'bpmn-js/lib/draw/BpmnRenderUtil';
+
+import {
   append as svgAppend,
   attr as svgAttr,
   create as svgCreate
@@ -15,6 +19,7 @@ import {
 
 var COLOR_GREEN = '#52B415',
     COLOR_RED = '#cc0000',
+    TASK_BORDER_RADIUS = 2,
     COLOR_YELLOW = '#ffc800';
 
 /**
@@ -108,6 +113,23 @@ export default function CustomRenderer(eventBus, styles) {
 
     return componentsToPath(circlePath);
   };
+  this.drawRect= function(parentNode, width, height, borderRadius, strokeColor) {
+    const rect = svgCreate('rect');
+  
+    svgAttr(rect, {
+      width: width,
+      height: height,
+      rx: borderRadius,
+      ry: borderRadius,
+      stroke: 'none',
+      //strokeWidth: 2,
+      fill: COLOR_GREEN
+    });
+  
+    svgAppend(parentNode, rect);
+  
+    return rect;
+  };
 
   this.drawCustomConnection = function(p, element) {
     var attrs = computeStyle(attrs, {
@@ -164,6 +186,10 @@ CustomRenderer.prototype.drawShape = function(p, element) {
   if (type === 'custom:circle-green') {
     return this.drawCircle(p, element.width, element.height, COLOR_GREEN);
   }
+
+  if(type === 'custom:rect'){
+    return this.drawRect(p, element.width, element.height, TASK_BORDER_RADIUS, COLOR_GREEN);
+  }
 };
 
 CustomRenderer.prototype.getShapePath = function(shape) {
@@ -183,6 +209,9 @@ CustomRenderer.prototype.getShapePath = function(shape) {
   
   if (type === 'custom:circle-green') {
     return this.getCirclePath(shape);
+  }
+  if(type === 'custom:rect'){
+    return getRectPath(shape);
   }
 };
 
