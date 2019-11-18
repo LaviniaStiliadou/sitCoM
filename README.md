@@ -2,6 +2,13 @@
 
 This example uses [bpmn-js](https://github.com/bpmn-io/bpmn-js) and [bpmn-js-properties-panel](https://github.com/bpmn-io/bpmn-js-properties-panel). It implements a BPMN 2.0 modeler that allows you to edit execution related properties via a properties panel.
 
+## How to start
+```
+npm install 
+npm install -g grunt-cli
+```
+Build and run the project
+grunt auto-build
 
 ## About
 
