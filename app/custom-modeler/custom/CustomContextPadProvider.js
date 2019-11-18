@@ -27,7 +27,7 @@ export default function CustomContextPadProvider(injector, connect, translate) {
       connect.start(event, element, autoActivate);
     }
 
-    if (isAny(businessObject, [ 'custom:circle2', 'custom:circle', 'custom:circle3', 'custom:rect'])) {
+    if (isAny(businessObject, [ 'custom:circle-red', 'custom:circle-yellow', 'custom:circle-green', 'custom:rect'])) {
       assign(actions, {
         'connect': {
           group: 'connect',
