@@ -24,7 +24,7 @@ var bpmnModeler = new CustomModeler({
   propertiesPanel: {
     parent: '#js-properties-panel'
   },
-  keboard: {
+  keyboard: {
     bindTo: document
   },
   additionalModules: [
