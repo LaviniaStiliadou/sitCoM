@@ -77,7 +77,7 @@ PaletteProvider.prototype.getPaletteEntries = function(element) {
       'custom:BewitchedIntermediateEvent', 'custom', 'icon-custom-circle-green'
     ),
     'custom-rect': createAction(
-      'custom:rect', 'activity', 'icon-custom-circle-green'
+      'custom:rect', 'activity', 'icon-custom-rect'
     ),
     'custom-separator': {
       group: 'custom',

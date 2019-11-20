@@ -20,7 +20,8 @@ import {
 var COLOR_GREEN = '#52B415',
     COLOR_RED = '#cc0000',
     TASK_BORDER_RADIUS = 2,
-    COLOR_YELLOW = '#ffc800';
+    COLOR_YELLOW = '#ffc800',
+	COLOR_DARKGRAY = '#A9A9A9';
 
 /**
  * A renderer that knows how to render custom elements.
@@ -121,9 +122,9 @@ export default function CustomRenderer(eventBus, styles) {
       height: height,
       rx: borderRadius,
       ry: borderRadius,
-      stroke: 'none',
-      //strokeWidth: 2,
-      fill: COLOR_GREEN
+      stroke: COLOR_DARKGRAY,
+      strokeWidth: 2,
+      fill: 'none'
     });
   
     svgAppend(parentNode, rect);
@@ -210,6 +211,7 @@ CustomRenderer.prototype.getShapePath = function(shape) {
   if (type === 'custom:BewitchedIntermediateEvent') {
     return this.getCirclePath(shape);
   }
+  
   if(type === 'custom:rect'){
     return getRectPath(shape);
   }
