@@ -80,4 +80,19 @@ export default function(group, element) {
       label : 'prioritaet',
       modelProperty : 'prioritaet'
     }));
-}}
+  }
+  if (is(element, 'bpmn:IntermediateCatchEvent')) {
+    group.entries.push(entryFactory.textField({
+      id : 'violation',
+      description : 'Wenn Situation verletzt wird',
+      label : 'Violation',
+      modelProperty : 'violation'
+    }));
+    group.entries.push(entryFactory.textField({
+      id : 'prioritaet',
+      description : 'Prioritaet',
+      label : 'prioritaet',
+      modelProperty : 'prioritaet'
+    }));
+  } 
+}

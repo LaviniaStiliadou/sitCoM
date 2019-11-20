@@ -183,7 +183,7 @@ CustomRenderer.prototype.drawShape = function(p, element) {
     return this.drawCircle(p, element.width, element.height, COLOR_RED);
   }
   
-  if (type === 'custom:circle-green') {
+  if (type === 'custom:BewitchedIntermediateEvent') {
     return this.drawCircle(p, element.width, element.height, COLOR_GREEN);
   }
 
@@ -207,7 +207,7 @@ CustomRenderer.prototype.getShapePath = function(shape) {
     return this.getCirclePath(shape);
   }
   
-  if (type === 'custom:circle-green') {
+  if (type === 'custom:BewitchedIntermediateEvent') {
     return this.getCirclePath(shape);
   }
   if(type === 'custom:rect'){

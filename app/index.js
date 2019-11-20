@@ -5,6 +5,10 @@ import propertiesPanelModule from 'bpmn-js-properties-panel';
 import propertiesProviderModule from './provider/situations';
 import situationModdleDescriptor from './descriptors/sit.json';
 
+import colorPickerModule from './color-picker';
+import nyanDrawModule from './nyan/draw';
+import nyanPaletteModule from './nyan/palette';
+
 import diagramXML from '../resources/diagram.bpmn';
 
 import customElements from './custom-elements.json';
@@ -29,10 +33,13 @@ var bpmnModeler = new CustomModeler({
   },
   additionalModules: [
     propertiesPanelModule,
-    propertiesProviderModule
+    propertiesProviderModule,
+	colorPickerModule,
+    nyanDrawModule,
+    nyanPaletteModule
   ],
   moddleExtensions: {
-    situation: situationModdleDescriptor
+    custom: situationModdleDescriptor
   }
 });
 container.removeClass('with-diagram');

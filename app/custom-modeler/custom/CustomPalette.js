@@ -73,8 +73,8 @@ PaletteProvider.prototype.getPaletteEntries = function(element) {
 	'custom-circle-yellow': createAction(
       'custom:circle-yellow', 'custom', 'icon-custom-circle-yellow'
     ),
-	'custom-circle-green': createAction(
-      'custom:circle-green', 'custom', 'icon-custom-circle-green'
+	'custom:BewitchedIntermediateEvent': createAction(
+      'custom:BewitchedIntermediateEvent', 'custom', 'icon-custom-circle-green'
     ),
     'custom-rect': createAction(
       'custom:rect', 'activity', 'icon-custom-circle-green'
