@@ -124,7 +124,8 @@ export default function CustomRenderer(eventBus, styles) {
       ry: borderRadius,
       stroke: COLOR_DARKGRAY,
       strokeWidth: 2,
-      fill: 'none'
+      fill: 'none',
+	  strokeDasharray: '5,5'
     });
   
     svgAppend(parentNode, rect);
@@ -184,6 +185,10 @@ CustomRenderer.prototype.drawShape = function(p, element) {
     return this.drawCircle(p, element.width, element.height, COLOR_RED);
   }
   
+  if (type === 'custom:circle-green') {
+    return this.drawCircle(p, element.width, element.height, COLOR_GREEN);
+  }
+
   if (type === 'custom:BewitchedIntermediateEvent') {
     return this.drawCircle(p, element.width, element.height, COLOR_GREEN);
   }
@@ -205,6 +210,10 @@ CustomRenderer.prototype.getShapePath = function(shape) {
   }
   
   if (type === 'custom:circle-red') {
+    return this.getCirclePath(shape);
+  }
+  
+    if (type === 'custom:circle-green') {
     return this.getCirclePath(shape);
   }
   
