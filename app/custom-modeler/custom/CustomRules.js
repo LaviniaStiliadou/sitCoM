@@ -10,7 +10,7 @@ import {
 
 import RuleProvider from 'diagram-js/lib/features/rules/RuleProvider';
 
-// need for snapping boundary events (customs) on border
+// need for snapping boundary events (customs) on border -- siehe Zeile 56-62
 import {
 	getBoundaryAttachment as isBoundaryAttachment
 }	from 'bpmn-js/lib/features/snapping/BpmnSnappingUtil';
@@ -53,7 +53,7 @@ CustomRules.prototype.init = function() {
   
   //////////////////////////////////////////////////
   
-  // define rect as container
+  // define rect as container ---- muss irgendwie noch mit dem BpmnSnappingUtil bzw. dessen config verbunden werden
   function isContainer(shape) {
 	if(is(shape, 'custom:rect')) {
 		return true;
@@ -90,10 +90,14 @@ CustomRules.prototype.init = function() {
 	    return false;
 	  }
 	  
+//	  // only attach to subprocess border
+//      if (position && !isBoundaryAttachment(position, target)) {
+//        return false;
+//      }
+	  
   // ka why 'attach' ?!
   return 'attach';
   }
-  
   
   //////////////////////////////////////////////////
 
