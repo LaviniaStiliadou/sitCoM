@@ -10,6 +10,12 @@ import {
 
 import RuleProvider from 'diagram-js/lib/features/rules/RuleProvider';
 
+// need for snapping boundary events (customs) on border
+import {
+	getBoundaryAttachment as isBoundaryAttachment
+}	from 'bpmn-js/lib/features/snapping/BpmnSnappingUtil';
+
+
 var HIGH_PRIORITY = 1500;
 
 
@@ -30,7 +36,7 @@ CustomRules.$inject = [ 'eventBus' ];
 
 
 CustomRules.prototype.init = function() {
-
+	
   /**
    * Can shape be created on target container?
    */
@@ -44,6 +50,52 @@ CustomRules.prototype.init = function() {
     // allow creation on processes
     return is(target, 'bpmn:Process') || is(target, 'bpmn:Participant') || is(target, 'bpmn:Collaboration');
   }
+  
+  //////////////////////////////////////////////////
+  
+  // define rect as container
+  function isContainer(shape) {
+	if(is(shape, 'custom:rect')) {
+		return true;
+    }
+  return false;
+  }
+  
+  // moving rect everywhere ---- evtl + parameter position)
+  function canDrop(shape, target) {
+	 if(is(shape, 'custom:rect')) {
+	 return true;
+	 }		 
+  }
+  
+  // define circles as boundary events
+  function isBoundaryEvent(shape) {
+	  return is(shape, [
+	  'custom:custom-circle-green',
+	  'custom:custom-circle-yellow',
+	  'custom:custom-circle-red'
+	  ])
+  }
+     
+  // attach function
+  function canAttach(shape, target) {
+	  
+	  // only handle boundary events
+	  if (!isBoundaryEvent(shape)) {
+		  return false;
+	  }
+	  
+	  // only allow drop on bpmn:rect
+	  if (!is(target, 'custom:rect')) {
+	    return false;
+	  }
+	  
+  // ka why 'attach' ?!
+  return 'attach';
+  }
+  
+  
+  //////////////////////////////////////////////////
 
   /**
    * Can source and target be connected?
