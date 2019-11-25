@@ -5,7 +5,7 @@ import OrderingProvider from 'diagram-js/lib/features/ordering/OrderingProvider'
 
 /**
  * a simple ordering provider that ensures that custom
- * connections are always rendered on top.
+ * shapes (rect) are always rendered on top.
  */
 export default function CustomOrderingProvider(eventBus, canvas) {
 
@@ -13,7 +13,7 @@ export default function CustomOrderingProvider(eventBus, canvas) {
 
   this.getOrdering = function(element, newParent) {
 
-    if (element.type === 'custom:connection') {
+	if (element.type === 'custom:rect') {
 
       // always move to end of root element
       // to display always on top

@@ -21,7 +21,7 @@ PaletteProvider.$inject = [
   'create',
   'elementFactory',
   'spaceTool',
-  'lassoTool'
+  'lassoTool',
 ];
 
 
@@ -64,9 +64,6 @@ PaletteProvider.prototype.getPaletteEntries = function(element) {
   }
 
   assign(actions, {
-    //'custom-triangle': createAction(
-    //  'custom:triangle', 'custom', 'icon-custom-triangle'
-    //),
     'custom-circle-red': createAction(
       'custom:circle-red', 'custom', 'icon-custom-circle-red'
     ),
@@ -134,7 +131,10 @@ PaletteProvider.prototype.getPaletteEntries = function(element) {
         dragstart: createParticipant,
         click: createParticipant
       }
-    }
+    },
+    'create.group': createAction(
+      'bpmn:Group', 'artifact', 'bpmn-icon-group'
+    ),
   });
 
   return actions;
