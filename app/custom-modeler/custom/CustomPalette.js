@@ -21,7 +21,7 @@ PaletteProvider.$inject = [
   'create',
   'elementFactory',
   'spaceTool',
-  'lassoTool',
+  'lassoTool'
 ];
 
 
