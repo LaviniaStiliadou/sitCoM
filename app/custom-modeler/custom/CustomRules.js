@@ -46,9 +46,14 @@ CustomRules.prototype.init = function() {
     if (!isCustom(shape)) {
       return;
     }
+	
+	// all custom shapes except rect are only allowed on rect
+	if (!is(shape, 'custom:rect')) {
+	  return is(target, 'custom:rect');
+	}
 
-    // allow creation on processes
-    return is(target, 'bpmn:Process') || is(target, 'bpmn:Participant') || is(target, 'bpmn:Collaboration');
+    // allow creation of on processes & rect
+    return is(target, 'bpmn:Process') || is(target, 'bpmn:Participant') || is(target, 'bpmn:Collaboration') || is(target, 'custom:rect');
   }
   
   //////////////////////////////////////////////////
