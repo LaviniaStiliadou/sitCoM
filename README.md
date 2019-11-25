@@ -16,6 +16,10 @@ grunt auto-build
 
 This project uses [bpmn-js](https://github.com/bpmn-io/bpmn-js), [bpmn-js-properties-panel](https://github.com/bpmn-io/bpmn-js-properties-panel), [bpmn-js-properties-panel-extension](https://github.com/bpmn-io/bpmn-js-examples/tree/master/properties-panel-extension/app), [bpmn-js-custom-shapes](https://github.com/bpmn-io/bpmn-js-example-custom-shapes), [bpmn-js-nyan](https://github.com/bpmn-io/bpmn-js-nyan) and [bpmn-js-custom-elements](https://github.com/bpmn-io/bpmn-js-examples/tree/master/custom-elements).
 
+## Interesting Link
+
+[docs - element-templates](https://github.com/camunda/camunda-modeler/tree/master/docs/element-templates)
+
 ## About
 
 This example is a node-style web application that builds a user interface around the bpmn-js BPMN 2.0 modeler.
