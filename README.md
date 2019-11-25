@@ -1,6 +1,6 @@
-# bpmn-js Modeler + Properties Panel Example
+# bpmn-js Modeler with Situation Awareness
 
-This example uses [bpmn-js](https://github.com/bpmn-io/bpmn-js) and [bpmn-js-properties-panel](https://github.com/bpmn-io/bpmn-js-properties-panel). It implements a BPMN 2.0 modeler that allows you to edit execution related properties via a properties panel.
+It implements a BPMN 2.0 modeler that allows you to edit execution related properties via a properties panel.
 
 ## How to start
 ```
@@ -12,6 +12,9 @@ Build and run the project
 grunt auto-build
 ```
 
+## Plugins used
+
+This project uses [bpmn-js](https://github.com/bpmn-io/bpmn-js), [bpmn-js-properties-panel](https://github.com/bpmn-io/bpmn-js-properties-panel), [bpmn-js-properties-panel-extension(https://github.com/bpmn-io/bpmn-js-examples/tree/master/properties-panel-extension/app), [bpmn-js-custom-shapes](https://github.com/bpmn-io/bpmn-js-example-custom-shapes), [bpmn-js-nyan](https://github.com/bpmn-io/bpmn-js-nyan) and [bpmn-js-custom-elements](https://github.com/bpmn-io/bpmn-js-examples/tree/master/custom-elements).
 
 ## About
 
