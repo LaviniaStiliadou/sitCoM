@@ -40,19 +40,19 @@ CustomRules.prototype.init = function() {
   /**
    * Can shape be created on target container?
    */
-  function canCreate(shape, target) {
+  function canCreate(shape, target, source, position) {
 
     // only judge about custom elements
     if (!isCustom(shape)) {
       return;
     }
 	
-	// all custom shapes except rect are only allowed on rect
+	// all custom shapes except rect only allowed on rect
 	if (!is(shape, 'custom:rect')) {
-	  return is(target, 'custom:rect');
+	  return is(target, 'custom:rect') || is(target, 'bpmn:SubProcess');
 	}
 
-    // allow creation of on processes & rect
+    // allow creation of rect on processes & rect
     return is(target, 'bpmn:Process') || is(target, 'bpmn:Participant') || is(target, 'bpmn:Collaboration') || is(target, 'custom:rect');
   }
   
@@ -68,7 +68,7 @@ CustomRules.prototype.init = function() {
   
   // moving rect everywhere ---- evtl + parameter position)
   function canDrop(shape, target) {
-	 if(is(shape, 'custom:rect')) {
+	 if(is(shape, 'custom:rect') || is(shape, 'bpmn:SubProcess')) {
 	 return true;
 	 }		 
   }
@@ -76,37 +76,109 @@ CustomRules.prototype.init = function() {
   // define circles as boundary events
   function isBoundaryEvent(shape) {
 	  return is(shape, [
-	  'custom:custom-circle-green',
-	  'custom:custom-circle-yellow',
-	  'custom:custom-circle-red'
+	  'custom:circle-green',
+	  'custom:circle-yellow',
+	  'custom:circle-red'
 	  ])
   }
      
   // attach function
-  function canAttach(shape, target) {
+  function canAttach(shape, target, source, position) {
 	  
+	  if (!Array.isArray(shape)) {
+         shape = [ shape ];
+      }
+	  
+	  // only (re-)attach one element at a time
+      if (shape.length !== 1) {
+         return false;
+      }
+	  
+	  var shapeX = shape[0];
+	  	  
 	  // only handle boundary events
-	  if (!isBoundaryEvent(shape)) {
+	  if (!isBoundaryEvent(shapeX)) {
 		  return false;
 	  }
 	  
 	  // only allow drop on bpmn:rect
-	  if (!is(target, 'custom:rect')) {
+	  if (!is(target, 'custom:rect') || !is(target, 'bpmn:SubProcess')) {
 	    return false;
 	  }
 	  
-//	  // only attach to subprocess border
-//      if (position && !isBoundaryAttachment(position, target)) {
-//        return false;
-//      }
+	  // only attach to subprocess border
+      if (position && !isBoundaryAttachment(position, target)) {
+        return false;
+      }
 	  
   // ka why 'attach' ?!
   return 'attach';
   }
   
+  this.addRule('shape.attach', HIGH_PRIORITY, function(context) {
+	  
+	var target = context.taret,
+	    position = context.position,
+		shape = context.shape,
+		source = null;
+
+    return canAttach(shape, target, source, position);
+  });
+  
   //////////////////////////////////////////////////
 
-  /**
+  this.addRule('elements.move', HIGH_PRIORITY, function(context) {
+
+    var target = context.target,
+        shapes = context.shapes,
+		position = context.position,
+		source = context.source;
+
+    var type;
+
+    // do not allow mixed movements of custom / BPMN shapes
+    // if any shape cannot be moved, the group cannot be moved, too
+    var allowed = reduce(shapes, function(result, s) {
+      if (type === undefined) {
+        type = isCustom(s);
+      }
+
+      if (type !== isCustom(s) || result === false) {
+        return false;
+      }
+
+      return canCreate(s, target, position);
+    }, undefined);
+
+    // reject, if we have at least one
+    // custom element that cannot be moved
+    return allowed;
+  });
+
+  this.addRule('shape.create', HIGH_PRIORITY, function(context) {
+    var target = context.target,
+		position = context.position,
+        shape = context.shape,
+		source = context.source;
+		
+    if (shape.host) {
+       return canAttach(shape, shape.host, null, position);
+    }
+	
+    return canCreate(shape, target, source, position);
+  });
+
+  this.addRule('shape.resize', HIGH_PRIORITY, function(context) {
+    var shape = context.shape;
+
+    if (isCustom(shape)) {
+      // resize custom elements
+      return true;
+    }
+  });
+  
+  
+   /**
    * Can source and target be connected?
    */
   function canConnect(source, target) {
@@ -131,48 +203,6 @@ CustomRules.prototype.init = function() {
       }
     }
   }
-
-  this.addRule('elements.move', HIGH_PRIORITY, function(context) {
-
-    var target = context.target,
-        shapes = context.shapes;
-
-    var type;
-
-    // do not allow mixed movements of custom / BPMN shapes
-    // if any shape cannot be moved, the group cannot be moved, too
-    var allowed = reduce(shapes, function(result, s) {
-      if (type === undefined) {
-        type = isCustom(s);
-      }
-
-      if (type !== isCustom(s) || result === false) {
-        return false;
-      }
-
-      return canCreate(s, target);
-    }, undefined);
-
-    // reject, if we have at least one
-    // custom element that cannot be moved
-    return allowed;
-  });
-
-  this.addRule('shape.create', HIGH_PRIORITY, function(context) {
-    var target = context.target,
-        shape = context.shape;
-
-    return canCreate(shape, target);
-  });
-
-  this.addRule('shape.resize', HIGH_PRIORITY, function(context) {
-    var shape = context.shape;
-
-    if (isCustom(shape)) {
-      // resize custom elements
-      return true;
-    }
-  });
 
   this.addRule('connection.create', HIGH_PRIORITY, function(context) {
     var source = context.source,
