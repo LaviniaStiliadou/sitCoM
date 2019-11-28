@@ -9,12 +9,12 @@ export default function(group, element) {
   // Only return an entry, if the currently selected
   // element is one of these types.
   if (isAny(element, [
-      'custom:circle-red', 
-	  'custom:circle-yellow',
+      'custom:circle-red',
+      'custom:circle-yellow',
       'custom:circle-green',
-	  'custom:rect',
-	  'bpmn:IntermediateThrowEvent',
-	  'bpmn:IntermediateCatchEvent'])) {
+      'custom:rect',
+      'bpmn:IntermediateThrowEvent',
+      'bpmn:IntermediateCatchEvent'])) {
     group.entries.push(entryFactory.textField({
       id : 'violation',
       description : 'Wenn Situation verletzt wird, springe zu Scope ID.',
