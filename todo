@@ -3,7 +3,6 @@ XML-Kompatibilität:
 - Rechteck zu Subprocess/Group
 
 - Kreise drankleben
-- Violation + Priorität zu Integer
 - auf die Kreise Icons legen
 - README aktualisieren bzw. anpassen
 
@@ -15,3 +14,4 @@ Features:
 - Properties Panel
 - Download Button
 - Situation Tab
+- Validate Funktion für IntegerWerte
