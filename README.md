@@ -26,6 +26,9 @@ This example is a node-style web application that builds a user interface around
 * Priority Setting
 * Advanced Property Panel
 
+''ANIMATIONS OF NEW FEATURES SOON HERE''
+
+
 ## Usage
 
 Add the [properties panel](https://github.com/bpmn-io/bpmn-js-properties-panel) to your project:
