@@ -15,6 +15,11 @@ import {
 	getBoundaryAttachment as isBoundaryAttachment
 }	from 'bpmn-js/lib/features/snapping/BpmnSnappingUtil';
 
+// need evtl?
+import {
+	BpmnGridSnapping as isGridSnappable
+}   from 'bpmn-js/lib/features/grid-snapping/BpmnGridSnapping';
+
 
 var HIGH_PRIORITY = 1500;
 

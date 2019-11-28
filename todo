@@ -3,15 +3,15 @@ XML-Kompatibilität:
 - Rechteck zu Subprocess/Group
 
 - Kreise drankleben
-- Violation + Priorität zu Integer
-- neues Diagramm einfügen (ohne die Element Documentation)
 - auf die Kreise Icons legen
-- README mal anpassen...
+- README aktualisieren bzw. anpassen
 
-Was es kann:
-- ENTF-Taste
+
+Features:
+- ENTF-Taste (Probleme in versch. Browsern)
 - Kreise in verschiedenen Farben
 - Rechteck 
 - Properties Panel
 - Download Button
 - Situation Tab
+- Validate Funktion für IntegerWerte
