@@ -2,31 +2,12 @@
 
 This example uses [bpmn-js](https://github.com/bpmn-io/bpmn-js) and [bpmn-js-properties-panel](https://github.com/bpmn-io/bpmn-js-properties-panel). It implements a BPMN 2.0 modeler that allows you to edit execution related properties via a properties panel.
 
-## How to start
-```
-npm install 
-npm install -g grunt-cli
-```
-Build and run the project
-```
-grunt auto-build
-```
-http://localhost:9013/ in your web browser.
-
 
 ## About
 
 This example is a node-style web application that builds a user interface around the bpmn-js BPMN 2.0 modeler.
 
-![new screenshot](https://github.com/LaviniaStiliadou/sitCoM/blob/PropertiesPanel/docs/New%20Screenshot.png)
-
-## New Features
-
-* Displaying colored conditional objects
-* Priority Setting
-* Advanced Property Panel
-
-''ANIMATIONS OF NEW FEATURES SOON HERE''
+![demo application screenshot](https://raw.githubusercontent.com/bpmn-io/bpmn-js-examples/master/properties-panel/docs/screenshot.png "Screenshot of the modeler + properties panel example")
 
 
 ## Usage
