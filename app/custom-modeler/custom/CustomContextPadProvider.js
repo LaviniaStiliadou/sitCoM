@@ -37,26 +37,14 @@ export default function CustomContextPadProvider(injector, connect, translate) {
             click: startConnect,
             dragstart: startConnect
           }
-        },
-		'icons': {
-        group: 'edit',
-        className: 'bpmn-icon-screw-wrench',
-        title: translate('Choose an Icontype'),
-        action: {
-			click: function(event, element){
-            var position = assign(getReplaceMenuPosition(element), {
-              cursor: { x: event.x, y: event.y }
-            });
-
-            popupMenu.open(element, 'bpmn-replace', position);
-			}
-        }         
-      }
+        }
       });
     }
+
     return actions;
   };
 }
+
 inherits(CustomContextPadProvider, ContextPadProvider);
 
 CustomContextPadProvider.$inject = [

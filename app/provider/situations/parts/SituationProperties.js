@@ -30,8 +30,8 @@ export default function(group, element) {
     })),
     group.entries.push(entryFactory.textField({
       id : 'prioritaet',
-      description : 'Priorität',
-      label : 'Priorität',
+      description : 'Prioritaet',
+      label : 'prioritaet',
       modelProperty : 'prioritaet',
       validate: function(element, values) {
         var prioritaet = values.prioritaet;
