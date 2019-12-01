@@ -79,7 +79,7 @@ export default class CustomPalette {
       },
       'create.rect': {
         group: 'activity',
-        className: 'icon-custom-circle-green',
+        className: 'icon-custom-rect',
         title: translate('Create rect'),
         action: {
           dragstart: createTask(SUITABILITY_SCORE_HIGH),
