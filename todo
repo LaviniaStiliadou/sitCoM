@@ -1,11 +1,10 @@
-XML-Kompatibilität:
-- Kreise zu Intermediate Event
-- Rechteck zu Subprocess/Group
+Kreise:
+- nur noch an Rechtecke kleben erlaubt
 
-- Kreise drankleben
+Rechteck:
+- Kreise nur noch erlauben
+
 - auf die Kreise Icons legen
-- README aktualisieren bzw. anpassen
-
 
 Features:
 - ENTF-Taste (Probleme in versch. Browsern)
@@ -14,4 +13,9 @@ Features:
 - Properties Panel
 - Download Button
 - Situation Tab
-- Validate Funktion für IntegerWerte
+- Validate Funktion für IntegerWerte (violation, priority)
+- Kreise drankleben
+- README aktualisieren bzw. anpassen
+- XML-Kompatibilität:
+   - Kreise zu Intermediate Event
+   - Rechteck zu Subprocess/Group
