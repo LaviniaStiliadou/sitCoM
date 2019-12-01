@@ -25,19 +25,15 @@ html, body, #container {
   font-family: 'Arial', sans-serif;
 }
 
-.bpmn-icon-task.red {
+.bpmn-icon-intermediate-event-none.red{
   color: #cc0000 !important;
 }
-
-.bpmn-icon-task.yellow {
+.bpmn-icon-intermediate-event-none.yellow{
   color: #ffc800 !important;
 }
 
-.bpmn-icon-task.green {
+.bpmn-icon-intermediate-event-none.green{
   color: #52B415 !important;
-}
-.icon-custom-circle-green {
-  background: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22%2352B415%22%20viewBox%3D%220%200%20120%20120%22%3E%3Ccircle%20cx%3D%2260%22%20cy%3D%2260%22%20r%3D%2240%22%2F%3E%3C%2Fsvg%3E');
 }
 
 #quality-assurance {

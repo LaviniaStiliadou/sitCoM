@@ -20,7 +20,7 @@ export default class CustomPalette {
       translate
     } = this;
 
-    function createTask(suitabilityScore) {
+    function createRect(suitabilityScore) {
       return function(event) {
         const businessObject = bpmnFactory.create('bpmn:SubProcess');
   
@@ -54,7 +54,7 @@ export default class CustomPalette {
     return {
       'create.red-circle': {
         group: 'activity',
-        className: 'icon-custom-circle-red',
+        className: 'bpmn-icon-intermediate-event-none red',
         title: translate('Create red circle'),
         action: {
           dragstart: createCircle(SUITABILITY_SCORE_LOW),
@@ -63,7 +63,7 @@ export default class CustomPalette {
       },
       'create.yellow-circle': {
         group: 'activity',
-        className: 'icon-custom-circle-yellow',
+        className: 'bpmn-icon-intermediate-event-none yellow',
         title: translate('Create yellow circle'),
         action: {
           dragstart: createCircle(SUITABILITY_SCORE_AVERGE),
@@ -72,8 +72,8 @@ export default class CustomPalette {
       },
       'create.green-circle': {
         group: 'activity',
-        className: 'icon-custom-circle-green',
-        title: translate('Create yellow circle'),
+        className: 'bpmn-icon-intermediate-event-none green',
+        title: translate('Create green circle'),
         action: {
           dragstart: createCircle(SUITABILITY_SCORE_HIGH),
           click: createCircle(SUITABILITY_SCORE_HIGH)
@@ -84,8 +84,8 @@ export default class CustomPalette {
         className: 'icon-custom-rect',
         title: translate('Create rect'),
         action: {
-          dragstart: createTask(SUITABILITY_SCORE_HIGH),
-          click: createTask(SUITABILITY_SCORE_HIGH)
+          dragstart: createRect(SUITABILITY_SCORE_HIGH),
+          click: createRect(SUITABILITY_SCORE_HIGH)
         }
       }
     }
