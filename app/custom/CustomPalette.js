@@ -22,15 +22,17 @@ export default class CustomPalette {
 
     function createTask(suitabilityScore) {
       return function(event) {
-        const businessObject = bpmnFactory.create('bpmn:Task');
+        const businessObject = bpmnFactory.create('bpmn:SubProcess');
   
-        businessObject.suitable = suitabilityScore;
+        //businessObject.suitable = suitabilityScore;
   
         const shape = elementFactory.createShape({
-          type: 'bpmn:Task',
+          type: 'bpmn:SubProcess',
           businessObject: businessObject
         });
-  
+			
+        shape.businessObject.di.isExpanded = true;
+      
         create.start(event, shape); 
       }
     }
