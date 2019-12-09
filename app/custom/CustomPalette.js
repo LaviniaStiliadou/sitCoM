@@ -36,6 +36,24 @@ export default class CustomPalette {
         create.start(event, shape); 
       }
     }
+	
+	function createGroup(suitabilityScore) {
+      return function(event) {
+        const businessObject = bpmnFactory.create('bpmn:Group');
+  
+        //businessObject.suitable = suitabilityScore;
+  
+        const shape = elementFactory.createShape({
+          type: 'bpmn:Group',
+          businessObject: businessObject
+        });
+			
+        //shape.businessObject.di.isExpanded = true;
+      
+        create.start(event, shape); 
+      }
+    }
+	
     function createCircle(suitabilityScore) {
       return function(event) {
         const businessObject = bpmnFactory.create('bpmn:IntermediateThrowEvent');
@@ -86,6 +104,15 @@ export default class CustomPalette {
         action: {
           dragstart: createRect(SUITABILITY_SCORE_HIGH),
           click: createRect(SUITABILITY_SCORE_HIGH)
+        }
+      },
+	  'create.outerrect': {
+        group: 'activity',
+        className: 'icon-custom-rect',
+        title: translate('Create Scope'),
+        action: {
+          dragstart: createGroup(SUITABILITY_SCORE_HIGH),
+          click: createGroup(SUITABILITY_SCORE_HIGH)
         }
       }
     }
