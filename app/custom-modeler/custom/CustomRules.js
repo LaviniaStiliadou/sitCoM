@@ -64,8 +64,8 @@ CustomRules.prototype.init = function() {
   //////////////////////////////////////////////////
   
   // define rect as container ---- muss irgendwie noch mit dem BpmnSnappingUtil bzw. dessen config verbunden werden
-  function isContainer(shape) {
-	if(is(shape, 'custom:rect')) {
+  function isContainer(element) {
+	if(is(element, 'custom:rect')) {
 		return true;
     }
   return false;
@@ -79,8 +79,8 @@ CustomRules.prototype.init = function() {
   }
   
   // define circles as boundary events
-  function isBoundaryEvent(shape) {
-	  return is(shape, [
+  function isBoundaryEvent(element) {
+	  return is(element, [
 	  'custom:circle-green',
 	  'custom:circle-yellow',
 	  'custom:circle-red'
@@ -88,21 +88,21 @@ CustomRules.prototype.init = function() {
   }
      
   // attach function
-  function canAttach(shape, target, source, position) {
+  function canAttach(elements, target, source, position) {
 	  
-	  if (!Array.isArray(shape)) {
-         shape = [ shape ];
+	  if (!Array.isArray(elements)) {
+         elements = [ elements ];
       }
 	  
 	  // only (re-)attach one element at a time
-      if (shape.length !== 1) {
+      if (elements.length !== 1) {
          return false;
       }
 	  
-	  var shapeX = shape[0];
+	  var element = elements[0];
 	  	  
 	  // only handle boundary events
-	  if (!isBoundaryEvent(shapeX)) {
+	  if (!isBoundaryEvent(element)) {
 		  return false;
 	  }
 	  
@@ -120,24 +120,45 @@ CustomRules.prototype.init = function() {
   return 'attach';
   }
   
-  this.addRule('shape.attach', HIGH_PRIORITY, function(context) {
+  function canMove(elements, target) {
 	  
-	var target = context.taret,
-	    position = context.position,
-		shape = context.shape,
-		source = null;
+  // allow default move check to start move operation
+  if (!target) {
+    return true;
+  }
 
-    return canAttach(shape, target, source, position);
+  return elements.every(function(element) {
+    return canDrop(element, target);
   });
-  
+}
   //////////////////////////////////////////////////
+  
+  this.addRule('elements.create', HIGH_PRIORITY, function(context) {
+	  
+    var shapes = context.shapes,
+		target = context.target,
+        source = context.source,
+		position = context.position;
+
+	return every(elements, function(element) {
+	
+	if (element.host) {
+        return canAttach(element, element.host, null, position);
+      }
+
+      return canCreate(element, target, null, position);
+    });
+  });
+	
 
   this.addRule('elements.move', HIGH_PRIORITY, function(context) {
 
-    var target = context.target,
-        shapes = context.shapes,
-		position = context.position,
-		source = context.source;
+    var shapes = context.shapes,
+		target = context.target,
+        source = context.source,
+		position = context.position;
+		
+
 
     var type;
 
@@ -151,8 +172,10 @@ CustomRules.prototype.init = function() {
       if (type !== isCustom(s) || result === false) {
         return false;
       }
-
-      return canCreate(s, target, position);
+	  
+      return canAttach(s, target, source, position) ||
+			canMove(shapes, target, position);
+//     return canCreate(s, target, source, position);
     }, undefined);
 
     // reject, if we have at least one
@@ -161,16 +184,22 @@ CustomRules.prototype.init = function() {
   });
 
   this.addRule('shape.create', HIGH_PRIORITY, function(context) {
-    var target = context.target,
-		position = context.position,
-        shape = context.shape,
-		source = context.source;
-		
-    if (shape.host) {
-       return canAttach(shape, shape.host, null, position);
-    }
-	
+    var shape = context.shape,
+		target = context.target,
+		source = context.source,
+		position = context.position;   
+
     return canCreate(shape, target, source, position);
+  });
+  
+  this.addRule('shape.attach', HIGH_PRIORITY, function(context) {
+	  
+	var shape = context.shape,
+		target = context.taret,
+		source = null,
+	    position = context.position;		
+
+    return canAttach(shape, target, source, position);
   });
 
   this.addRule('shape.resize', HIGH_PRIORITY, function(context) {
