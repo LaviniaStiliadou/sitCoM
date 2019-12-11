@@ -1,19 +1,21 @@
 import entryFactory from 'bpmn-js-properties-panel/lib/factory/EntryFactory';
+
 import {
-  is
-} from 'bpmn-js/lib/util/ModelUtil';
+  isAny
+} from 'bpmn-js/lib/features/modeling/util/ModelingUtil';
 
 
 export default function(group, element) {
 
   // Only return an entry, if the currently selected
   // element is one of these types.
-  if (is(element, 'custom:circle-red') 
-	  || is(element, 'custom:circle-yellow') 
-      || is(element, 'custom:circle-green') 
-	  || is(element, 'custom:rect') 
-	  || is(element, 'bpmn:IntermediateThrowEvent') 
-	  || is(element, 'bpmn:IntermediateCatchEvent')) {
+  if (isAny(element, [
+      'custom:circle-red',
+      'custom:circle-yellow',
+      'custom:circle-green',
+      'custom:rect',
+      'bpmn:IntermediateThrowEvent',
+      'bpmn:IntermediateCatchEvent'])) {
     group.entries.push(entryFactory.textField({
       id : 'violation',
       description : 'Wenn Situation verletzt wird, springe zu Scope ID.',
