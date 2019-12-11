@@ -1,0 +1,30 @@
+Lbranch: 
+
+Timm & Lavi:
+- Hover-Effekt bei der Palette (Orange bei default-symbolen, bei customs fehlt es)
+- Custom Palette Element spezifisch machen (derzeit alle default Symbole entfernt)
+
+Alex & Marvin:
+Kreise:
+- nur noch an Rechtecke kleben erlaubt
+Rechteck:
+- Kreise nur noch erlauben
+
+Pawel:
+- auf die Kreise Icons legen
+- Menu Provider dementsprechend anpassen
+
+Features:
+- ENTF-Taste (Probleme in versch. Browsern)
+- zweiten Container entfernen
+- Kreise in verschiedenen Farben
+- Rechteck 
+- Properties Panel
+- Download Button
+- Situation Tab
+- Validate Funktion für IntegerWerte (violation, priority)
+- Kreise drankleben
+- README aktualisieren bzw. anpassen
+- XML-Kompatibilität:
+   - Kreise zu Intermediate Event
+   - Rechteck zu Subprocess/Group
