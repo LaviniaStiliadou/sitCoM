@@ -21,7 +21,11 @@ export default function CustomContextPadProvider(injector, connect, translate) {
     ContextPadProvider.prototype.getContextPadEntries;
     ContextPadProvider.prototype.getContextPadEntries = function(element) {
       var businessObject = element.businessObject;
-      const entries = _getContextPadEntries.apply(this, [element]);
+	  
+	  const entries = _getContextPadEntries.apply(this, [element]);
+	  
+	  if(element.type === "bpmn:IntermediateThrowEvent"){
+      
       delete entries["append.end-event"];
       delete entries["append.intermediate-event"];
       delete entries["append.gateway"];
@@ -33,6 +37,7 @@ export default function CustomContextPadProvider(injector, connect, translate) {
       delete entries["delete"];
       // loescht die Arrows, also die Möglichkeit Objekte zu verbinden
       delete entries["connect"];
+	  }
       return entries;
     
   }
