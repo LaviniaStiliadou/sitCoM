@@ -42,4 +42,4 @@ http://localhost:9013/ in your web browser.
 
 This example is a node-style web application that builds a user interface around the bpmn-js BPMN 2.0 modeler.
 
-![new screenshot](https://github.com/LaviniaStiliadou/sitCoM/blob/PropertiesPanel/docs/screenshot.png)
+![new screenshot](https://github.com/LaviniaStiliadou/sitCoM/blob/lbranch/docs/screenshot.png)
