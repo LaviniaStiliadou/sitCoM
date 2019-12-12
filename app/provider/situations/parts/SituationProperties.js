@@ -15,7 +15,8 @@ export default function(group, element) {
       'custom:circle-green',
       'custom:rect',
       'bpmn:IntermediateThrowEvent',
-      'bpmn:IntermediateCatchEvent'])) {
+      'bpmn:IntermediateCatchEvent',
+	  'bpmn:BoundaryEvent'])) {
     group.entries.push(entryFactory.textField({
       id : 'violation',
       description : 'Wenn Situation verletzt wird, springe zu Scope ID.',

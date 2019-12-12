@@ -56,12 +56,13 @@ export default class CustomPalette {
 	
     function createCircle(suitabilityScore) {
       return function(event) {
-        const businessObject = bpmnFactory.create('bpmn:IntermediateThrowEvent');
+        const businessObject = bpmnFactory.create('bpmn:BoundaryEvent');
   
         businessObject.suitable = suitabilityScore;
   
         const shape = elementFactory.createShape({
-          type: 'bpmn:IntermediateThrowEvent',
+          type: 'bpmn:BoundaryEvent',
+		  eventDefinitionType: 'bpmn:ErrorEventDefinition',
           businessObject: businessObject
         });
   
