@@ -5,6 +5,10 @@ import {
 import inherits from 'inherits';
 
 import {
+  isAny
+} from 'bpmn-js/lib/features/modeling/util/ModelingUtil';
+
+import {
   is
 } from 'bpmn-js/lib/util/ModelUtil';
 
@@ -52,87 +56,18 @@ CustomRules.prototype.init = function() {
       return;
     }
 	
-	// all custom shapes except rect only allowed on rect
-	if (!is(shape, 'custom:rect')) {
-	  return is(target, 'custom:rect') || is(target, 'bpmn:SubProcess');
-	}
+//	// all custom shapes except rect only allowed on rect
+//	if (!is(shape, 'custom:rect')) {
+//	  return is(target, 'custom:rect') || is(target, 'bpmn:SubProcess');
+//	}
 
     // allow creation of rect on processes & rect
-    return is(target, 'bpmn:Process') || is(target, 'bpmn:Participant') || is(target, 'bpmn:Collaboration') || is(target, 'custom:rect');
+	if (is(shape, 'custom:rect')) {
+		return is(target, 'bpmn:Process') || is(target, 'bpmn:Participant') || is(target, 'bpmn:Collaboration') || is(target, 'custom:rect');
+	}
   }
   
-  //////////////////////////////////////////////////
-  
-  // define rect as container ---- muss irgendwie noch mit dem BpmnSnappingUtil bzw. dessen config verbunden werden
-  function isContainer(element) {
-	if(is(element, 'custom:rect')) {
-		return true;
-    }
-  return false;
-  }
-  
-  // moving rect everywhere ---- evtl + parameter position)
-  function canDrop(shape, target) {
-	 if(is(shape, 'custom:rect') || is(shape, 'bpmn:SubProcess')) {
-	 return true;
-	 }		 
-  }
-  
-  // define circles as boundary events
-  function isBoundaryEvent(element) {
-	  return is(element, [
-	  'custom:circle-green',
-	  'custom:circle-yellow',
-	  'custom:circle-red'
-	  ])
-  }
-     
-  // attach function
-  function canAttach(elements, target, source, position) {
-	  
-	  if (!Array.isArray(elements)) {
-         elements = [ elements ];
-      }
-	  
-	  // only (re-)attach one element at a time
-      if (elements.length !== 1) {
-         return false;
-      }
-	  
-	  var element = elements[0];
-	  	  
-	  // only handle boundary events
-	  if (!isBoundaryEvent(element)) {
-		  return false;
-	  }
-	  
-	  // only allow drop on bpmn:rect
-	  if (!is(target, 'custom:rect') || !is(target, 'bpmn:SubProcess')) {
-	    return false;
-	  }
-	  
-	  // only attach to subprocess border
-      if (position && !isBoundaryAttachment(position, target)) {
-        return false;
-      }
-	  
-  // ka why 'attach' ?!
-  return 'attach';
-  }
-  
-  function canMove(elements, target) {
-	  
-  // allow default move check to start move operation
-  if (!target) {
-    return true;
-  }
-
-  return elements.every(function(element) {
-    return canDrop(element, target);
-  });
-}
-  //////////////////////////////////////////////////
-  
+  // dont know if its needed, maybe rework
   this.addRule('elements.create', HIGH_PRIORITY, function(context) {
 	  
     var shapes = context.shapes,
@@ -142,15 +77,11 @@ CustomRules.prototype.init = function() {
 
 	return every(elements, function(element) {
 	
-	if (element.host) {
-        return canAttach(element, element.host, null, position);
-      }
-
       return canCreate(element, target, null, position);
     });
   });
 	
-
+  // maybe need rework ??
   this.addRule('elements.move', HIGH_PRIORITY, function(context) {
 
     var shapes = context.shapes,
@@ -158,8 +89,6 @@ CustomRules.prototype.init = function() {
         source = context.source,
 		position = context.position;
 		
-
-
     var type;
 
     // do not allow mixed movements of custom / BPMN shapes
@@ -173,9 +102,7 @@ CustomRules.prototype.init = function() {
         return false;
       }
 	  
-      return canAttach(s, target, source, position) ||
-			canMove(shapes, target, position);
-//     return canCreate(s, target, source, position);
+      return canCreate(s, target, source, position);
     }, undefined);
 
     // reject, if we have at least one
@@ -183,6 +110,7 @@ CustomRules.prototype.init = function() {
     return allowed;
   });
 
+  // done
   this.addRule('shape.create', HIGH_PRIORITY, function(context) {
     var shape = context.shape,
 		target = context.target,
@@ -192,73 +120,42 @@ CustomRules.prototype.init = function() {
     return canCreate(shape, target, source, position);
   });
   
+  // need some rework
   this.addRule('shape.attach', HIGH_PRIORITY, function(context) {
 	  
 	var shape = context.shape,
-		target = context.taret,
+		target = context.target,
 		source = null,
-	    position = context.position;		
-
-    return canAttach(shape, target, source, position);
+	    position = context.position;
+	
+	// allow circles to rect & subProcess Border on creation
+	if (isAny(shape, [
+	'custom:circle-green',
+	'custom:circle-yellow',
+	'custom:circle-red']) && (is(target, 'custom:rect') || is(target, 'bpmn:SubProcess'))) {
+		
+		return 'attach';
+    }
   });
 
+  // done
   this.addRule('shape.resize', HIGH_PRIORITY, function(context) {
     var shape = context.shape;
 
-    if (isCustom(shape)) {
-      // resize custom elements
-      return true;
+	// disallow resize of circles
+    if (isAny(shape, [
+	'custom:circle-green',
+	'custom:circle-yellow',
+	'custom:circle-red'])) {
+		return false;
     }
+	
+	// allow resize of rect
+	if (is(shape, 'custom:rect')) {
+		return true;
+	}
   });
   
   
-   /**
-   * Can source and target be connected?
-   */
-  function canConnect(source, target) {
-
-    // only judge about custom elements
-    if (!isCustom(source) && !isCustom(target)) {
-      return;
-    }
-
-    // allow connection between custom shape and task
-    if (isCustom(source)) {
-      if (is(target, 'bpmn:Task')) {
-        return { type: 'custom:connection' };
-      } else {
-        return false;
-      }
-    } else if (isCustom(target)) {
-      if (is(source, 'bpmn:Task')) {
-        return { type: 'custom:connection' };
-      } else {
-        return false;
-      }
-    }
-  }
-
-  this.addRule('connection.create', HIGH_PRIORITY, function(context) {
-    var source = context.source,
-        target = context.target;
-
-    return canConnect(source, target);
-  });
-
-  this.addRule('connection.reconnectStart', HIGH_PRIORITY, function(context) {
-    var connection = context.connection,
-        source = context.hover || context.source,
-        target = connection.target;
-
-    return canConnect(source, target, connection);
-  });
-
-  this.addRule('connection.reconnectEnd', HIGH_PRIORITY, function(context) {
-    var connection = context.connection,
-        source = connection.source,
-        target = context.hover || context.target;
-
-    return canConnect(source, target, connection);
-  });
 
 };

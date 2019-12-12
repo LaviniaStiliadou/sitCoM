@@ -12,6 +12,18 @@ export default function CustomOrderingProvider(eventBus, canvas) {
   OrderingProvider.call(this, eventBus);
 
   this.getOrdering = function(element, newParent) {
+	  
+	var type = element.type;
+
+	if (type === 'custom:circle-green' || type === 'custom:circle-yellow' || type === 'custom:circle-red')  {
+
+      // always move to end of root element
+      // to display always on top
+      return {
+        parent: canvas.getRootElement(),
+        index: 8
+      };
+    }
 
 	if (element.type === 'custom:rect') {
 
