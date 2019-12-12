@@ -3,6 +3,8 @@ Lbranch:
 Timm & Lavi:
 - Hover-Effekt bei der Palette (Orange bei default-symbolen, bei customs fehlt es)
 - Custom Palette Element spezifisch machen (heute besprechen)
+- Boundary Events score zufügen (beim attach an Subprocess)
+- Boundary Events in Palette direkt implementieren
 
 Alex & Marvin:
 Kreise:
