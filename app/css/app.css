@@ -36,6 +36,14 @@ html, body, #container {
   color: #52B415 !important;
 }
 
+.bpmn-icon-start-event-none.red{
+  color: #cc0000 !important;
+}
+.icon-custom-circle-green {
+  background: url('https://png.pngtree.com/png-clipart/20190516/original/pngtree-vector-charging-battery-icon-png-image_4101449.jpg');
+  background-position: bottom right;
+}
+
 #quality-assurance {
   color: #111;
   left: 50%;
