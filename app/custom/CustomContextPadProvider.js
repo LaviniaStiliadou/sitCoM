@@ -11,6 +11,7 @@ import {
   assign,
   bind
 } from 'min-dash';
+import CustomContextPad from './CustomContextPad';
 
 
 export default function CustomContextPadProvider(injector, connect, translate) {
@@ -24,7 +25,7 @@ export default function CustomContextPadProvider(injector, connect, translate) {
 	  
 	  const entries = _getContextPadEntries.apply(this, [element]);
 	  
-	  if(element.type === "bpmn:IntermediateThrowEvent" && businessObject.suitable>0){
+	  if(element.type === "bpmn:IntermediateThrowEvent" && businessObject.suitable > 0){
       delete entries["append.end-event"];
       delete entries["append.intermediate-event"];
       delete entries["append.gateway"];
@@ -43,7 +44,7 @@ export default function CustomContextPadProvider(injector, connect, translate) {
 
 }
 
-inherits(CustomContextPadProvider, ContextPadProvider);
+inherits(CustomContextPadProvider, ContextPadProvider, CustomContextPad);
 
 CustomContextPadProvider.$inject = [
   'injector',
