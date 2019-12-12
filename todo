@@ -5,6 +5,7 @@ Timm & Lavi:
 - Custom Palette Element spezifisch machen (heute besprechen)
 - Boundary Events score zufügen (beim attach an Subprocess)
 - Boundary Events in Palette direkt implementieren
+- bpmn:BoundaryEvent
 
 Alex & Marvin:
 Kreise:
