@@ -1,0 +1,29 @@
+{
+    "name": "Situation",
+    "prefix": "custom",
+    "uri": "http://situation",
+    "xml": {
+      "tagAlias": "lowerCase"
+    },
+    "associations": [],
+    "types": [
+      {
+        "name": "BewitchedIntermediateEvent",
+        "superClass": [
+          "bpmn:Element"
+        ],
+        "properties": [
+          {
+            "name": "violation",
+            "isAttr": true,
+            "type": "integer"
+          },
+          {
+            "name": "prioritaet",
+            "isAttr": true,
+            "type": "integer"
+          }
+        ]
+      }
+    ]
+  }
