@@ -189,7 +189,7 @@ export var START_EVENT = [
     {
         label: 'Message Intermediate Catch Event2',
         actionName: 'replace-with-message-intermediate-catch2',
-        className: 'icon-custom-circle-green',
+        className: 'bpmn-icon-emo-happy',
         target: {
           type: 'bpmn:IntermediateCatchEvent',
           eventDefinitionType: 'bpmn:MessageEventDefinition'

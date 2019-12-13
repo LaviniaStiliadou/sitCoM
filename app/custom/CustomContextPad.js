@@ -62,7 +62,8 @@ return function(event) {
 return {
 'append.red-circle': {
   group: 'model',
-  className: 'bpmn-icon-intermediate-event-none red',
+  //className: 'bpmn-icon-intermediate-event-none red',
+  className: 'bpmn-icon-emo-happy', 
   title: translate('Append red circle'),
   action: {
     click: appendIntermediateEvent(SUITABILITY_SCORE_LOW),
