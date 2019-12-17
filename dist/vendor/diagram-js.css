@@ -328,7 +328,7 @@ marker.djs-dragger tspan {
 }
 
 .djs-palette .entry:hover {
-  color: rgb(255, 116, 0);
+  color: rgb(100, 100, 0);
 }
 
 .djs-palette .highlighted-entry {
@@ -378,7 +378,7 @@ marker.djs-dragger tspan {
 }
 
 .djs-context-pad .entry {
-  width: 22px;
+  width: 30px;
   height: 22px;
   text-align: center;
   display: inline-block;

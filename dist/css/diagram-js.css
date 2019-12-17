@@ -280,7 +280,7 @@ marker.djs-dragger tspan {
   top: 20px;
 
   box-sizing: border-box;
-  width: 48px;
+  width: 60px;
 }
 
 .djs-palette .separator {
@@ -304,7 +304,7 @@ marker.djs-dragger tspan {
 .djs-palette .entry,
 .djs-palette .djs-palette-toggle {
   color: #333;
-  font-size: 30px;
+  font-size: 35px;
 
   text-align: center;
 }
@@ -327,20 +327,14 @@ marker.djs-dragger tspan {
   background: #666;
 }
 
-.djs-palette .entry:hover {
-  color: rgb(255, 116, 0);
-}
 
 .djs-palette .highlighted-entry {
   color: rgb(255, 116, 0) !important;
 }
 
-.djs-palette .entry,
-.djs-palette .djs-palette-toggle {
-  width: 46px;
-  height: 46px;
-  line-height: 46px;
+.djs-palette .entry:hover{
   cursor: default;
+  color: rgb(255, 116, 0) !important;
 }
 
 /**
@@ -349,7 +343,7 @@ marker.djs-dragger tspan {
  * changed life-cycle are available in addition.
  */
 .djs-palette.two-column.open {
-  width: 94px;
+  width: 100px;
 }
 
 .djs-palette:not(.open) .djs-palette-entries {
