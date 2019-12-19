@@ -25,7 +25,18 @@ export default function CustomContextPadProvider(injector, connect, translate) {
 	  
 	  const entries = _getContextPadEntries.apply(this, [element]);
 	  
-	  if(element.type === "bpmn:IntermediateThrowEvent" && businessObject.suitable > 0){
+	  if ((element.type === "bpmn:IntermediateThrowEvent") && (businessObject.suitable > 0)){
+      delete entries["append.end-event"];
+      delete entries["append.intermediate-event"];
+      delete entries["append.gateway"];
+      delete entries["append.append-task"];
+      delete entries["append.text-annotation"];
+      // loescht die Arrows, also die Möglichkeit Objekte zu verbinden
+      delete entries["connect"];
+      delete entries["append.red-circle"];
+      delete entries["append.yellow-circle"];
+      delete entries["append.green-circle"];
+    } else if (element.type === "bpmn:SubProcess" && businessObject.suitable == 100){
       delete entries["append.end-event"];
       delete entries["append.intermediate-event"];
       delete entries["append.gateway"];
@@ -33,11 +44,9 @@ export default function CustomContextPadProvider(injector, connect, translate) {
       delete entries["append.text-annotation"];
       // loescht den Schraubenschlüssel
       delete entries["replace"];
-      // loescht den Papierkorb
-      delete entries["delete"];
       // loescht die Arrows, also die Möglichkeit Objekte zu verbinden
       delete entries["connect"];
-	  }
+    }
       return entries;
     
   }

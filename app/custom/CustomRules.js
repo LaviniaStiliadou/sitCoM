@@ -15,6 +15,7 @@ import {
 import RuleProvider from 'diagram-js/lib/features/rules/RuleProvider';
 
 // need for snapping boundary events (customs) on border -- siehe Zeile 56-62
+// fhhfhf
 import {
 	getBoundaryAttachment as isBoundaryAttachment
 }	from 'bpmn-js/lib/features/snapping/BpmnSnappingUtil';

@@ -108,4 +108,6 @@
 .bpmn-icon-emo-happy:before { content: '\e86a'; } /* '' */
 .bpmn-icon-emo-displeased:before { content: '\e86b'; } /* '' */
 .bpmn-icon-emo-angry:before { content: '\e86c'; } /* '' */
+.bpmn-icon-marquee:before { content: '\e86d'; } /* '' */
+.bpmn-icon-check-empty:before { content: '\e86e'; } /* '' */
 .bpmn-icon-transaction:before { content: '\e8c4'; } /* '' */

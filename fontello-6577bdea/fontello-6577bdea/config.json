@@ -1523,6 +1523,18 @@
       "css": "emo-angry",
       "code": 59500,
       "src": "fontelico"
+    },
+    {
+      "uid": "8ce732688587909ad0a9d8323eaca8ad",
+      "css": "marquee",
+      "code": 59501,
+      "src": "fontelico"
+    },
+    {
+      "uid": "cc8e2a0eff0356811984b84a868524f8",
+      "css": "check-empty",
+      "code": 59502,
+      "src": "elusive"
     }
   ]
 }

@@ -1,10 +1,9 @@
 import $ from 'jquery';
-import qaExtension from '../resources/qa.json';
 import BpmnModeler from 'bpmn-js/lib/Modeler';
 import customModule from './custom';
-import { getBusinessObject } from 'bpmn-js/lib/util/ModelUtil';
 import propertiesPanelModule from 'bpmn-js-properties-panel';
 import propertiesProviderModule from './provider/situations';
+//import propertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
 import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda.json';
 
 import {
@@ -12,18 +11,16 @@ import {
 } from 'min-dash';
 
 import diagramXML from '../resources/newDiagram.bpmn';
-const HIGH_PRIORITY = 1500;
+import qaExtension from '../resources/qa.json';
+
 var container = $('#js-drop-zone');
 
 var canvas = $('#js-canvas');
 
 var bpmnModeler = new BpmnModeler({
-  container: canvas, 
+  container: canvas,
   propertiesPanel: {
     parent: '#js-properties-panel'
-  },
-    keyboard: {
-    bindTo: document
   },
   additionalModules: [
     customModule,
@@ -59,13 +56,6 @@ function openDiagram(xml) {
         .addClass('with-diagram');
     }
 
-    const moddle = bpmnModeler.get('moddle'),
-        modeling = bpmnModeler.get('modeling');
-
-  let analysisDetails,
-      businessObject,
-      element,
-      suitabilityScore;
 
   });
 }
@@ -79,15 +69,6 @@ function saveDiagram(done) {
   bpmnModeler.saveXML({ format: true }, function(err, xml) {
     done(err, xml);
   });
-}
-function getExtensionElement(element, type) {
-  if (!element.extensionElements) {
-    return;
-  }
-
-  return element.extensionElements.values.filter((extensionElement) => {
-    return extensionElement.$instanceOf(type);
-  })[0];
 }
 
 function registerFileDrop(container, callback) {

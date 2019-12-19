@@ -1,4 +1,5 @@
 const SUITABILITY_SCORE_HIGH = 100,
+      SUITABILITY_SCORE_OUTER_RECT = 200,
       SUITABILITY_SCORE_AVERGE = 50,
       SUITABILITY_SCORE_LOW = 25;
 
@@ -36,7 +37,8 @@ export default class CustomPalette {
         create.start(event, shape); 
       }
     }
-	
+  
+  // wird jetzt nicht mehr benutzt
 	function createGroup(suitabilityScore) {
       return function(event) {
         const businessObject = bpmnFactory.create('bpmn:Group');
@@ -99,8 +101,8 @@ export default class CustomPalette {
       },
       'create.rect': {
         group: 'activity',
-        className: 'icon-custom-rect',
-        title: translate('Create rect'),
+        className: 'bpmn-icon-marquee',
+        title: translate('Create inner scope'),
         action: {
           dragstart: createRect(SUITABILITY_SCORE_HIGH),
           click: createRect(SUITABILITY_SCORE_HIGH)
@@ -108,11 +110,11 @@ export default class CustomPalette {
       },
 	  'create.outerrect': {
         group: 'activity',
-        className: 'icon-custom-rect',
-        title: translate('Create Scope'),
+        className: 'bpmn-icon-check-empty',
+        title: translate('Create outer scope'),
         action: {
-          dragstart: createGroup(SUITABILITY_SCORE_HIGH),
-          click: createGroup(SUITABILITY_SCORE_HIGH)
+          dragstart: createRect(SUITABILITY_SCORE_OUTER_RECT),
+          click: createRect(SUITABILITY_SCORE_OUTER_RECT)
         }
       }
     }
