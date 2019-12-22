@@ -15,16 +15,9 @@
 - ID Feld zu Subprozessen
 - Je ein Kreis pro Icon für Violation
 - Properties Panel ID violation pro Icon
-   - z.B. Batterie FeldV FeldP
 
-----------------
-älter als 19.12
 Timm & Lavi:
-- Hover-Effekt bei der Palette (Orange bei default-symbolen, bei customs fehlt es)
-- Custom Palette Element spezifisch machen (heute besprechen)
-- Boundary Events score zufügen (beim attach an Subprocess)
-- Boundary Events in Palette direkt implementieren
-- bpmn:BoundaryEvent
+- CustomContextPad Element spezifisch machen (heute besprechen)
 
 Alex & Marvin:
 Kreise:
@@ -38,6 +31,7 @@ Pawel:
 
 Features:
 - Absturzursache behoben
+- Hover-Effekt bei der Palette 
 - ENTF-Taste (Probleme in versch. Browsern)
 - zweiten Container entfernen
 - Kreise in verschiedenen Farben
