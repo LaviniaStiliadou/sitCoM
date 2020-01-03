@@ -21,7 +21,7 @@ export default function CustomContextPadProvider(injector, connect, translate) {
   const _getContextPadEntries =
     ContextPadProvider.prototype.getContextPadEntries;
     ContextPadProvider.prototype.getContextPadEntries = function(element) {
-      var businessObject = element.businessObject;
+    var businessObject = element.businessObject;
 	  
 	  const entries = _getContextPadEntries.apply(this, [element]);
 	  
@@ -33,9 +33,6 @@ export default function CustomContextPadProvider(injector, connect, translate) {
       delete entries["append.text-annotation"];
       // loescht die Arrows, also die Möglichkeit Objekte zu verbinden
       delete entries["connect"];
-      delete entries["append.red-circle"];
-      delete entries["append.yellow-circle"];
-      delete entries["append.green-circle"];
     } else if (element.type === "bpmn:SubProcess" && businessObject.suitable == 100){
       delete entries["append.end-event"];
       delete entries["append.intermediate-event"];
@@ -46,6 +43,11 @@ export default function CustomContextPadProvider(injector, connect, translate) {
       delete entries["replace"];
       // loescht die Arrows, also die Möglichkeit Objekte zu verbinden
       delete entries["connect"];
+    }else if (element.type === "bpmn:SubProcess" && businessObject.suitable == 200){
+      delete entries["append.intermediate-event"];
+      delete entries["append.append-task"];
+      // loescht den Schraubenschlüssel
+      delete entries["replace"];
     }
       return entries;
     
