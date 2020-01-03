@@ -7,14 +7,16 @@
 - Verbindungen zu Rect Score 100 verbieten
 - Objekte richtig darstellen (z.B. Rect gestrichelt statt durchgezogener Linie)
 - Icons auf Kreise legen
-- ContextPad verändern:
-   - Red, green, yellow: löschen, Schraubenschlüssel
-   - Großes Rechteckt (Score 200?): Subprozesse, Löschen, Arrows
 - dynamisches Erweitern des Menü
 - Subprozesse größer machen
 - ID Feld zu Subprozessen
 - Je ein Kreis pro Icon für Violation
 - Properties Panel ID violation pro Icon
+
+Done:
+- ContextPad verändern:
+   - Red, green, yellow: löschen, Schraubenschlüssel
+   - Großes Rechteckt (Score 100?): Subprozesse, Löschen, Arrows
 
 Timm & Lavi:
 - CustomContextPad Element spezifisch machen (heute besprechen)
