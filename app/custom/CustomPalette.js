@@ -25,7 +25,7 @@ export default class CustomPalette {
       return function(event) {
         const businessObject = bpmnFactory.create('bpmn:SubProcess');
   
-        //businessObject.suitable = suitabilityScore;
+        businessObject.suitable = suitabilityScore;
   
         const shape = elementFactory.createShape({
           type: 'bpmn:SubProcess',

@@ -13,6 +13,7 @@ import {
 import diagramXML from '../resources/newDiagram.bpmn';
 import qaExtension from '../resources/qa.json';
 
+const HIGH_PRIORITY = 1500;
 var container = $('#js-drop-zone');
 
 var canvas = $('#js-canvas');
