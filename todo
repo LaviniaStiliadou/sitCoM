@@ -17,6 +17,7 @@ Done:
    - Red, green, yellow: löschen, Schraubenschlüssel
    - Großes Rechteckt (Score 100?): Subprozesse, Löschen, Arrows
 - Subprozesse größer machen
+- erstes Drankleben aus der Palette von Situationskreisen an normale Rects (Task, Subprozesse ohne Score) verboten
 
 Timm & Lavi:
 - CustomContextPad Element spezifisch machen (heute besprechen)
