@@ -3,8 +3,6 @@
 - Rect mit Score 100 hat die grünen/gelben/roten Kreise (evtl 1 oder mehrere, noch unsicher) drangeklebt
 - Kreise dürfen nicht frei im Feld sein, müssen drangeklebt sein
 - Rect mit Score (200) keine roten, gelben, grünen Kreise 
-- Kreise nicht verbinden
-- Verbindungen zu Rect Score 100 verbieten
 - Objekte richtig darstellen (z.B. Rect gestrichelt statt durchgezogener Linie)
 - Icons auf Kreise legen
 - dynamisches Erweitern des Menüs
@@ -18,6 +16,8 @@ Done:
    - Großes Rechteckt (Score 100?): Subprozesse, Löschen, Arrows
 - Subprozesse größer machen
 - erstes Drankleben aus der Palette von Situationskreisen an normale Rects (Task, Subprozesse ohne Score) verboten
+- Kreise nicht verbinden
+- Verbindungen zu Rect Score 100 verbieten
 
 Timm & Lavi:
 - CustomContextPad Element spezifisch machen (heute besprechen)
