@@ -56,17 +56,23 @@ CustomRules.prototype.init = function() {
     if (!isCustom(shape)) {
       return;
     }
-	
-//	// all custom shapes except rect only allowed on rect
-//	if (!is(shape, 'custom:rect')) {
-//	  return is(target, 'custom:rect') || is(target, 'bpmn:SubProcess');
-//	}
+  }
 
-    // allow creation of rect on processes & rect
-	//wird wahrscheinlich nicht mehr gebraucht?
-	if (is(shape, 'custom:rect')) {
-		return is(target, 'bpmn:Process') || is(target, 'bpmn:Participant') || is(target, 'bpmn:Collaboration') || is(target, 'custom:rect');
-	}
+  function canAttach(context){
+    var shape = context.shape,
+      target = context.target;
+    var businessObject = shape.businessObject;
+    var targetBusinessObject = target.businessObject;
+
+  
+    if (isAny(shape, [
+    'bpmn:IntermediateThrowEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent'])  && 
+    (businessObject.suitable == 100 || businessObject.suitable == 50 || 
+      businessObject.suitable == 25) &&
+    ((is(target, 'bpmn:SubProcess')) ||  (is(target, 'bpmn:Task')))
+     && (targetBusinessObject.suitable != 100 && targetBusinessObject.suitable != 200 )) {
+      return false;
+      }
   }
   
   // dont know if its needed, maybe rework
@@ -88,10 +94,16 @@ CustomRules.prototype.init = function() {
 
     var shapes = context.shapes,
 		target = context.target,
-        source = context.source,
+    source = context.source,
 		position = context.position;
 		
     var type;
+
+    // klappt noch nicht 
+    // beheben...
+    if(is(shapes, 'bpmn:IntermediateThrowEvent') && is(target, 'bpmn:SubProcess')){
+      return canAttach(context);
+    }
 
     // do not allow mixed movements of custom / BPMN shapes
     // if any shape cannot be moved, the group cannot be moved, too
@@ -122,45 +134,24 @@ CustomRules.prototype.init = function() {
     return canCreate(shape, target, source, position);
   });
   
-  // need some rework
+  // ist fuer das erste Drankleben aus der Palette
+  // damit Situationsintermediateevents nie an Task oder normale Subprocess geklebt werden 
   this.addRule('shape.attach', HIGH_PRIORITY, function(context) {
-	  
-	var shape = context.shape,
-		target = context.target,
-		source = null,
-	    position = context.position;
-		//suitable = context.suitable;
-	
-	// allow circles to rect & subProcess Border on creation
-	//context = element?
-	if (isAny(shape, [
-	'custom:circle-green',
-	'custom:circle-yellow',
-	//'bpmn:intermediateThrowEvent',
-	'custom:circle-red']) && (is(target, 'custom:rect') || is(target, 'bpmn:SubProcess'))) {
-		
-		return 'attach';
-    }
-  });
+    var shape = context.shape,
+      target = context.target;
+    var businessObject = shape.businessObject;
+    var targetBusinessObject = target.businessObject;
 
-  // done
-  this.addRule('shape.resize', HIGH_PRIORITY, function(context) {
-    var shape = context.shape;
-
-	// disallow resize of circles
+  
     if (isAny(shape, [
-	'custom:circle-green',
-	'custom:circle-yellow',
-	'custom:circle-red'])) {
-		return false;
-    }
-	
-	// allow resize of rect
-	if (is(shape, 'custom:rect')) {
-		return true;
-	}
-  });
+    'bpmn:IntermediateThrowEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent'])  && 
+    (businessObject.suitable == 100 || businessObject.suitable == 50 || 
+      businessObject.suitable == 25) &&
+    ((is(target, 'bpmn:SubProcess')) ||  (is(target, 'bpmn:Task')))
+     && (targetBusinessObject.suitable != 100 && targetBusinessObject.suitable != 200 )) {
+      return false;
+      }
   
-  
+    });
 
 };

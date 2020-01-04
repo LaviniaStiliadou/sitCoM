@@ -26,18 +26,31 @@ export default class CustomPalette {
         const businessObject = bpmnFactory.create('bpmn:SubProcess');
   
         businessObject.suitable = suitabilityScore;
+        if(businessObject.suitable === 100){
   
         const shape = elementFactory.createShape({
           type: 'bpmn:SubProcess',
+          height: 200,
+          width: 250,
           businessObject: businessObject
         });
-			
+
         shape.businessObject.di.isExpanded = true;
-      
+        create.start(event, shape); 
+
+      }else {
+        const shape = elementFactory.createShape({
+          type: 'bpmn:SubProcess',
+          height: 400,
+          width: 450,
+          businessObject: businessObject
+        });
+        
+        shape.businessObject.di.isExpanded = true;
         create.start(event, shape); 
       }
     }
-  
+    }
   // wird jetzt nicht mehr benutzt
 	function createGroup(suitabilityScore) {
       return function(event) {
