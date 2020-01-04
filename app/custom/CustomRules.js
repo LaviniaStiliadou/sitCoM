@@ -204,8 +204,7 @@ if (isAny(shape, [
     var shape = shapes[0];
 	
 	 var businessObject = shape.businessObject;
-//	 var targetBusinessObject = target.businessObject; /////////////////// WILL NICHT -- target is undefined kacke scheiße man
-//	 var targetBusinessObject = target.businessObject;
+//	 var targetBusinessObject = target.businessObject; /////////////////// WILL NICHT -- target is undefined
 	 
 //	 if(is(target, 'bpmn:SubProcess') && (targetBusinessObject.suitable == 200)) {
 //	     return false;
@@ -237,13 +236,13 @@ if (isAny(shape, [
 		position = context.position;
 		
     var type;
-	var test = false;
-	var bla = true;
+//	var test = false;
+//	var bla = true;
 	
 	return canAttach(shapes, target, null, position) ||
 	       canMove(shapes, target, position);
 	
-	
+/*	
 	if (some(shapes, function(shape) {
 		if (shape.businessObject.suitable != 25) {
 			bla = false;
@@ -256,6 +255,7 @@ if (isAny(shape, [
 if (bla) {
 	return canAttach(shape, target, null, position);
 }
+*/
 
 	
 	
@@ -311,7 +311,7 @@ if (bla) {
     return canCreate(shape, target, source, position);
   });
   
-  this.addRule('elements.create', function(context) {
+  this.addRule('elements.create', HIGH_PRIORITY, function(context) {
     var shapes = context.shapes,
         position = context.position,
         target = context.target;
