@@ -92,7 +92,6 @@ CustomRules.prototype.init = function() {
       return false;
     }
 
-
     // damit Rect mit Score = 200 nicht mit Score = 100 verbunden werden duerfen
     if (!is(target, 'bpmn:IntermediateThrowEvent') &&
      (is(source, 'bpmn:SubProcess')) && businessObject.suitable == 200
@@ -115,20 +114,20 @@ CustomRules.prototype.init = function() {
 
   function canAttach(context){
     var shape = context.shape,
-      target = context.target;
+        target = context.target;
     var businessObject = shape.businessObject;
     var targetBusinessObject = target.businessObject;
 
-  
+
     if (isAny(shape, [
     'bpmn:IntermediateThrowEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent'])  && 
     (businessObject.suitable == 100 || businessObject.suitable == 50 || 
       businessObject.suitable == 25) &&
     ((is(target, 'bpmn:SubProcess')) ||  (is(target, 'bpmn:Task')))
-     && (targetBusinessObject.suitable != 100 && targetBusinessObject.suitable != 200 )) {
+     && (targetBusinessObject.suitable != 100)) {
       return false;
       }
-  
+
   }
   
   
@@ -180,7 +179,7 @@ CustomRules.prototype.init = function() {
     (businessObject.suitable == 100 || businessObject.suitable == 50 || 
       businessObject.suitable == 25) &&
     ((is(target, 'bpmn:SubProcess')) ||  (is(target, 'bpmn:Task')))
-     && (targetBusinessObject.suitable != 100 && targetBusinessObject.suitable != 200 )) {
+     && (targetBusinessObject.suitable != 100 && targetBusinessObject.suitable == 200 )) {
       return false;
       }
 

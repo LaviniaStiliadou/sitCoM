@@ -1,14 +1,15 @@
 19.12.2019
 - Rect mit Score 200 enthält nur Rect mit Score 100
 - Rect mit Score 100 hat die grünen/gelben/roten Kreise (evtl 1 oder mehrere, noch unsicher) drangeklebt
-- Kreise dürfen nicht frei im Feld sein, müssen drangeklebt sein
-- Rect mit Score (200) keine roten, gelben, grünen Kreise 
+- Kreise dürfen nicht frei im Feld sein, müssen drangeklebt sein (jetzt fehlt nur noch move)
 - Objekte richtig darstellen (z.B. Rect gestrichelt statt durchgezogener Linie)
 - Icons auf Kreise legen
 - dynamisches Erweitern des Menüs
 - ID Feld zu Subprozessen
 - Je ein Kreis pro Icon für Violation
 - Properties Panel ID violation pro Icon
+
+!!! move, derzeit nur Funktionalität beim ersten Kleben erledigt
 
 Done:
 - ContextPad verändern:
@@ -17,7 +18,12 @@ Done:
 - Subprozesse größer machen
 - erstes Drankleben aus der Palette von Situationskreisen an normale Rects (Task, Subprozesse ohne Score) verboten
 - Kreise nicht verbinden
+- keine Verbindungen von Kreisen zu anderen Objekten
+- keine Verbinungen von Rect 100 (nur zu Kreisen)
+- keine Verbindungen zu Rect 100
 - Verbindungen zu Rect Score 100 verbieten
+- Kreise dürfen nicht frei im Feld sein, müssen drangeklebt sein
+- keine Kreise an Rect Score = 200 erlaubt (bei Palette)
 
 Timm & Lavi:
 - CustomContextPad Element spezifisch machen (heute besprechen)
