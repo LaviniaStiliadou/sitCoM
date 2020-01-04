@@ -1,5 +1,10 @@
 import {
-  reduce
+  forEach,
+  find,
+  every,
+  has,
+  reduce,
+  some
 } from 'min-dash';
 
 import inherits from 'inherits';
@@ -66,20 +71,13 @@ CustomRules.prototype.init = function() {
 	
 	// SubProcess Score 100 nur auf  SubProcess Scroe 200 erlaubt
 	if (is(shape, 'bpmn:SubProcess') && businessObject.suitable == 100) {
-	    return (targetBusinessObject.suitable == 200);
+	    return (is(target, 'bpmn:SubProcess') && targetBusinessObject.suitable == 200);
 	}
 	
 
-    // Kreise mit Score nur an SubProcess Score 100 erlaubt
-	if (isAny(shape, [
-	    'bpmn:IntermediateThrowEvent',
-	    'bpmn:IntermediateCatchEvent',
-	    'bpmn:BoundaryEvent']) &&
-	    (businessObject.suitable == 100 || businessObject.suitable == 50 || 
-        businessObject.suitable == 25)) {
-			return false;
-			}
-//		    return (targetBusinessObject.suitable == 100);		    
+
+
+  return canDrop(shape, target, position);    
 		
 
   }
@@ -131,11 +129,21 @@ CustomRules.prototype.init = function() {
   }
   
 
-  function canAttach(context){
-    var shape = context.shape,
-        target = context.target;
+  function canAttach(shapes, target, source, position){
+	  
+if (!Array.isArray(shapes)) {
+    shapes = [ shapes ];
+  }
+
+  // only (re-)attach one element at a time
+  if (shapes.length !== 1) {
+    return false;
+  }
+
+  var shape = shapes[0];
+	  	  
     var businessObject = shape.businessObject;
-    var targetBusinessObject = target.businessObject;
+//    var targetBusinessObject = target.businessObject;
 	
 	
 	if (isAny(shape, [
@@ -143,7 +151,7 @@ CustomRules.prototype.init = function() {
 	    'bpmn:IntermediateCatchEvent',
 	    'bpmn:BoundaryEvent']) &&
 	    (businessObject.suitable == 100 || businessObject.suitable == 50 || 
-        businessObject.suitable == 25) && (!is(target, 'bpmn:SubProcess') || (is(target, 'bpmn:SubProcess') && (targetBusinessObject.suitable != 100))))
+        businessObject.suitable == 25) && (!is(target, 'bpmn:SubProcess'))) //|| (is(target, 'bpmn:SubProcess') && (targetBusinessObject.suitable != 100))))
 		{
 			return false;
 		}
@@ -157,8 +165,67 @@ CustomRules.prototype.init = function() {
 //      return false;
 //      }
 
+
   }
   
+  function canDrop(shape, target, position) {
+    var businessObject = shape.businessObject;
+    var targetBusinessObject = target.businessObject;
+	
+if (isAny(shape, [
+	    'bpmn:IntermediateThrowEvent',
+	    'bpmn:IntermediateCatchEvent',
+	    'bpmn:BoundaryEvent']) &&
+	    (businessObject.suitable == 100 || businessObject.suitable == 50 || 
+        businessObject.suitable == 25))
+		{
+			return false;
+		}
+	  
+  }
+  
+  function canMove(shapes, target) {
+	  
+	if (some(shapes, function(shape){
+	    if (is(shape, 'bpmn:Lane')) {
+		return false;
+		}
+	}));
+	
+    if (!Array.isArray(shapes)) {
+        shapes = [ shapes ];
+    }
+
+    // only (re-)attach one element at a time
+    if (shapes.length !== 1) {
+        return false;
+    }
+
+    var shape = shapes[0];
+	
+	 var businessObject = shape.businessObject;
+//	 var targetBusinessObject = target.businessObject; /////////////////// WILL NICHT -- target is undefined kacke scheiße man
+//	 var targetBusinessObject = target.businessObject;
+	 
+//	 if(is(target, 'bpmn:SubProcess') && (targetBusinessObject.suitable == 200)) {
+//	     return false;
+//	 }
+	
+//if (isAny(shape, [
+//	    'bpmn:IntermediateThrowEvent',
+//	    'bpmn:IntermediateCatchEvent',
+//	    'bpmn:BoundaryEvent']) &&
+//	    (businessObject.suitable == 100 || businessObject.suitable == 50 || 
+//       businessObject.suitable == 25) && (!is(target, 'bpmn:SubProcess') || (is(target, 'bpmn:SubProcess') && (targetBusinessObject.suitable != 100))))
+//		{
+//			return false;
+//		}
+	
+	if (!target) {
+		return true;
+	}
+  
+  }
   
 	
   // maybe need rework ??
@@ -170,17 +237,67 @@ CustomRules.prototype.init = function() {
 		position = context.position;
 		
     var type;
+	var test = false;
+	var bla = true;
+	
+	return canAttach(shapes, target, null, position) ||
+	       canMove(shapes, target, position);
+	
+	
+	if (some(shapes, function(shape) {
+		if (shape.businessObject.suitable != 25) {
+			bla = false;
+		} else {
+			target = shape.host;
+			return canAttach(shape, target, null, position);
+		}
+	}));
+	
+if (bla) {
+	return canAttach(shape, target, null, position);
+}
+
+	
+	
+	
+//	if (some(shapes, function(shape) {
+//		if (shape.businessObject.suitable == 25) {			
+//		test = true;
+//		}
+//	}));
+//	if (test) {
+//		return canAttach(context);
+//	}
+
+	
+//	if (forEach(shapes, function(shape) {
+//		if (shape.businessObject.suitable == 25) {			
+//		return false;
+//		}
+//	}));
+	
+	
+//	var shape = shapes[0]
+//	var businessObject = shape.businessObject;
+//    var targetBusinessObject = target.businessObject;
+	
+//	var x = reduce(shapes, function(result, s);
+//	var businessObject = s.businessObject;
+//    var targetBusinessObject = target.businessObject;
 	
 
     // klappt noch nicht 
     // beheben...
-    if(is(shapes, 'bpmn:IntermediateThrowEvent') && is(target, 'bpmn:SubProcess')){
-      return canAttach(context);
-    }
+//	  if(some(shapes, isBoundaryEvent)) {
+//		  return canAttach(context);
+//	  }
+//    if(some(shapes, 'bpmn:BoundaryEvent') || some(shapes, 'bpmn:IntermediateCatchEvent') || some(shapes, 'bpmn:IntermediateThrowEvent')) {
+//      return canAttach(context);
+//    }
 
-    if(is(shapes, 'bpmn:IntermediateThrowEvent') && is(target, 'bpmn:Participant')){
-      return canCreate(shapes, target, source, position);
-    }
+//    if(is(shapes, 'bpmn:IntermediateThrowEvent') && is(target, 'bpmn:Participant')){
+//      return canCreate(shapes, target, source, position);
+//    }
     
   });
 
@@ -194,12 +311,28 @@ CustomRules.prototype.init = function() {
     return canCreate(shape, target, source, position);
   });
   
+  this.addRule('elements.create', function(context) {
+    var shapes = context.shapes,
+        position = context.position,
+        target = context.target;
+
+    return every(shapes, function(shape) {
+
+      if (shape.host) {
+        return canAttach(shape, shape.host, null, position);
+      }
+
+      return canCreate(shape, target, null, position);
+    });
+  });
+  
   // ist fuer das erste Drankleben aus der Palette
   // damit Situationsintermediateevents nie an Task oder normale Subprocess geklebt werden 
   // damit IntermediateEvents nicht an Situationsscopes geklebt werden 
   this.addRule('shape.attach', HIGH_PRIORITY, function(context) {
     var shape = context.shape,
-      target = context.target;
+        target = context.target,
+	    position = context.position;
     var businessObject = shape.businessObject;
     var targetBusinessObject = target.businessObject;
 
@@ -222,7 +355,8 @@ CustomRules.prototype.init = function() {
          && (targetBusinessObject.suitable == 100 || targetBusinessObject.suitable == 200 )) {
           return false;
           }
-  
+	
+	return canAttach(shape, target, null, position);
     });
 
     this.addRule('connection.create', HIGH_PRIORITY, function(context) {
