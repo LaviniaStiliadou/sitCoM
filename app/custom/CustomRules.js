@@ -63,7 +63,12 @@ CustomRules.prototype.init = function() {
 //       && (targetBusinessObject.suitable != 100 && targetBusinessObject.suitable != 200 )) {
 //        return false;
 //       } 
-
+	
+	// SubProcess Score 100 nur auf  SubProcess Scroe 200 erlaubt
+	if (is(shape, 'bpmn:SubProcess') && businessObject.suitable == 100) {
+	    return (targetBusinessObject.suitable == 200);
+	}
+	
 
     // Kreise mit Score nur an SubProcess Score 100 erlaubt
 	if (isAny(shape, [
@@ -72,13 +77,11 @@ CustomRules.prototype.init = function() {
 	    'bpmn:BoundaryEvent']) &&
 	    (businessObject.suitable == 100 || businessObject.suitable == 50 || 
         businessObject.suitable == 25)) {
-			return (is(target, 'bpmn:SubProcess') && targetBusinessObject.suitable == 100)
-		}
+			return false;
+			}
+//		    return (targetBusinessObject.suitable == 100);		    
 		
-	// SubProcess Score 100 nur auf  SubProcess Scroe 200 erlaubt
-	if (businessObject.suitable == 100) {
-	    return (targetBusinessObject.suitable == 200);
-	}
+
   }
 
   // verbietet das Verbinden von Situationskreisen 
@@ -133,16 +136,26 @@ CustomRules.prototype.init = function() {
         target = context.target;
     var businessObject = shape.businessObject;
     var targetBusinessObject = target.businessObject;
+	
+	
+	if (isAny(shape, [
+	    'bpmn:IntermediateThrowEvent',
+	    'bpmn:IntermediateCatchEvent',
+	    'bpmn:BoundaryEvent']) &&
+	    (businessObject.suitable == 100 || businessObject.suitable == 50 || 
+        businessObject.suitable == 25) && (!is(target, 'bpmn:SubProcess') || (is(target, 'bpmn:SubProcess') && (targetBusinessObject.suitable != 100))))
+		{
+			return false;
+		}
 
-
-    if (isAny(shape, [
-    'bpmn:IntermediateThrowEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent'])  && 
-    (businessObject.suitable == 100 || businessObject.suitable == 50 || 
-      businessObject.suitable == 25) &&
-    ((is(target, 'bpmn:SubProcess')) ||  (is(target, 'bpmn:Task')))
-     && (targetBusinessObject.suitable != 100)) {
-      return false;
-      }
+//    if (isAny(shape, [
+//    'bpmn:IntermediateThrowEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent'])  && 
+//    (businessObject.suitable == 100 || businessObject.suitable == 50 || 
+//      businessObject.suitable == 25) &&
+//    ((is(target, 'bpmn:SubProcess')) ||  (is(target, 'bpmn:Task')))
+//     && (targetBusinessObject.suitable != 100)) {
+//      return false;
+//      }
 
   }
   
@@ -153,10 +166,11 @@ CustomRules.prototype.init = function() {
 
     var shapes = context.shapes,
 		target = context.target,
-    source = context.source,
+		source = context.source,
 		position = context.position;
 		
     var type;
+	
 
     // klappt noch nicht 
     // beheben...
@@ -195,7 +209,7 @@ CustomRules.prototype.init = function() {
     (businessObject.suitable == 100 || businessObject.suitable == 50 || 
       businessObject.suitable == 25) &&
     ((is(target, 'bpmn:SubProcess')) ||  (is(target, 'bpmn:Task')))
-     && (targetBusinessObject.suitable != 100 && targetBusinessObject.suitable == 200 )) {
+     && (targetBusinessObject.suitable != 100 || targetBusinessObject.suitable == 200 )) {
       return false;
       }
 
