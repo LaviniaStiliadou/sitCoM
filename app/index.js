@@ -23,6 +23,9 @@ var bpmnModeler = new BpmnModeler({
   propertiesPanel: {
     parent: '#js-properties-panel'
   },
+    keyboard: {
+    bindTo: document
+  },
   additionalModules: [
     customModule,
     propertiesPanelModule,

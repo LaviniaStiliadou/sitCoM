@@ -55,14 +55,30 @@ CustomRules.prototype.init = function() {
   function canCreate(shape, target, source, position) {
     var businessObject = shape.businessObject;
     var targetBusinessObject = target.businessObject;
-    if (isAny(shape, [
-      'bpmn:IntermediateThrowEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent'])  && 
-      (businessObject.suitable == 100 || businessObject.suitable == 50 || 
-        businessObject.suitable == 25) &&
-      ((is(target, 'bpmn:Participant')) ||  (is(target, 'bpmn:Lane')) ||  (is(target, 'bpmn:Pool')))
-       && (targetBusinessObject.suitable != 100 && targetBusinessObject.suitable != 200 )) {
-        return false;
-       }
+//    if (isAny(shape, [
+//      'bpmn:IntermediateThrowEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent'])  && 
+//      (businessObject.suitable == 100 || businessObject.suitable == 50 || 
+//        businessObject.suitable == 25) &&
+//      ((is(target, 'bpmn:Participant')) ||  (is(target, 'bpmn:Lane')) ||  (is(target, 'bpmn:Pool')))
+//       && (targetBusinessObject.suitable != 100 && targetBusinessObject.suitable != 200 )) {
+//        return false;
+//       } 
+
+
+    // Kreise mit Score nur an SubProcess Score 100 erlaubt
+	if (isAny(shape, [
+	    'bpmn:IntermediateThrowEvent',
+	    'bpmn:IntermediateCatchEvent',
+	    'bpmn:BoundaryEvent']) &&
+	    (businessObject.suitable == 100 || businessObject.suitable == 50 || 
+        businessObject.suitable == 25)) {
+			return (is(target, 'bpmn:SubProcess') && targetBusinessObject.suitable == 100)
+		}
+		
+	// SubProcess Score 100 nur auf  SubProcess Scroe 200 erlaubt
+	if (businessObject.suitable == 100) {
+	    return (targetBusinessObject.suitable == 200);
+	}
   }
 
   // verbietet das Verbinden von Situationskreisen 
