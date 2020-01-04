@@ -58,6 +58,33 @@ CustomRules.prototype.init = function() {
     }
   }
 
+  // verbietet das Verbinden von Situationskreisen 
+  // verbietet das Verbinden von inner Rects mit Score = 100
+  // todo mehr einschraenken
+  function canConnect(source, target) {
+    var businessObject = source.businessObject;
+    var targetBusinessObject = target.businessObject;
+
+    if (is(target, 'bpmn:IntermediateThrowEvent') &&
+     (is(source, 'bpmn:IntermediateThrowEvent')) && businessObject.suitable >0
+      && targetBusinessObject.suitable >0){
+      return false;
+    }
+
+    if (is(target, 'bpmn:IntermediateThrowEvent') &&
+     (is(source, 'bpmn:BoundaryEvent')) && businessObject.suitable >0
+      && targetBusinessObject.suitable >0){
+      return false;
+    }
+
+    if (is(target, 'bpmn:SubProcess') &&
+     (is(source, 'bpmn:SubProcess')) && businessObject.suitable ==100
+      && targetBusinessObject.suitable == 100){
+      return false;
+    }
+  }
+  
+
   function canAttach(context){
     var shape = context.shape,
       target = context.target;
@@ -151,6 +178,14 @@ CustomRules.prototype.init = function() {
      && (targetBusinessObject.suitable != 100 && targetBusinessObject.suitable != 200 )) {
       return false;
       }
+  
+    });
+
+    this.addRule('connection.create', HIGH_PRIORITY, function(context) {
+      let source = context.source,
+        target = context.target;
+  
+      return canConnect(source, target);
   
     });
 
