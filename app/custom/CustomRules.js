@@ -40,8 +40,13 @@ CustomRules.prototype.init = function() {
     var targetBusinessObject = target.businessObject;
     if (is(shape, 'bpmn:SubProcess') && businessObject.suitable == 100) {
 	    return (targetBusinessObject.suitable == 200);
-  }
-  if (isAny(shape, ['bpmn:IntermediateThrowEvent','bpmn:IntermediateCatchEvent',
+    }
+
+    if (!is(shape, 'bpmn:SubProcess') && (targetBusinessObject.suitable == 200)) {
+	    return false;
+    }
+
+    if (isAny(shape, ['bpmn:IntermediateThrowEvent','bpmn:IntermediateCatchEvent',
      'bpmn:BoundaryEvent']) &&(businessObject.suitable == 100 ||
       businessObject.suitable == 50 || businessObject.suitable == 25)) {
         return false;
