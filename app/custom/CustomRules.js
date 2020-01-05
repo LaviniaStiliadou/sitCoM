@@ -119,7 +119,7 @@ CustomRules.prototype.init = function() {
 
     // damit normale IntermediateEvents nicht an Situationsscopes geklebt werden
     if((is(context.shapes[0], 'bpmn:IntermediateThrowEvent') || is(context.shapes[0], 'bpmn:BoundaryEvent'))
-     && (!is(target, is(target, 'bpmn:SubProcess')) && (targetBusinessObject.suitable == 100 || targetBusinessObject.suitable == 200))){
+     && (!is(target, is(target, 'bpmn:SubProcess'))&& ( businessObject.suitable !=25 && businessObject.suitable != 50 && businessObject.suitable !=100) && (targetBusinessObject.suitable == 100 || targetBusinessObject.suitable == 200))){
       return false;
     }
 
