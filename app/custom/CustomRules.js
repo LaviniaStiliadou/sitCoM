@@ -123,6 +123,18 @@ CustomRules.prototype.init = function() {
       return false;
     }
 
+    // damit normale IntermediateEvents nicht an Situationsscopes geklebt werden
+    if(!(is(context.shapes[0], 'bpmn:IntermediateThrowEvent') || is(context.shapes[0], 'bpmn:BoundaryEvent'))
+     && (!is(target, is(target, 'bpmn:SubProcess'))&& ( businessObject.suitable !=25 && businessObject.suitable != 50 && businessObject.suitable !=100) && (targetBusinessObject.suitable == 100 || targetBusinessObject.suitable == 200))){
+      return false;
+    }
+
+    // damit Rect mit 100 nicht rausgezogen werden
+    if((is(context.shapes[0], 'bpmn:SubProcess'))
+     && (!is(target,'bpmn:SubProcess'))&& ( businessObject.suitable ==100) && (targetBusinessObject.suitable != 100 || targetBusinessObject.suitable != 200)){
+      return false;
+    }
+
     }
   }  
   
