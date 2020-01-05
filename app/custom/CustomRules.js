@@ -102,11 +102,10 @@ CustomRules.prototype.init = function() {
     var businessObject = context.shapes[0].businessObject;
      
     if(target != undefined){
-
+      var targetBusinessObject = target.businessObject;
     // damit Situationskreise nicht rausgezogen werden  
     if((is(context.shapes[0], 'bpmn:IntermediateThrowEvent') || is(context.shapes[0], 'bpmn:BoundaryEvent'))
-     && (is(target, 'bpmn:Participant') ||
-    is(target, 'bpmn:Lane') || is(target, 'bpmn:Collaboration')) && businessObject.suitable > 0 ){
+     && (!is(target, 'bpmn:SubProcess') || is(target, 'bpmn:SubProcess')) && (targetBusinessObject.suitable != 100 || targetBusinessObject.suitable == 200) && businessObject.suitable > 0 ){
       return false;
     }
 
