@@ -56,9 +56,6 @@ CustomRules.prototype.init = function() {
       businessObject.suitable == 50 || businessObject.suitable == 25)) {
         return false;
     }
-
-  
-  
   }
 
   // verbietet das Verbinden von Situationskreisen 
@@ -84,7 +81,7 @@ CustomRules.prototype.init = function() {
       return false;
     }
 
-    if ((is(source, 'bpmn:BoundaryEvent')) &&   businessObject.suitable >0){
+    if ((is(source, 'bpmn:BoundaryEvent')) && businessObject.suitable >0){
       return false;
     }
 
@@ -117,16 +114,6 @@ CustomRules.prototype.init = function() {
     if(target != undefined){
       var targetBusinessObject = target.businessObject;
     
-    // damit Situationskreise nicht rausgezogen werden
-    //console.log((is(context.shapes[0], 'bpmn:IntermediateThrowEvent')));
-    //console.log(is(context.shapes[0], 'bpmn:BoundaryEvent'));
-    //console.log((is(target, 'bpmn:SubProcess')) );
-    //console.log((targetBusinessObject.suitable == 100));
-    //console.log(businessObject.suitable > 0 );  
-    if((is(context.shapes[0], 'bpmn:IntermediateThrowEvent') || is(context.shapes[0], 'bpmn:BoundaryEvent'))
-     && (is(target, 'bpmn:SubProcess')) && (targetBusinessObject.suitable == 100) && businessObject.suitable > 0 ){
-      return canCreate(context.shapes[0], target);
-    }
 
     // damit Rect 100 sowie 200 nicht in 100 reingezogen werden
     if((is(context.shapes[0], 'bpmn:SubProcess')) && (is(target, 'bpmn:SubProcess')) && (targetBusinessObject.suitable == 100) 
@@ -177,7 +164,6 @@ CustomRules.prototype.init = function() {
   });
   
   function canAttach(shape, target){
-
     var businessObject = shape.businessObject;
     var targetBusinessObject = target.businessObject;
     if (isAny(shape, [
