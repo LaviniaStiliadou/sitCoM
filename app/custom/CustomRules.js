@@ -42,6 +42,11 @@ CustomRules.prototype.init = function() {
 	    return (targetBusinessObject.suitable == 200);
     }
 
+    if (is(shape, 'bpmn:SubProcess') && is(target, 'bpmn:SubProcess')&& (businessObject.suitable == 200) &&
+    (targetBusinessObject.suitable = 100)) {
+	    return false;
+    }
+
     if (!is(shape, 'bpmn:SubProcess') && (targetBusinessObject.suitable == 200)) {
 	    return false;
     }
@@ -111,6 +116,23 @@ CustomRules.prototype.init = function() {
      
     if(target != undefined){
       var targetBusinessObject = target.businessObject;
+    
+    // damit Situationskreise nicht rausgezogen werden
+    //console.log((is(context.shapes[0], 'bpmn:IntermediateThrowEvent')));
+    //console.log(is(context.shapes[0], 'bpmn:BoundaryEvent'));
+    //console.log((is(target, 'bpmn:SubProcess')) );
+    //console.log((targetBusinessObject.suitable == 100));
+    //console.log(businessObject.suitable > 0 );  
+    if((is(context.shapes[0], 'bpmn:IntermediateThrowEvent') || is(context.shapes[0], 'bpmn:BoundaryEvent'))
+     && (is(target, 'bpmn:SubProcess')) && (targetBusinessObject.suitable == 100) && businessObject.suitable > 0 ){
+      return canCreate(context.shapes[0], target);
+    }
+
+    // damit Rect 100 sowie 200 nicht in 100 reingezogen werden
+    if((is(context.shapes[0], 'bpmn:SubProcess')) && (is(target, 'bpmn:SubProcess')) && (targetBusinessObject.suitable == 100) 
+    && businessObject.suitable > 0 ){
+      return false;
+    }
     // damit Situationskreise nicht rausgezogen werden  
     if((is(context.shapes[0], 'bpmn:IntermediateThrowEvent') || is(context.shapes[0], 'bpmn:BoundaryEvent'))
      && (!is(target, 'bpmn:SubProcess') || is(target, 'bpmn:SubProcess')) && (targetBusinessObject.suitable != 100 || targetBusinessObject.suitable == 200) && businessObject.suitable > 0 ){
@@ -154,6 +176,38 @@ CustomRules.prototype.init = function() {
     return canCreate(shape, target, source, position);
   });
   
+  function canAttach(shape, target){
+
+    var businessObject = shape.businessObject;
+    var targetBusinessObject = target.businessObject;
+    if (isAny(shape, [
+      'bpmn:IntermediateThrowEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent'])  && 
+      (businessObject.suitable == 100 || businessObject.suitable == 50 || 
+        businessObject.suitable == 25) &&
+      ((is(target, 'bpmn:SubProcess')) ||  (is(target, 'bpmn:Task')))
+       && (targetBusinessObject.suitable != 100 || targetBusinessObject.suitable == 200 )) {
+        return false;
+        }
+  
+        if (isAny(shape, [
+          'bpmn:IntermediateThrowEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent'])  && 
+          (businessObject.suitable == 100 || businessObject.suitable == 50 || 
+            businessObject.suitable == 25) &&
+          ((is(target, 'bpmn:Task')))) {
+            return false;
+            }
+  
+        // damit normale IntermediateEvents nicht an Situationsscopes geklebt werden duerfen
+        if (isAny(shape, [
+          'bpmn:IntermediateThrowEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent'])  && 
+          (businessObject.suitable != 100 && businessObject.suitable != 50 && 
+            businessObject.suitable != 25) &&
+          ((is(target, 'bpmn:SubProcess')))
+           && (targetBusinessObject.suitable == 100 || targetBusinessObject.suitable == 200 )) {
+            return false;
+            }
+    
+  }
   // ist fuer das erste Drankleben aus der Palette
   // damit Situationsintermediateevents nie an Task oder normale Subprocess geklebt werden 
   // damit IntermediateEvents nicht an Situationsscopes geklebt werden 
