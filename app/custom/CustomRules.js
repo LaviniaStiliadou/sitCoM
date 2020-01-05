@@ -31,21 +31,24 @@ CustomRules.$inject = [ 'eventBus' ];
 CustomRules.prototype.init = function() {
 	
   /**
-   * Can shape be created on target container?
-   * Derzeit erstes Erstellen von Situationskreisen an Participant etc nicht erlaubt (damit sie nicht frei sind)
+   * Can shape be created on target container
+   * 
    * 
    */
   function canCreate(shape, target, source, position) {
     var businessObject = shape.businessObject;
     var targetBusinessObject = target.businessObject;
-    if (isAny(shape, [
-      'bpmn:IntermediateThrowEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent'])  && 
-      (businessObject.suitable == 100 || businessObject.suitable == 50 || 
-        businessObject.suitable == 25) &&
-      ((is(target, 'bpmn:Participant')) ||  (is(target, 'bpmn:Lane')) ||  (is(target, 'bpmn:Pool')))
-       && (targetBusinessObject.suitable != 100 && targetBusinessObject.suitable != 200 )) {
+    if (is(shape, 'bpmn:SubProcess') && businessObject.suitable == 100) {
+	    return (targetBusinessObject.suitable == 200);
+  }
+  if (isAny(shape, ['bpmn:IntermediateThrowEvent','bpmn:IntermediateCatchEvent',
+     'bpmn:BoundaryEvent']) &&(businessObject.suitable == 100 ||
+      businessObject.suitable == 50 || businessObject.suitable == 25)) {
         return false;
-       }
+    }
+
+  
+  
   }
 
   // verbietet das Verbinden von Situationskreisen 
@@ -110,27 +113,7 @@ CustomRules.prototype.init = function() {
     }
 
     }
-  }
-  
-
-  function canAttach(context){
-    var shape = context.shape,
-        target = context.target;
-    var businessObject = shape.businessObject;
-    var targetBusinessObject = target.businessObject;
-
-
-    if (isAny(shape, [
-    'bpmn:IntermediateThrowEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent'])  && 
-    (businessObject.suitable == 100 || businessObject.suitable == 50 || 
-      businessObject.suitable == 25) &&
-    ((is(target, 'bpmn:SubProcess')) ||  (is(target, 'bpmn:Task')))
-     && (targetBusinessObject.suitable != 100)) {
-      return false;
-      }
-
-  }
-  
+  }  
   
 	
   this.addRule('elements.move', 4000, function(context) {
@@ -162,7 +145,7 @@ CustomRules.prototype.init = function() {
     (businessObject.suitable == 100 || businessObject.suitable == 50 || 
       businessObject.suitable == 25) &&
     ((is(target, 'bpmn:SubProcess')) ||  (is(target, 'bpmn:Task')))
-     && (targetBusinessObject.suitable != 100 && targetBusinessObject.suitable == 200 )) {
+     && (targetBusinessObject.suitable != 100 || targetBusinessObject.suitable == 200 )) {
       return false;
       }
 
