@@ -5,7 +5,8 @@ import {
 } from 'bpmn-js/lib/features/modeling/util/ModelingUtil';
 
 export default function(group, element) {
-
+  
+  
   // Only return an entry, if the currently selected
   // element is one of these types.
   if (isAny(element, [
@@ -131,20 +132,18 @@ group.entries.push(entryFactory.textField({
 // TODO aendern von label description via Textfeld
 // vielleicht anderer Ansatz probieren mit Number nach Start? 
 function addEntry(group, j){
-  console.log(j);
   for(var i = 0; i < j; i++){
-  console.log(group.entries);
   group.entries.push(entryFactory.textField({
-    id : 'violationN' + i,
+    id : 'violationN' + i.toString(),
     description : 'Wenn Situation verletzt wird, springe zu Scope ID.',
     label : 'Violation von neuen Situation '+ i,
-    modelProperty : 'violationN'+ i,
+    modelProperty : 'violationN'+ i.toString(),
     // todo
     validate: function(element, values) {
-      var violation = values.violation;
+      var violationN = values.violationN0;
       var errorMessageV = {};
-      if (isNaN(violation)) {
-         errorMessageV.violation = "Please enter a valid priority (number)";
+      if (isNaN(violationN)) {
+         errorMessageV.violationN0 = "Please enter a valid priority (number)";
       }
       return errorMessageV;
     }
