@@ -2,9 +2,10 @@
 To do:
    CustomRules:
    - SituationEvents (Kreise) dürfen nicht in Rect 100 reingezogen werden
+   // möglicher fix via 'attach' in canMove funktion, jedoch ist es dann überall innerhalb erzeugbar
+   // evtl. mit so ner art snap-funktion automatisch an border heften (irgendwo gibts sowas schon)
    - Fehler: Normale Events können bei Move nicht an Task Border geklebt werden (need fix)
-   - Fehler: Normale Events können bei Move nicht in Rect 100 gezogen werden (need fix)
-   // die drei oberen Probleme hängen mit canMove zusammen. canMove verbietet interaktion "komplett". 
+   // oberen Probleme hängen mit canMove zusammen. canMove verbietet interaktion "komplett".
    - Rect mit Score 100 hat die grünen/gelben/roten Kreise (evtl 1 oder mehrere, noch unsicher) drangeklebt (*) 
 
    Renderer:
@@ -36,6 +37,8 @@ Done:
 - Rect mit Score 200 enthält nur Rect mit Score 100
 - dynamisches Erweitern des Menüs
 - Properties Panel ID violation pro Icon
+- Rect 100 kann innerhalb Rect 200 frei bewegt werden
+- Alle (normalen) Events können innerhalb des Rects 100 bewegt werden
 
 Timm & Lavi:
 - CustomContextPad Element spezifisch machen (heute besprechen)
