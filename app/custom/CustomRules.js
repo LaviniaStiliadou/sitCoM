@@ -144,11 +144,20 @@ CustomRules.prototype.init = function() {
 
     // damit Situationskreise nicht rausgezogen werden  
     if((isAny(context.shapes[0], ['bpmn:IntermediateThrowEvent','bpmn:IntermediateCatchEvent',
-     'bpmn:BoundaryEvent']))
-    && (!is(target, 'bpmn:SubProcess')) || (is(target, 'bpmn:SubProcess') && (targetBusinessObject.suitable != 100 || targetBusinessObject.suitable == 200)) && businessObject.suitable > 0 ){
+     'bpmn:BoundaryEvent'])) && (businessObject.suitable > 0) &&
+    (!is(target, 'bpmn:SubProcess')) || (is(target, 'bpmn:SubProcess') && (targetBusinessObject.suitable != 100 || targetBusinessObject.suitable == 200))){
       return false;
     }
-	
+
+/*	
+    // SituationsEvents können innerhalb des Rects 100 überall erzeugt werden, werden jedoch der Border zugewiesen
+    if((isAny(context.shapes[0], ['bpmn:IntermediateThrowEvent','bpmn:IntermediateCatchEvent',
+     'bpmn:BoundaryEvent']))
+    && (is(target, 'bpmn:SubProcess') && (targetBusinessObject.suitable == 100) && businessObject.suitable > 0)){
+      return 'attach';
+    }
+*/
+
 	// normale IntermediateEvents dürfen in Rect 100 bewegt werden
 	if((isAny(context.shapes[0], ['bpmn:IntermediateThrowEvent','bpmn:IntermediateCatchEvent',
      'bpmn:BoundaryEvent']))
@@ -188,7 +197,19 @@ CustomRules.prototype.init = function() {
       target = context.target;
     var businessObject = shape.businessObject;
     var targetBusinessObject = target.businessObject;
-  
+
+/*
+    // Bei Create können die SituationsEvents überall innerhalb des Rect 100 erzeugt werden, werden aber der Border zugewiesen
+    if (isAny(shape, [
+    'bpmn:IntermediateThrowEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent'])  &&
+    (businessObject.suitable == 100 || businessObject.suitable == 50 || 
+    businessObject.suitable == 25) &&
+    (is(target, 'bpmn:SubProcess')) &&
+    (targetBusinessObject.suitable == 100)) {
+        return 'attach';
+    }
+*/
+	
     if (isAny(shape, [
     'bpmn:IntermediateThrowEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent'])  &&
     (businessObject.suitable == 100 || businessObject.suitable == 50 || 
