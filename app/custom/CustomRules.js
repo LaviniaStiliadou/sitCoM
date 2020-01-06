@@ -143,13 +143,15 @@ CustomRules.prototype.init = function() {
     }
 
     // damit Situationskreise nicht rausgezogen werden  
-    if((is(context.shapes[0], 'bpmn:IntermediateThrowEvent') || is(context.shapes[0], 'bpmn:BoundaryEvent'))
+    if((isAny(context.shapes[0], ['bpmn:IntermediateThrowEvent','bpmn:IntermediateCatchEvent',
+     'bpmn:BoundaryEvent']))
     && (!is(target, 'bpmn:SubProcess')) || (is(target, 'bpmn:SubProcess') && (targetBusinessObject.suitable != 100 || targetBusinessObject.suitable == 200)) && businessObject.suitable > 0 ){
       return false;
     }
 
     // damit normale IntermediateEvents nicht an Situationsscopes geklebt werden
-    if((is(context.shapes[0], 'bpmn:IntermediateThrowEvent') || is(context.shapes[0], 'bpmn:BoundaryEvent'))
+    if((isAny(context.shapes[0], ['bpmn:IntermediateThrowEvent','bpmn:IntermediateCatchEvent',
+     'bpmn:BoundaryEvent']))
     && (is(target, 'bpmn:SubProcess')) && (businessObject.suitable !=25 && businessObject.suitable != 50 && businessObject.suitable != 100) && (targetBusinessObject.suitable == 100 || targetBusinessObject.suitable == 200)){
       return false;
     }
