@@ -1,9 +1,10 @@
 19.12.2019
 To do:
    CustomRules:
-   - Kreise dürfen nicht in Rect 100 reingezogen werden
+   - SituationEvents (Kreise) dürfen nicht in Rect 100 reingezogen werden
    - Rect mit Score 100 hat die grünen/gelben/roten Kreise (evtl 1 oder mehrere, noch unsicher) drangeklebt (*)
    - Fehler: Normale Events können bei Move nicht an Task Border geklebt werden (need fix)
+   - Fehler: Noramle Events können bei Move nicht in Rect 100 (gezogen werden (need fix) // evtl. auch für 200er??
 
    Renderer:
    - Objekte richtig darstellen (z.B. Rect gestrichelt statt durchgezogener Linie)
