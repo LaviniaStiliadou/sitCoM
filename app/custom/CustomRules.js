@@ -148,24 +148,29 @@ CustomRules.prototype.init = function() {
     && (!is(target, 'bpmn:SubProcess')) || (is(target, 'bpmn:SubProcess') && (targetBusinessObject.suitable != 100 || targetBusinessObject.suitable == 200)) && businessObject.suitable > 0 ){
       return false;
     }
+	
+	// normale IntermediateEvents dürfen in Rect 100 bewegt werden
+	if((isAny(context.shapes[0], ['bpmn:IntermediateThrowEvent','bpmn:IntermediateCatchEvent',
+     'bpmn:BoundaryEvent']))
+    && (is(target, 'bpmn:SubProcess')) && (businessObject.suitable !=25 && businessObject.suitable != 50 && businessObject.suitable != 100) && (targetBusinessObject.suitable == 100)){
+      return true;
+    }
 
-    // damit normale IntermediateEvents nicht an Situationsscopes geklebt werden
+    // normale IntermediateEvents dürfen NICHT in Rect 200 bewegt werden
     if((isAny(context.shapes[0], ['bpmn:IntermediateThrowEvent','bpmn:IntermediateCatchEvent',
      'bpmn:BoundaryEvent']))
-    && (is(target, 'bpmn:SubProcess')) && (businessObject.suitable !=25 && businessObject.suitable != 50 && businessObject.suitable != 100) && (targetBusinessObject.suitable == 100 || targetBusinessObject.suitable == 200)){
+    && (is(target, 'bpmn:SubProcess')) && (businessObject.suitable !=25 && businessObject.suitable != 50 && businessObject.suitable != 100) && (targetBusinessObject.suitable == 200)){
       return false;
     }
 
     }
   }  
-  
-	
+
+
   this.addRule('elements.move', 4000, function(context) {
     return canMove(context);  
   });
 
-
-  // done
   this.addRule('shape.create', HIGH_PRIORITY, function(context) {
     var shape = context.shape,
 		target = context.target,
@@ -174,43 +179,6 @@ CustomRules.prototype.init = function() {
 
     return canCreate(shape, target, source, position);
   });
-
-/*  
-  function canAttach(shape, target){
-    var businessObject = shape.businessObject;
-    var targetBusinessObject = target.businessObject;
-	
-	if (isAny(shape, [
-    'bpmn:IntermediateThrowEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent']) &&
-	(businessObject.suitable == 100 || businessObject.suitable == 50 || 
-    businessObject.suitable == 25) &&
-    (is(target, 'bpmn:SubProcess') ||  is(target, 'bpmn:Task')) &&
-    (targetBusinessObject.suitable != 100 || targetBusinessObject.suitable == 200 )) {
-        return false;
-    }
-
-  
-    if (isAny(shape, [
-    'bpmn:IntermediateThrowEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent'])  &&
-    (businessObject.suitable == 100 || businessObject.suitable == 50 || 
-    businessObject.suitable == 25) &&
-    (is(target, 'bpmn:Task'))) {
-        return false;
-    }
-
-  
-        // damit normale IntermediateEvents nicht an Situationsscopes geklebt werden duerfen
-    if (isAny(shape, [
-    'bpmn:IntermediateThrowEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent'])  && 
-    (businessObject.suitable != 100 && businessObject.suitable != 50 && 
-    businessObject.suitable != 25) &&
-    (is(target, 'bpmn:SubProcess')) &&
-    (targetBusinessObject.suitable == 100 || targetBusinessObject.suitable == 200 )) {
-        return false;
-    }
-    
-  }
-*/ 
   
   // ist fuer das erste Drankleben aus der Palette
   // damit Situationsintermediateevents nie an Task oder normale Subprocess geklebt werden 
