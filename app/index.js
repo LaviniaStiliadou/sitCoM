@@ -75,6 +75,11 @@ function saveDiagram(done) {
   });
 }
 
+function saveNumber(){
+  var x = document.getElementById('situations').value;
+  document.getElementById('situations').innerHTML = x;
+}
+
 function registerFileDrop(container, callback) {
 
   function handleFileSelect(e) {

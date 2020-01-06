@@ -14,6 +14,7 @@
     <div class="message intro">
       <div class="note">
         Drop BPMN diagram from your desktop or <a id="js-create-diagram" href>create a new diagram</a> to get started.
+        Number of Situations: <input type="text" id="situations"><br>
       </div>
     </div>
 
@@ -25,6 +26,7 @@
           <span>Import Error Details</span>
           <pre></pre>
         </div>
+        
       </div>
     </div>
 
@@ -33,6 +35,7 @@
   </div>
 
   <ul class="buttons">
+    <button id= "btn" onclick="saveNumber()">Store Number</button>
     <li>
       download
     </li>
@@ -46,7 +49,15 @@
         SVG image
       </a>
     </li>
+    
   </ul>
 
   <script src="index.js"></script>
 </html>
+<script>
+  function saveNumber(){
+     var x = document.getElementById('situations').value;
+    document.getElementById('situations').innerHTML = x;
+    console.log(x);
+  }
+</script>
