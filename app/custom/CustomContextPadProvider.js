@@ -25,6 +25,7 @@ export default function CustomContextPadProvider(injector, connect, translate) {
 	  
 	  const entries = _getContextPadEntries.apply(this, [element]);
 	  
+	  
 	  if ((element.type === "bpmn:IntermediateThrowEvent") && (businessObject.suitable > 0)){
       delete entries["append.end-event"];
       delete entries["append.intermediate-event"];

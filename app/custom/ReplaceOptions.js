@@ -170,123 +170,60 @@ export var START_EVENT = [
     }
   ];
   export var INTERMEDIATE_EVENT2 = [
-    {
+  {
       label: 'Start Event',
       actionName: 'replace-with-none-start',
-      className: 'bpmn-icon-start-event-none red',
+      className: 'bpmn-icon-start-event-none',
       target: {
         type: 'bpmn:StartEvent'
       }
     },
     {
-      label: 'Intermediate Throw Event',
-      actionName: 'replace-with-none-intermediate-throw',
-      className: 'bpmn-icon-intermediate-event-none',
+	  label: 'Spider Condition',
+      actionName: 'replace-with-spider-event',
+      className: 'bpmn-icon-spider',
       target: {
-        type: 'bpmn:IntermediateThrowEvent'
+      type: 'bpmn:IntermediateThrowEvent',
+      eventDefinitionType: 'bpmn:IntermediateThrowEvent'
+      }
+    },
+	{
+	  label: 'Battery Condition',
+      actionName: 'replace-with-battery-event',
+      className: 'bpmn-icon-bat4',
+      target: {
+      type: 'bpmn:IntermediateThrowEvent',
+      eventDefinitionType: 'bpmn:IntermediateThrowEvent'
+      }
+    },
+	{
+	  label: 'Human Condition',
+      actionName: 'replace-with-human-event',
+      className: 'bpmn-icon-adult',
+      target: {
+      type: 'bpmn:IntermediateThrowEvent',
+      eventDefinitionType: 'bpmn:IntermediateThrowEvent'
+      }
+    },
+	{
+	  label: 'Warranty Condition',
+      actionName: 'replace-with-warranty-event',
+      className: 'bpmn-icon-script',
+      target: {
+      type: 'bpmn:IntermediateThrowEvent',
+      eventDefinitionType: 'bpmn:IntermediateThrowEvent'
       }
     },
     {
-        label: 'Message Intermediate Catch Event2',
-        actionName: 'replace-with-message-intermediate-catch2',
-        className: 'bpmn-icon-emo-happy',
-        target: {
-          type: 'bpmn:IntermediateCatchEvent',
-          eventDefinitionType: 'bpmn:MessageEventDefinition'
-        }
-      },
-    {
-      label: 'Message Intermediate Catch Event',
-      actionName: 'replace-with-message-intermediate-catch',
-      className: 'bpmn-icon-intermediate-event-catch-message',
+	  label: 'Message Intermediate Catch Event2',
+      actionName: 'replace-with-message-intermediate-catch2',
+      className: 'bpmn-icon-emo-happy',
       target: {
-        type: 'bpmn:IntermediateCatchEvent',
-        eventDefinitionType: 'bpmn:MessageEventDefinition'
-      }
-    },
-    {
-      label: 'Message Intermediate Throw Event',
-      actionName: 'replace-with-message-intermediate-throw',
-      className: 'bpmn-icon-intermediate-event-throw-message',
-      target: {
-        type: 'bpmn:IntermediateThrowEvent',
-        eventDefinitionType: 'bpmn:MessageEventDefinition'
-      }
-    },
-    {
-      label: 'Timer Intermediate Catch Event',
-      actionName: 'replace-with-timer-intermediate-catch',
-      className: 'bpmn-icon-intermediate-event-catch-timer',
-      target: {
-        type: 'bpmn:IntermediateCatchEvent',
-        eventDefinitionType: 'bpmn:TimerEventDefinition'
-      }
-    },
-    {
-      label: 'Escalation Intermediate Throw Event',
-      actionName: 'replace-with-escalation-intermediate-throw',
-      className: 'bpmn-icon-intermediate-event-throw-escalation',
-      target: {
-        type: 'bpmn:IntermediateThrowEvent',
-        eventDefinitionType: 'bpmn:EscalationEventDefinition'
-      }
-    },
-    {
-      label: 'Conditional Intermediate Catch Event',
-      actionName: 'replace-with-conditional-intermediate-catch',
-      className: 'bpmn-icon-intermediate-event-catch-condition',
-      target: {
-        type: 'bpmn:IntermediateCatchEvent',
-        eventDefinitionType: 'bpmn:ConditionalEventDefinition'
-      }
-    },
-    {
-      label: 'Link Intermediate Catch Event',
-      actionName: 'replace-with-link-intermediate-catch',
-      className: 'bpmn-icon-intermediate-event-catch-link',
-      target: {
-        type: 'bpmn:IntermediateCatchEvent',
-        eventDefinitionType: 'bpmn:LinkEventDefinition'
-      }
-    },
-    {
-      label: 'Link Intermediate Throw Event',
-      actionName: 'replace-with-link-intermediate-throw',
-      className: 'bpmn-icon-intermediate-event-throw-link',
-      target: {
-        type: 'bpmn:IntermediateThrowEvent',
-        eventDefinitionType: 'bpmn:LinkEventDefinition'
-      }
-    },
-    {
-      label: 'Compensation Intermediate Throw Event',
-      actionName: 'replace-with-compensation-intermediate-throw',
-      className: 'bpmn-icon-intermediate-event-throw-compensation',
-      target: {
-        type: 'bpmn:IntermediateThrowEvent',
-        eventDefinitionType: 'bpmn:CompensateEventDefinition'
-      }
-    },
-    {
-      label: 'Signal Intermediate Catch Event',
-      actionName: 'replace-with-signal-intermediate-catch',
-      className: 'bpmn-icon-intermediate-event-catch-signal',
-      target: {
-        type: 'bpmn:IntermediateCatchEvent',
-        eventDefinitionType: 'bpmn:SignalEventDefinition'
-      }
-    },
-    {
-      label: 'Signal Intermediate Throw Event',
-      actionName: 'replace-with-signal-intermediate-throw',
-      className: 'bpmn-icon-intermediate-event-throw-signal',
-      target: {
-        type: 'bpmn:IntermediateThrowEvent',
-        eventDefinitionType: 'bpmn:SignalEventDefinition'
+      type: 'bpmn:IntermediateCatchEvent',
+      eventDefinitionType: 'bpmn:MessageEventDefinition'
       }
     }
-  ];
-  
+  ];	
   export var END_EVENT = [
     {
       label: 'Start Event',
