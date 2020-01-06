@@ -1,12 +1,21 @@
 19.12.2019
-- Rect mit Score 100 hat die grünen/gelben/roten Kreise (evtl 1 oder mehrere, noch unsicher) drangeklebt
-- Objekte richtig darstellen (z.B. Rect gestrichelt statt durchgezogener Linie)
-- Icons auf Kreise legen
-- dynamisches Erweitern des Menüs
-- ID Feld zu Subprozessen
-- Je ein Kreis pro Icon für Violation
-- Properties Panel ID violation pro Icon
-- Kreise dürfen nicht in Rect 100 reingezogen werden
+To do:
+   CustomRules:
+   - Kreise dürfen nicht in Rect 100 reingezogen werden
+   - Rect mit Score 100 hat die grünen/gelben/roten Kreise (evtl 1 oder mehrere, noch unsicher) drangeklebt (*)
+
+   Renderer:
+   - Objekte richtig darstellen (z.B. Rect gestrichelt statt durchgezogener Linie)
+   - Icons auf Kreise legen 
+
+   SituationProperties:
+   - validate von neuen Textfeldern
+   - vielleicht Möglichkeit zum Bearbeiten der Label...
+   
+   IdProps:
+   - ID Feld zu Subprozessen
+   
+   - Je ein Kreis pro Icon für Violation (gekoppelt an (*))
 
 Done:
 - ContextPad verändern:
@@ -22,6 +31,8 @@ Done:
 - Kreise dürfen nicht frei im Feld sein, müssen drangeklebt sein
 - keine Kreise an Rect Score = 200 erlaubt (bei Palette)
 - Rect mit Score 200 enthält nur Rect mit Score 100
+- dynamisches Erweitern des Menüs
+- Properties Panel ID violation pro Icon
 
 Timm & Lavi:
 - CustomContextPad Element spezifisch machen (heute besprechen)
