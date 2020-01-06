@@ -145,18 +145,17 @@ CustomRules.prototype.init = function() {
     // damit Situationskreise nicht rausgezogen werden  
     if((isAny(context.shapes[0], ['bpmn:IntermediateThrowEvent','bpmn:IntermediateCatchEvent',
      'bpmn:BoundaryEvent'])) && (businessObject.suitable > 0) &&
-    (!is(target, 'bpmn:SubProcess')) || (is(target, 'bpmn:SubProcess') && (targetBusinessObject.suitable != 100 || targetBusinessObject.suitable == 200))){
+    ((!is(target, 'bpmn:SubProcess')) || (is(target, 'bpmn:SubProcess')) && (targetBusinessObject.suitable != 100 || targetBusinessObject.suitable == 200))){
       return false;
     }
-
-/*	
+	
     // SituationsEvents können innerhalb des Rects 100 überall erzeugt werden, werden jedoch der Border zugewiesen
     if((isAny(context.shapes[0], ['bpmn:IntermediateThrowEvent','bpmn:IntermediateCatchEvent',
      'bpmn:BoundaryEvent']))
     && (is(target, 'bpmn:SubProcess') && (targetBusinessObject.suitable == 100) && businessObject.suitable > 0)){
       return 'attach';
     }
-*/
+
 
 	// normale IntermediateEvents dürfen in Rect 100 bewegt werden
 	if((isAny(context.shapes[0], ['bpmn:IntermediateThrowEvent','bpmn:IntermediateCatchEvent',
