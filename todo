@@ -4,6 +4,7 @@ To do:
    - SituationEvents (Kreise) dürfen nicht in Rect 100 reingezogen werden
    // möglicher fix via 'attach' in canMove funktion, jedoch ist es dann überall innerhalb erzeugbar
    // evtl. mit so ner art snap-funktion automatisch an border heften (irgendwo gibts sowas schon)
+   // muss aufjedenfall möglich sein, weil bei normalen Tasks ist es auch so nur attach, aber nicht innerhalb
    - Rect mit Score 100 hat die grünen/gelben/roten Kreise (evtl 1 oder mehrere, noch unsicher) drangeklebt (*) 
 
    Renderer:
