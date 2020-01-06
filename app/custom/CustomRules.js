@@ -129,23 +129,28 @@ CustomRules.prototype.init = function() {
     && businessObject.suitable > 0 ){
       return false;
     }
+
+	// damit Rect mit 100 nicht rausgezogen werden
+    if((is(context.shapes[0], 'bpmn:SubProcess')) && (businessObject.suitable == 100) &&
+    (!is(target,'bpmn:SubProcess'))){
+      return false;
+    }
+	
+	// Rect 100 darf in Rect 200 bewegt werden
+	if((is(context.shapes[0], 'bpmn:SubProcess')) && (businessObject.suitable == 100) &&
+    (is(target,'bpmn:SubProcess')) && (targetBusinessObject.suitable == 200)){
+      return true;
+    }
+
     // damit Situationskreise nicht rausgezogen werden  
     if((is(context.shapes[0], 'bpmn:IntermediateThrowEvent') || is(context.shapes[0], 'bpmn:BoundaryEvent'))
     && (!is(target, 'bpmn:SubProcess')) || (is(target, 'bpmn:SubProcess') && (targetBusinessObject.suitable != 100 || targetBusinessObject.suitable == 200)) && businessObject.suitable > 0 ){
       return false;
     }
 
-
     // damit normale IntermediateEvents nicht an Situationsscopes geklebt werden
     if((is(context.shapes[0], 'bpmn:IntermediateThrowEvent') || is(context.shapes[0], 'bpmn:BoundaryEvent'))
     && (is(target, 'bpmn:SubProcess')) && (businessObject.suitable !=25 && businessObject.suitable != 50 && businessObject.suitable != 100) && (targetBusinessObject.suitable == 100 || targetBusinessObject.suitable == 200)){
-      return false;
-    }
-
-
-    // damit Rect mit 100 nicht rausgezogen werden
-    if((is(context.shapes[0], 'bpmn:SubProcess'))
-    && (!is(target,'bpmn:SubProcess')) && ( businessObject.suitable == 100) && (targetBusinessObject.suitable != 100 || targetBusinessObject.suitable != 200)){
       return false;
     }
 
