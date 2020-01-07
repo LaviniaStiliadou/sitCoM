@@ -124,6 +124,10 @@ CustomRules.prototype.init = function() {
     if(target != undefined){
       var targetBusinessObject = target.businessObject;
     
+    if((is(context.shapes[0], 'bpmn:SubProcess')) && (businessObject.suitable == 200) &&
+      ((is(target, 'bpmn:SubProcess') && targetBusinessObject.suitable ==200))){
+        return false;
+      }
     // damit Rect 100 sowie 200 nicht in 100 reingezogen werden
     if((is(context.shapes[0], 'bpmn:SubProcess')) && (is(target, 'bpmn:SubProcess')) && (targetBusinessObject.suitable == 100) 
     && businessObject.suitable > 0 ){
