@@ -46,7 +46,7 @@ CustomRules.prototype.init = function() {
 
     // SubProcess 200 darf nicht in SubProcess 100 erzeugt werden
     if (is(shape, 'bpmn:SubProcess') && (businessObject.suitable == 200) && is(target, 'bpmn:SubProcess') &&
-    (targetBusinessObject.suitable = 100)) {
+    (targetBusinessObject.suitable == 100)) {
 	    return false;
     }
 
