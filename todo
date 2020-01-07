@@ -13,7 +13,10 @@ To do:
 
    SituationProperties:
    - validate von neuen Textfeldern
-   - vielleicht Möglichkeit zum Bearbeiten der Label...
+   - vielleicht Möglichkeit zum Bearbeiten der Label
+   - Array aus Variablen für validate Funktion
+   - set 0 -> Situation egal
+   - Bilder ins PropertiesPanel
    
    IdProps:
    - ID Feld zu Subprozessen
@@ -39,6 +42,8 @@ Done:
 - Rect 100 kann innerhalb Rect 200 frei bewegt werden
 - Alle (normalen) Events können innerhalb des Rects 100 bewegt werden
 - Normale Events können an Task Border gehängt werden
+- 100 nicht in normalen Subprozessen erlaubt
+- 200 enthält keine Subprozesse
 
 Timm & Lavi:
 - CustomContextPad Element spezifisch machen (heute besprechen)
