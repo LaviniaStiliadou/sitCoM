@@ -13,6 +13,10 @@ export default function(group, element) {
       'bpmn:IntermediateThrowEvent',
       'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent' ])) {
     
+    group.entries.push({
+      html: '<img src="Batterie.jpg" width="25">',
+      id : 'icon'
+    }),
     group.entries.push(entryFactory.textField({
       id : 'violation',
       description : 'Wenn Situation verletzt wird, springe zu Scope ID.',
@@ -41,6 +45,10 @@ export default function(group, element) {
         return errorMessageP;
    }
   })),
+  group.entries.push({
+    html: '<img src="spider.png" width="25">',
+    id : 'icon2'
+  }),
   group.entries.push(entryFactory.textField({
     id : 'violation2',
     description : 'Wenn Situation verletzt wird, springe zu Scope ID.',
@@ -69,6 +77,10 @@ export default function(group, element) {
       return errorMessageP;
  }
 })),
+  group.entries.push({
+    html: '<img src="human.png" width="35">',
+    id : 'icon3'
+  }),
   group.entries.push(entryFactory.textField({
     id : 'violation3',
     description : 'Wenn Situation verletzt wird, springe zu Scope ID.',
@@ -97,6 +109,10 @@ export default function(group, element) {
       return errorMessageP;
  }
 })),
+group.entries.push({
+  html: '<img src="kamera.png" width="35">',
+  id : 'icon4'
+}),
 group.entries.push(entryFactory.textField({
   id : 'violation4',
   description : 'Wenn Situation verletzt wird, springe zu Scope ID.',
@@ -134,10 +150,10 @@ group.entries.push(entryFactory.textField({
 function addEntry(group, j){
   for(var i = 0; i < j; i++){
   group.entries.push(entryFactory.textField({
-    id : 'violationN' + i.toString(),
+    id : "violationN" + i.toString(),
     description : 'Wenn Situation verletzt wird, springe zu Scope ID.',
     label : 'Violation von neuen Situation '+ i,
-    modelProperty : 'violationN'+ i.toString(),
+    modelProperty : "violationN" + i.toString(),
     // todo
     validate: function(element, values) {
       var violationN = values.violationN0;
