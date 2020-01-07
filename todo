@@ -9,7 +9,7 @@ To do:
 
    Renderer:
    - Objekte richtig darstellen (z.B. Rect gestrichelt statt durchgezogener Linie)
-   - Icons auf Kreise legen 
+   - Icons auf Kreise legen (!!!!!)
 
    SituationProperties:
    - validate von neuen Textfeldern
@@ -22,6 +22,8 @@ To do:
    - ID Feld zu Subprozessen
    
    - Je ein Kreis pro Icon für Violation (gekoppelt an (*))
+
+(!!!!!) Anderer Ansatz im Branch target umgesetzt
 
 Done:
 - ContextPad verändern:
@@ -44,6 +46,7 @@ Done:
 - Normale Events können an Task Border gehängt werden
 - 100 nicht in normalen Subprozessen erlaubt
 - 200 enthält keine Subprozesse
+-(Bilder im PropertiesPanel)
 
 Timm & Lavi:
 - CustomContextPad Element spezifisch machen (heute besprechen)
