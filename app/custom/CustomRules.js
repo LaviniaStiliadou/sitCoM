@@ -130,9 +130,16 @@ CustomRules.prototype.init = function() {
       return false;
     }
 
-	// damit Rect mit 100 nicht rausgezogen werden
+    // damit normale Subprocesse nicht in Rect 200 reingezogen werden
+    if((is(context.shapes[0], 'bpmn:SubProcess')) && (is(target, 'bpmn:SubProcess')) && (targetBusinessObject.suitable == 200) 
+    && (businessObject.suitable != 100 && businessObject.suitable !=200 )){
+      return false;
+    }
+
+   // damit Rect mit 100 nicht rausgezogen werden 
+   // damit Rect 100 nicht in normale Subprocesse reingezogen wird
     if((is(context.shapes[0], 'bpmn:SubProcess')) && (businessObject.suitable == 100) &&
-    (!is(target,'bpmn:SubProcess'))){
+    (!is(target,'bpmn:SubProcess') || (is(target, 'bpmn:SubProcess') && targetBusinessObject.suitable!=200))){
       return false;
     }
 	
