@@ -125,7 +125,7 @@ CustomRules.prototype.init = function() {
       var targetBusinessObject = target.businessObject;
     
     if((is(context.shapes[0], 'bpmn:SubProcess')) && (businessObject.suitable == 200) &&
-      ((is(target, 'bpmn:SubProcess') && targetBusinessObject.suitable ==200))){
+      ((is(target, 'bpmn:SubProcess') && targetBusinessObject.suitable ==200 && businessObject.suitable!=100))){
         return false;
       }
     // damit Rect 100 sowie 200 nicht in 100 reingezogen werden
@@ -218,7 +218,11 @@ CustomRules.prototype.init = function() {
     (targetBusinessObject.suitable == 100)) {
         return 'attach';
     }
-*/
+*/  
+   if(is(target, 'bpmn:SubProcess') && is(shape, 'bpmn:SubProcess') && businessObject.suitable ==200 
+   && targetBusinessObject.suitable ==200){
+     return false;
+   }
 	
     if (isAny(shape, [
     'bpmn:IntermediateThrowEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent'])  &&
