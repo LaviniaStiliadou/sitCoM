@@ -44,6 +44,11 @@ CustomRules.prototype.init = function() {
 	    return (is(target, 'bpmn:SubProcess') && targetBusinessObject.suitable == 200);
     }
 
+    // SubProcess 200 darf nicht in SubProcess 200 erzeugt werden 
+    if (is(shape, 'bpmn:SubProcess') && businessObject.suitable == 200 && (is(target, 'bpmn:SubProcess') && targetBusinessObject.suitable == 200)){
+	    return false;
+    }
+
     // SubProcess 200 darf nicht in SubProcess 100 erzeugt werden
     if (is(shape, 'bpmn:SubProcess') && (businessObject.suitable == 200) && is(target, 'bpmn:SubProcess') &&
     (targetBusinessObject.suitable == 100)) {
