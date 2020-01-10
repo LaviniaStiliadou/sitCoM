@@ -4,11 +4,14 @@ import {
   append as svgAppend,
   attr as svgAttr,
   classes as svgClasses,
-  create as svgCreate
+  create as svgCreate,
+  remove as svgRemove
 } from 'tiny-svg';
 
 import {
-  getRoundRectPath
+  getRoundRectPath,
+  getFillColor,
+  getStrokeColor
 } from 'bpmn-js/lib/draw/BpmnRenderUtil';
 
 import {
@@ -16,7 +19,17 @@ import {
   getBusinessObject
 } from 'bpmn-js/lib/util/ModelUtil';
 
-import { isNil } from 'min-dash';
+//import { isNil } from 'min-dash';
+
+import {
+	assign,
+	isNil
+}from 'min-dash';
+
+import {
+  isExpanded,
+  isEventSubProcess
+} from 'bpmn-js/lib/util/DiUtil';
 
 const HIGH_PRIORITY = 1500,
       TASK_BORDER_RADIUS = 2,
@@ -42,8 +55,34 @@ export default class CustomRenderer extends BaseRenderer {
     const shape = this.bpmnRenderer.drawShape(parentNode, element);
 
     const suitabilityScore = this.getSuitabilityScore(element);
+	
+	var businessObject = element.businessObject;
 
     if (!isNil(suitabilityScore)) {
+		
+	   if (is(element, 'bpmn:SubProcess')) {
+
+          const rect2 = drawRect(parentNode, element.width, element.height, 10, '#000000');
+
+          if (businessObject.suitable == 200) {
+            svgAttr(rect2, {
+		    fill: 'white',
+            strokeWidth: 8
+            });
+          }
+
+          if (businessObject.suitable == 100) {
+            svgAttr(rect2, {
+		    fill: 'white',
+            strokeDasharray: '5,5'
+            });
+          }
+	  
+	      prependTo(rect2, parentNode);
+
+          svgRemove(shape);
+        }
+	
       const color = this.getColor(suitabilityScore);
 
       const rect = drawRect(parentNode, 50, 20, TASK_BORDER_RADIUS, color);
@@ -67,10 +106,11 @@ export default class CustomRenderer extends BaseRenderer {
     }
 
     return shape;
-  }
+}
+
 
   getShapePath(shape) {
-    if (is(shape, 'bpmn:Task')) {
+    if (is(shape, 'bpmn:SubProcess')) {
       return getRoundRectPath(shape, TASK_BORDER_RADIUS);
     }
 
@@ -103,7 +143,7 @@ CustomRenderer.$inject = [ 'eventBus', 'bpmnRenderer' ];
 // copied from https://github.com/bpmn-io/bpmn-js/blob/master/lib/draw/BpmnRenderer.js
 function drawRect(parentNode, width, height, borderRadius, color) {
   const rect = svgCreate('rect');
-
+	  
   svgAttr(rect, {
     width: width,
     height: height,
@@ -113,8 +153,13 @@ function drawRect(parentNode, width, height, borderRadius, color) {
     strokeWidth: 2,
     fill: color
   });
-
+  
   svgAppend(parentNode, rect);
 
   return rect;
+}
+
+// copied from https://github.com/bpmn-io/diagram-js/blob/master/lib/core/GraphicsFactory.js
+function prependTo(newNode, parentNode, siblingNode) {
+  parentNode.insertBefore(newNode, siblingNode || parentNode.firstChild);
 }
