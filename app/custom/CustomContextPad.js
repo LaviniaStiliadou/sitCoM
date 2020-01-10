@@ -86,6 +86,7 @@ export default class CustomContextPad {
       }
 
     var businessObject = element.businessObject;
+    /** 
     if ((element.type === "bpmn:SubProcess") && (businessObject.suitable == 100)){
         return {
             'append.red-circle': {
@@ -117,7 +118,9 @@ export default class CustomContextPad {
             }
         }
     };
-    } else if ((element.type === 'bpmn:SubProcess') && (businessObject.suitable == 200)){
+}
+    */
+     if ((element.type === 'bpmn:SubProcess') && (businessObject.suitable == 200)){
         return{
             'append.outer-rect': {
                 group: 'model',

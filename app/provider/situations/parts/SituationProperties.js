@@ -1,7 +1,8 @@
 import entryFactory from 'bpmn-js-properties-panel/lib/factory/EntryFactory';
 
 import {
-  isAny
+  isAny,
+  is
 } from 'bpmn-js/lib/features/modeling/util/ModelingUtil';
 
 export default function(group, element) {
@@ -9,9 +10,10 @@ export default function(group, element) {
   
   // Only return an entry, if the currently selected
   // element is one of these types.
+
   if (isAny(element, [
       'bpmn:IntermediateThrowEvent',
-      'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent' ])) {
+      'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent' ])&& element.businessObject.suitable >0) {
     
     group.entries.push({
       html: '<img src="Batterie.jpg" width="25">',
@@ -25,12 +27,73 @@ export default function(group, element) {
       validate: function(element, values) {
         var violation = values.violation;
         var errorMessageV = {};
-        if (isNaN(violation)) {
-           errorMessageV.violation = "Please enter a valid scope id (number)";
+        if(element.businessObject.attachedToRef.$type == 'bpmn:SubProcess'&&
+         element.businessObject.attachedToRef.suitable == 100){
+
+        // Typ
+        //console.log(element.businessObject.attachedToRef.$type);
+        // über alle durch bis children = attachers
+        // Index vom aktuellen Element
+        var find;
+
+        var kind;
+        var li;
+        // woran es drangeklebt ist
+        // element.parent.children[0].attachers[0].host
+        console.log(element.parent.children[0]);
+        console.log(element.id);
+        for(var k = 0; k < element.parent.children.length-1; k++){
+          for(var l = 0; l < element.parent.children[k].attachers.length; l++){
+            for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
+            if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
+                kind = k;
+                li = l;
+                find = m;
+            }
+            }
+          }
+
         }
+
+        //console.log(element.parent.children[0].attachers[0].host.id);
+        //console.log(element.parent.children.length);
+        //for(var i = 0; i<element.parent.children.length-1; i++){
+          //if(element.parent.children[0].attachers[0].host.attachers[i].id == element.id){
+            //  find = i;
+          //}
+       // }
+
+        //console.log("find"+find);
+        //console.log(element.parent.children[0].attachers[0].host.attachers[i].violation);
+        
+        var onlyChild = false;
+        console.log("length"+ element.parent.children.length);
+        if(element.parent.children.length-1 == 1){
+               onlyChild = true;
+               console.log(onlyChild);
+        }
+        //console.log(element.parent.children);
+        if (isNaN(violation)) {
+          errorMessageV.violation = "Not valid scope id";
+        }
+
+        if(violation < 0){
+          errorMessageV.violation = "violation darf nicht kleiner 0 sein.";
+        }
+
+        if(!onlyChild){ 
+          for(var i = 0; i<element.parent.children.length-1; i++){
+            // gibt violation vom anderen Kreis aus
+            if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
+            if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation >= 0 && violation >= 0)) {
+              errorMessageV.violation = "violation darf nicht gesetzt werden";
+            }
+          }
+        }
+      }
         return errorMessageV;
-       }
-    })),
+      }
+    }})),
     group.entries.push(entryFactory.textField({
       id : 'prioritaet',
       description : 'Priorität',
@@ -181,4 +244,10 @@ function addEntry(group, j){
   }))
 }
  
+}
+
+function check(element){
+  if(is(element, 'SubProcess')){
+      console.log(element.children);
+  }
 }
