@@ -40,8 +40,8 @@ export default function(group, element) {
         var li;
         // woran es drangeklebt ist
         // element.parent.children[0].attachers[0].host
-        console.log(element.parent.children[0]);
-        console.log(element.id);
+        //console.log(element.parent.children[0]);
+        //console.log(element.id);
         for(var k = 0; k < element.parent.children.length-1; k++){
           for(var l = 0; l < element.parent.children[k].attachers.length; l++){
             for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
@@ -67,7 +67,7 @@ export default function(group, element) {
         //console.log(element.parent.children[0].attachers[0].host.attachers[i].violation);
         
         var onlyChild = false;
-        console.log("length"+ element.parent.children.length);
+        //console.log("length"+ element.parent.children.length);
         if(element.parent.children.length-1 == 1){
                onlyChild = true;
                console.log(onlyChild);
@@ -119,13 +119,62 @@ export default function(group, element) {
     modelProperty : 'violation2',
     validate: function(element, values) {
       var violation2 = values.violation2;
-      var errorMessageV = {};
-      if (isNaN(violation2)) {
-         errorMessageV.violation2 = "Please enter a valid scope id (number)";
+        var errorMessageV = {};
+        if(element.businessObject.attachedToRef.$type == 'bpmn:SubProcess'&&
+         element.businessObject.attachedToRef.suitable == 100){
+
+        // Typ
+        //console.log(element.businessObject.attachedToRef.$type);
+        // über alle durch bis children = attachers
+        // Index vom aktuellen Element
+        var find;
+
+        var kind;
+        var li;
+        // woran es drangeklebt ist
+        // element.parent.children[0].attachers[0].host
+        for(var k = 0; k < element.parent.children.length-1; k++){
+          for(var l = 0; l < element.parent.children[k].attachers.length; l++){
+            for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
+            if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
+                kind = k;
+                li = l;
+                find = m;
+            }
+            }
+          }
+
+        }
+
+        
+        var onlyChild = false;
+       
+        if(element.parent.children.length-1 == 1){
+               onlyChild = true;
+            
+        }
+        //console.log(element.parent.children);
+        if (isNaN(violation2)) {
+          errorMessageV.violation2 = "Not valid scope id";
+        }
+
+        if(violation2 < 0){
+          errorMessageV.violation2 = "violation darf nicht kleiner 0 sein.";
+        }
+
+        if(!onlyChild){ 
+          for(var i = 0; i<element.parent.children.length-1; i++){
+            // gibt violation vom anderen Kreis aus
+            if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
+            if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation2 >= 0 && violation2 >= 0)) {
+              errorMessageV.violation2 = "violation darf nicht gesetzt werden";
+            }
+          }
+        }
       }
-      return errorMessageV;
-     }
-  })),
+        return errorMessageV;
+      }
+  }})),
   group.entries.push(entryFactory.textField({
     id : 'prioritaet2',
     description : 'Priorität',
@@ -151,12 +200,56 @@ export default function(group, element) {
     modelProperty : 'violation3',
     validate: function(element, values) {
       var violation3 = values.violation3;
-      var errorMessageV = {};
-      if (isNaN(violation3)) {
-         errorMessageV.violation3 = "Please enter a valid scope id (number)";
+        var errorMessageV = {};
+        if(element.businessObject.attachedToRef.$type == 'bpmn:SubProcess'&&
+         element.businessObject.attachedToRef.suitable == 100){
+
+        var find;
+
+        var kind;
+        var li;
+        // woran es drangeklebt ist
+        // element.parent.children[0].attachers[0].host
+        for(var k = 0; k < element.parent.children.length-1; k++){
+          for(var l = 0; l < element.parent.children[k].attachers.length; l++){
+            for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
+            if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
+                kind = k;
+                li = l;
+                find = m;
+            }
+            }
+          }
+
+        }
+
+        
+        var onlyChild = false;
+       
+        if(element.parent.children.length-1 == 1){
+               onlyChild = true;
+        }
+        //console.log(element.parent.children);
+        if (isNaN(violation3)) {
+          errorMessageV.violation3 = "Not valid scope id";
+        }
+
+        if(violation3 < 0){
+          errorMessageV.violation3 = "violation darf nicht kleiner 0 sein.";
+        }
+
+        if(!onlyChild){ 
+          for(var i = 0; i<element.parent.children.length-1; i++){
+            // gibt violation vom anderen Kreis aus
+            if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
+            if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3 >= 0 && violation3 >= 0)) {
+              errorMessageV.violation3 = "violation darf nicht gesetzt werden";
+            }
+          }
+        }
       }
-      return errorMessageV;
-     }
+        return errorMessageV;
+      }}
   })),
   group.entries.push(entryFactory.textField({
     id : 'prioritaet3',
@@ -183,12 +276,53 @@ group.entries.push(entryFactory.textField({
   modelProperty : 'violation4',
   validate: function(element, values) {
     var violation4 = values.violation4;
-    var errorMessageV = {};
-    if (isNaN(violation4)) {
-       errorMessageV.violation4 = "Please enter a valid scope id (number)";
-    }
-    return errorMessageV;
-   }
+        var errorMessageV = {};
+        if(element.businessObject.attachedToRef.$type == 'bpmn:SubProcess'&&
+         element.businessObject.attachedToRef.suitable == 100){
+        // Index vom aktuellen Element
+        var find;
+
+        var kind;
+        var li;
+        for(var k = 0; k < element.parent.children.length-1; k++){
+          for(var l = 0; l < element.parent.children[k].attachers.length; l++){
+            for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
+            if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
+                kind = k;
+                li = l;
+                find = m;
+            }
+            }
+          }
+
+        }
+
+        
+        var onlyChild = false;
+        if(element.parent.children.length-1 == 1){
+               onlyChild = true;
+        }
+        //console.log(element.parent.children);
+        if (isNaN(violation4)) {
+          errorMessageV.violation4 = "Not valid scope id";
+        }
+
+        if(violation4 < 0){
+          errorMessageV.violation4 = "violation darf nicht kleiner 0 sein.";
+        }
+
+        if(!onlyChild){ 
+          for(var i = 0; i<element.parent.children.length-1; i++){
+            // gibt violation vom anderen Kreis aus
+            if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
+            if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4 >= 0 && violation4 >= 0)) {
+              errorMessageV.violation4 = "violation darf nicht gesetzt werden";
+            }
+          }
+        }
+      }
+        return errorMessageV;
+      }}
 })),
 group.entries.push(entryFactory.textField({
   id : 'prioritaet4',
@@ -203,9 +337,9 @@ group.entries.push(entryFactory.textField({
     }
     return errorMessageP;
 }
-})),
-  addEntry(group, document.getElementById('situations').value);
-  } 
+}))
+  //addEntry(group, document.getElementById('situations').value);
+} 
 }
 
 // TODO aendern von label description via Textfeld
