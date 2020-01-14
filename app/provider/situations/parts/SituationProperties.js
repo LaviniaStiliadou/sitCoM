@@ -70,7 +70,7 @@ export default function(group, element) {
         //console.log("length"+ element.parent.children.length);
         if(element.parent.children.length-1 == 1){
                onlyChild = true;
-               console.log(onlyChild);
+               //console.log(onlyChild);
         }
         //console.log(element.parent.children);
         if (isNaN(violation)) {
@@ -557,10 +557,4 @@ function addEntry(group, j){
   }))
 }
  
-}
-
-function check(element){
-  if(is(element, 'SubProcess')){
-      console.log(element.children);
-  }
 }

@@ -62,8 +62,11 @@ export default class CustomContextPad {
             businessObject.suitable = suitabilityScore;
             const shape = elementFactory.createShape({
               type: 'bpmn:SubProcess',
+              height: 400,
+              width: 450,
               businessObject: businessObject
             });
+            shape.businessObject.di.isExpanded = true;
             autoPlace.append(element, shape);
           } else {
             appendOuterRectStart(event, element);
@@ -79,8 +82,11 @@ export default class CustomContextPad {
   
           const shape = elementFactory.createShape({
             type: 'bpmn:SubProcess',
+            height: 400,
+            width: 450,
             businessObject: businessObject
           });
+          shape.businessObject.di.isExpanded = true;
           create.start(event, shape, element);
         }
       }

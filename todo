@@ -1,15 +1,47 @@
-19.12.2019
-- Rect mit Score 200 enthält nur Rect mit Score 100
-- Rect mit Score 100 hat die grünen/gelben/roten Kreise (evtl 1 oder mehrere, noch unsicher) drangeklebt
-- Kreise dürfen nicht frei im Feld sein, müssen drangeklebt sein (jetzt fehlt nur noch move)
-- Objekte richtig darstellen (z.B. Rect gestrichelt statt durchgezogener Linie)
-- Icons auf Kreise legen
-- dynamisches Erweitern des Menüs
+14.01.2020:
+- Diagramm machen
+- ContextPad Schlüssel entfernen (wenn Icons auf Kreisen funktionieren)
+- violation mit Zahl beginnen und dann Buchstabe erlauben
+- Icons auf Kreise legen 
 - ID Feld zu Subprozessen
-- Je ein Kreis pro Icon für Violation
-- Properties Panel ID violation pro Icon
+- derzeit werden ungültige violation Werte zum Beispiel (ab) ins xml übernommen..
+- Objekte richtig darstellen (Kreise rot, gelb & grün) 
+- SituationEvents (Kreise) dürfen nicht in Rect 100 reingezogen werden (bisher: gar keine Bewegung mehr nach Drankleben erlaubt)
+- Rect mit Score 100 hat die grünen/gelben/roten Kreise (evtl 1 oder mehrere, noch unsicher) drangeklebt  
 
-!!! move, derzeit nur Funktionalität beim ersten Kleben erledigt
+Erledigt:
+- Priorität validieren
+- expand 200 bei ContextPad
+- Inputfeld & Button entfernen
+- fix validate violation
+
+
+
+19.12.2019
+To do:
+   CustomRules:
+   - SituationEvents (Kreise) dürfen nicht in Rect 100 reingezogen werden
+   // möglicher fix via 'attach' in canMove funktion, jedoch ist es dann überall innerhalb erzeugbar
+   // evtl. mit so ner art snap-funktion automatisch an border heften (irgendwo gibts sowas schon)
+   // muss aufjedenfall möglich sein, weil bei normalen Tasks ist es auch so nur attach, aber nicht innerhalb
+   - Rect mit Score 100 hat die grünen/gelben/roten Kreise (evtl 1 oder mehrere, noch unsicher) drangeklebt (*) 
+
+   Renderer:
+   - Objekte richtig darstellen (Kreise rot, gelb & grün) 
+   - Icons auf Kreise legen (!!!!!)
+
+   SituationProperties:
+   - validate von neuen Textfeldern
+   - vielleicht Möglichkeit zum Bearbeiten der Label
+   - Array aus Variablen für validate Funktion
+   - derzeit werden ungültige violation Werte zum Beispiel (ab) ins xml übernommen..
+   
+   IdProps:
+   - ID Feld zu Subprozessen
+   
+   - Je ein Kreis pro Icon für Violation (gekoppelt an (*))
+
+(!!!!!) Anderer Ansatz im Branch target umgesetzt
 
 Done:
 - ContextPad verändern:
@@ -24,6 +56,17 @@ Done:
 - Verbindungen zu Rect Score 100 verbieten
 - Kreise dürfen nicht frei im Feld sein, müssen drangeklebt sein
 - keine Kreise an Rect Score = 200 erlaubt (bei Palette)
+- Rect mit Score 200 enthält nur Rect mit Score 100
+- dynamisches Erweitern des Menüs
+- Properties Panel ID violation pro Icon
+- Rect 100 kann innerhalb Rect 200 frei bewegt werden
+- Alle (normalen) Events können innerhalb des Rects 100 bewegt werden
+- Normale Events können an Task Border gehängt werden
+- 100 nicht in normalen Subprozessen erlaubt
+- 200 enthält keine Subprozesse
+-(Bilder im PropertiesPanel)
+- Rechtecke richtig rendern
+- damit Situation nicht in grün und gelb (etc) gesetzt werden können
 
 Timm & Lavi:
 - CustomContextPad Element spezifisch machen (heute besprechen)
@@ -54,3 +97,5 @@ Features:
 - XML-Kompatibilität:
    - Kreise zu Intermediate Event
    - Rechteck zu Subprocess/Group
+
+-
