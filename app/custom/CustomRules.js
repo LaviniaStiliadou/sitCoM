@@ -128,7 +128,6 @@ CustomRules.prototype.init = function() {
      
     if(target != undefined){
       var targetBusinessObject = target.businessObject;
-    
     if((is(context.shapes[0], 'bpmn:SubProcess')) && (businessObject.suitable == 200) &&
       ((is(target, 'bpmn:SubProcess') && targetBusinessObject.suitable ==200 && businessObject.suitable!=100))){
         return false;
@@ -169,7 +168,7 @@ CustomRules.prototype.init = function() {
     if((isAny(context.shapes[0], ['bpmn:IntermediateThrowEvent','bpmn:IntermediateCatchEvent',
      'bpmn:BoundaryEvent']))
     && (is(target, 'bpmn:SubProcess') && (targetBusinessObject.suitable == 100) && businessObject.suitable > 0)){
-      return 'attach';
+      return false;
     }
 
 
@@ -177,6 +176,7 @@ CustomRules.prototype.init = function() {
 	if((isAny(context.shapes[0], ['bpmn:IntermediateThrowEvent','bpmn:IntermediateCatchEvent',
      'bpmn:BoundaryEvent']))
     && (is(target, 'bpmn:SubProcess')) && (businessObject.suitable !=25 && businessObject.suitable != 50 && businessObject.suitable != 100) && (targetBusinessObject.suitable == 100)){
+      //console.log(target.id);
       return true;
     }
 
