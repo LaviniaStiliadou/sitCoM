@@ -1,3 +1,22 @@
+14.01.2020:
+- Diagramm machen
+- ContextPad Schlüssel entfernen (wenn Icons auf Kreisen funktionieren)
+- violation mit Zahl beginnen und dann Buchstabe erlauben
+- Icons auf Kreise legen 
+- ID Feld zu Subprozessen
+- derzeit werden ungültige violation Werte zum Beispiel (ab) ins xml übernommen..
+- Objekte richtig darstellen (Kreise rot, gelb & grün) 
+- SituationEvents (Kreise) dürfen nicht in Rect 100 reingezogen werden (bisher: gar keine Bewegung mehr nach Drankleben erlaubt)
+- Rect mit Score 100 hat die grünen/gelben/roten Kreise (evtl 1 oder mehrere, noch unsicher) drangeklebt  
+
+Erledigt:
+- Priorität validieren
+- expand 200 bei ContextPad
+- Inputfeld & Button entfernen
+- fix validate violation
+
+
+
 19.12.2019
 To do:
    CustomRules:
