@@ -74,7 +74,7 @@ export default function(group, element) {
         }
         //console.log(element.parent.children);
         if (isNaN(violation)) {
-          errorMessageV.violation = "Not valid scope id";
+          errorMessageV.violation = "Nicht valide Eingabe.";
         }
 
         if(violation < 0){
@@ -82,11 +82,11 @@ export default function(group, element) {
         }
 
         if(!onlyChild){ 
-          for(var i = 0; i<element.parent.children.length-1; i++){
+          for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
             // gibt violation vom anderen Kreis aus
             if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
             if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation >= 0 && violation >= 0)) {
-              errorMessageV.violation = "violation darf nicht gesetzt werden";
+              errorMessageV.violation = "violation darf nicht gesetzt werden.";
             }
           }
         }
@@ -102,11 +102,54 @@ export default function(group, element) {
       validate: function(element, values) {
         var prioritaet = values.prioritaet;
         var errorMessageP = {};
+        if(element.businessObject.$attrs.violation == undefined){
+          errorMessageP.prioritaet = "Setze zuerst violation Attribut.";
+        }
+
         if (isNaN(prioritaet)) {
-           errorMessageP.prioritaet = "Please enter a valid priority (number)";
+          errorMessageP.prioritaet = "Priorität muss eine Nummmer sein.";
+        }
+
+        if(element.businessObject.attachedToRef.$type == 'bpmn:SubProcess'&&
+           element.businessObject.attachedToRef.suitable == 100){
+           // Index vom aktuellen Element
+            var find;
+
+            var kind;
+            var li;
+            for(var k = 0; k < element.parent.children.length-1; k++){
+              for(var l = 0; l < element.parent.children[k].attachers.length; l++){
+                for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
+                  if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
+                    kind = k;
+                    li = l;
+                    find = m;
+                  }
+                }
+               }
+            }
+
+        var onlyChild = false;
+        if(element.parent.children.length-1 == 1){
+               onlyChild = true;
+        }
+
+        if(prioritaet < 0){
+          errorMessageP.prioritaet = "Priorität darf nicht kleiner 0 sein.";
+        }
+
+        if(!onlyChild){ 
+          for(var i = 0; i < element.parent.children[kind].attachers[li].host.attachers.length; i++){
+            // gibt prioritaet vom anderen Kreis aus
+            if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
+              if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.prioritaet >= 0 && prioritaet >= 0)) {
+                errorMessageP.prioritaet = "Priorität darf nicht gesetzt werden.";
+              }
+            }
+          }
         }
         return errorMessageP;
-   }
+      }}
   })),
   group.entries.push({
     html: '<img src="spider.png" width="25">',
@@ -155,7 +198,7 @@ export default function(group, element) {
         }
         //console.log(element.parent.children);
         if (isNaN(violation2)) {
-          errorMessageV.violation2 = "Not valid scope id";
+          errorMessageV.violation2 = "Nicht valide Eingabe.";
         }
 
         if(violation2 < 0){
@@ -163,11 +206,11 @@ export default function(group, element) {
         }
 
         if(!onlyChild){ 
-          for(var i = 0; i<element.parent.children.length-1; i++){
+          for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
             // gibt violation vom anderen Kreis aus
             if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
             if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation2 >= 0 && violation2 >= 0)) {
-              errorMessageV.violation2 = "violation darf nicht gesetzt werden";
+              errorMessageV.violation2 = "violation darf nicht gesetzt werden.";
             }
           }
         }
@@ -181,13 +224,58 @@ export default function(group, element) {
     label : 'Spinne-Priorität',
     modelProperty : 'prioritaet2',
     validate: function(element, values) {
-      var prioritaet2 = values.prioritaet2;
-      var errorMessageP = {};
-      if (isNaN(prioritaet2)) {
-         errorMessageP.prioritaet2 = "Please enter a valid priority (number)";
+    var prioritaet2 = values.prioritaet2;
+    var errorMessageP = {};
+    if(element.businessObject.$attrs.violation2 == undefined){
+      errorMessageP.prioritaet2 = "Setze zuerst violation Attribut.";
+    }
+
+    if (isNaN(prioritaet2)) {
+      errorMessageP.prioritaet2 = "Priorität muss eine Nummmer sein.";
+    }
+
+    if(element.businessObject.attachedToRef.$type == 'bpmn:SubProcess'&&
+        element.businessObject.attachedToRef.suitable == 100){
+        // Index vom aktuellen Element
+        var find;
+
+        var kind;
+        var li;
+        for(var k = 0; k < element.parent.children.length-1; k++){
+          for(var l = 0; l < element.parent.children[k].attachers.length; l++){
+            for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
+            if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
+                kind = k;
+                li = l;
+                find = m;
+            }
+            }
+          }
+
+        }
+
+        
+        var onlyChild = false;
+        if(element.parent.children.length-1 == 1){
+               onlyChild = true;
+        }
+
+        if(prioritaet2 < 0){
+          errorMessageP.prioritaet2 = "Priorität darf nicht kleiner 0 sein.";
+        }
+
+        if(!onlyChild){ 
+          for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
+            // gibt violation vom anderen Kreis aus
+            if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
+            if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.prioritaet2 >= 0 && prioritaet2 >= 0)) {
+              errorMessageP.prioritaet2 = "Priorität darf nicht gesetzt werden.";
+            }
+          }
+        }
       }
-      return errorMessageP;
- }
+        return errorMessageP;
+      }}
 })),
   group.entries.push({
     html: '<img src="human.png" width="35">',
@@ -231,7 +319,7 @@ export default function(group, element) {
         }
         //console.log(element.parent.children);
         if (isNaN(violation3)) {
-          errorMessageV.violation3 = "Not valid scope id";
+          errorMessageV.violation3 = "Keine valide Eingabe.";
         }
 
         if(violation3 < 0){
@@ -239,11 +327,11 @@ export default function(group, element) {
         }
 
         if(!onlyChild){ 
-          for(var i = 0; i<element.parent.children.length-1; i++){
+          for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
             // gibt violation vom anderen Kreis aus
             if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
             if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3 >= 0 && violation3 >= 0)) {
-              errorMessageV.violation3 = "violation darf nicht gesetzt werden";
+              errorMessageV.violation3 = "violation darf nicht gesetzt werden.";
             }
           }
         }
@@ -257,13 +345,58 @@ export default function(group, element) {
     label : 'Mensch-Priorität',
     modelProperty : 'prioritaet3',
     validate: function(element, values) {
-      var prioritaet3 = values.prioritaet3;
-      var errorMessageP = {};
-      if (isNaN(prioritaet3)) {
-         errorMessageP.prioritaet3 = "Please enter a valid priority (number)";
+    var prioritaet3 = values.prioritaet3;
+    var errorMessageP = {};
+    if(element.businessObject.$attrs.violation3 == undefined){
+      errorMessageP.prioritaet3 = "Setze zuerst violation Attribut.";
+    }
+
+    if (isNaN(prioritaet3)) {
+      errorMessageP.prioritaet3 = "Priorität muss eine Nummmer sein.";
+    }
+
+    if(element.businessObject.attachedToRef.$type == 'bpmn:SubProcess'&&
+        element.businessObject.attachedToRef.suitable == 100){
+        // Index vom aktuellen Element
+        var find;
+
+        var kind;
+        var li;
+        for(var k = 0; k < element.parent.children.length-1; k++){
+          for(var l = 0; l < element.parent.children[k].attachers.length; l++){
+            for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
+            if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
+                kind = k;
+                li = l;
+                find = m;
+            }
+            }
+          }
+
+        }
+
+        
+        var onlyChild = false;
+        if(element.parent.children.length-1 == 1){
+               onlyChild = true;
+        }
+        //console.log(element.parent.children);
+        if(prioritaet3 < 0){
+          errorMessageP.prioritaet4 = "Priorität darf nicht kleiner 0 sein.";
+        }
+
+        if(!onlyChild){ 
+          for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
+            // gibt violation vom anderen Kreis aus
+            if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
+            if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.prioritaet3 >= 0 && prioritaet3 >= 0)) {
+              errorMessageP.prioritaet3 = "Priorität darf nicht gesetzt werden.";
+            }
+          }
+        }
       }
-      return errorMessageP;
- }
+        return errorMessageP;
+      }}
 })),
 group.entries.push({
   html: '<img src="kamera.png" width="35">',
@@ -304,7 +437,7 @@ group.entries.push(entryFactory.textField({
         }
         //console.log(element.parent.children);
         if (isNaN(violation4)) {
-          errorMessageV.violation4 = "Not valid scope id";
+          errorMessageV.violation4 = "Keine valida Eingabe.";
         }
 
         if(violation4 < 0){
@@ -312,11 +445,11 @@ group.entries.push(entryFactory.textField({
         }
 
         if(!onlyChild){ 
-          for(var i = 0; i<element.parent.children.length-1; i++){
+          for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
             // gibt violation vom anderen Kreis aus
             if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
             if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4 >= 0 && violation4 >= 0)) {
-              errorMessageV.violation4 = "violation darf nicht gesetzt werden";
+              errorMessageV.violation4 = "violation darf nicht gesetzt werden.";
             }
           }
         }
@@ -332,11 +465,57 @@ group.entries.push(entryFactory.textField({
   validate: function(element, values) {
     var prioritaet4 = values.prioritaet4;
     var errorMessageP = {};
-    if (isNaN(prioritaet4)) {
-       errorMessageP.prioritaet4 = "Please enter a valid priority (number)";
+    if(element.businessObject.$attrs.violation4 == undefined){
+      errorMessageP.prioritaet4 = "Setze zuerst violation Attribut.";
     }
-    return errorMessageP;
-}
+
+    if (isNaN(prioritaet4)) {
+      errorMessageP.prioritaet4 = "Priorität muss eine Nummmer sein.";
+    }
+
+    if(element.businessObject.attachedToRef.$type == 'bpmn:SubProcess'&&
+        element.businessObject.attachedToRef.suitable == 100){
+        // Index vom aktuellen Element
+        var find;
+
+        var kind;
+        var li;
+        for(var k = 0; k < element.parent.children.length-1; k++){
+          for(var l = 0; l < element.parent.children[k].attachers.length; l++){
+            for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
+            if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
+                kind = k;
+                li = l;
+                find = m;
+            }
+            }
+          }
+
+        }
+
+        
+        var onlyChild = false;
+        if(element.parent.children.length-1 == 1){
+               onlyChild = true;
+        }
+        
+
+        if(prioritaet4 < 0){
+          errorMessageP.prioritaet4 = "Priorität darf nicht kleiner 0 sein.";
+        }
+
+        if(!onlyChild){ 
+          for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
+            // gibt violation vom anderen Kreis aus
+            if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
+            if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.prioritaet4 >= 0 && prioritaet4 >= 0)) {
+              errorMessageP.prioritaet4 = "Priorität darf nicht gesetzt werden.";
+            }
+          }
+        }
+      }
+        return errorMessageP;
+      }}
 }))
   //addEntry(group, document.getElementById('situations').value);
 } 
