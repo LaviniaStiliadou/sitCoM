@@ -98,13 +98,14 @@ CustomRules.prototype.init = function() {
     // damit Rect mit Score = 200 nicht mit Score = 100 verbunden werden duerfen
     if (!is(target, 'bpmn:IntermediateThrowEvent') &&
      (is(source, 'bpmn:SubProcess')) && businessObject.suitable == 200
-      && targetBusinessObject.suitable >0){
+      && targetBusinessObject.suitable == 100){
       return false;
     }
 
     if ((is(target, 'bpmn:SubProcess')) && targetBusinessObject.suitable == 100){
       return false;
     }
+
 
     // damit Rect mit Score = 100 nicht mit Score = 200 verbunden werden duerfen
     if (is(target, 'bpmn:SubProcess') &&
