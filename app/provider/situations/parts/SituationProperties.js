@@ -72,9 +72,10 @@ export default function(group, element) {
                onlyChild = true;
                //console.log(onlyChild);
         }
+        
         //console.log(element.parent.children);
-        if (isNaN(violation)) {
-          errorMessageV.violation = "Nicht valide Eingabe.";
+        if (isNaN(violation) && !String(violation).match(/^[0-9]([a-z0-9]+)*$/)) {
+          errorMessageV.violation = "Nicht valide Eingabe, da violation mit Zahl beginnen muss.";
         }
 
         if(violation < 0){
@@ -85,9 +86,22 @@ export default function(group, element) {
           for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
             // gibt violation vom anderen Kreis aus
             if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
-            if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation >= 0 && violation >= 0)) {
+              if (String(violation).match(/^[0-9]+$/)) {
+                if((!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation).match(/^[0-9]([a-z0-9]+)*$/)) && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation != '' ){
+              
+            //if((Number(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) >= 0 && Number(violation) >= 0)) {
+              errorMessageV.violation = "violation darf nicht gesetzt werden.";
+            //}
+          }}
+            if (String(violation).match(/^[0-9]([a-z0-9]+)*$/) && !(String(violation).match(/^[0-9]+$/))) {
+             
+              if((!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) 
+              || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation).match(/^[0-9]([a-z0-9]+)*$/)) 
+              && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation != '' ){
               errorMessageV.violation = "violation darf nicht gesetzt werden.";
             }
+          }
+
           }
         }
       }
@@ -162,61 +176,89 @@ export default function(group, element) {
     modelProperty : 'violation2',
     validate: function(element, values) {
       var violation2 = values.violation2;
-        var errorMessageV = {};
-        if(element.businessObject.attachedToRef.$type == 'bpmn:SubProcess'&&
-         element.businessObject.attachedToRef.suitable == 100){
+      var errorMessageV = {};
+      if(element.businessObject.attachedToRef.$type == 'bpmn:SubProcess'&&
+       element.businessObject.attachedToRef.suitable == 100){
 
-        // Typ
-        //console.log(element.businessObject.attachedToRef.$type);
-        // über alle durch bis children = attachers
-        // Index vom aktuellen Element
-        var find;
+      // Typ
+      //console.log(element.businessObject.attachedToRef.$type);
+      // über alle durch bis children = attachers
+      // Index vom aktuellen Element
+      var find;
 
-        var kind;
-        var li;
-        // woran es drangeklebt ist
-        // element.parent.children[0].attachers[0].host
-        for(var k = 0; k < element.parent.children.length-1; k++){
-          for(var l = 0; l < element.parent.children[k].attachers.length; l++){
-            for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
-            if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
-                kind = k;
-                li = l;
-                find = m;
-            }
-            }
+      var kind;
+      var li;
+      // woran es drangeklebt ist
+      // element.parent.children[0].attachers[0].host
+      //console.log(element.parent.children[0]);
+      //console.log(element.id);
+      for(var k = 0; k < element.parent.children.length-1; k++){
+        for(var l = 0; l < element.parent.children[k].attachers.length; l++){
+          for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
+          if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
+              kind = k;
+              li = l;
+              find = m;
           }
-
+          }
         }
 
-        
-        var onlyChild = false;
-       
-        if(element.parent.children.length-1 == 1){
-               onlyChild = true;
+      }
+
+      //console.log(element.parent.children[0].attachers[0].host.id);
+      //console.log(element.parent.children.length);
+      //for(var i = 0; i<element.parent.children.length-1; i++){
+        //if(element.parent.children[0].attachers[0].host.attachers[i].id == element.id){
+          //  find = i;
+        //}
+     // }
+
+      //console.log("find"+find);
+      //console.log(element.parent.children[0].attachers[0].host.attachers[i].violation);
+      
+      var onlyChild = false;
+      //console.log("length"+ element.parent.children.length);
+      if(element.parent.children.length-1 == 1){
+             onlyChild = true;
+             //console.log(onlyChild);
+      }
+      
+      //console.log(element.parent.children);
+      if (isNaN(violation2) && !String(violation2).match(/^[0-9]([a-z0-9]+)*$/)) {
+        errorMessageV.violation2 = "Nicht valide Eingabe, da violation mit Zahl beginnen muss.";
+      }
+
+      if(violation2 < 0){
+        errorMessageV.violation2 = "violation darf nicht kleiner 0 sein.";
+      }
+
+      if(!onlyChild){ 
+        for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
+          // gibt violation vom anderen Kreis aus
+          if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
+            if (String(violation2).match(/^[0-9]+$/)) {
+              if((!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation2) 
+              || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation2).match(/^[0-9]([a-z0-9]+)*$/))
+               && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation2 != '' ){
             
-        }
-        //console.log(element.parent.children);
-        if (isNaN(violation2)) {
-          errorMessageV.violation2 = "Nicht valide Eingabe.";
-        }
-
-        if(violation2 < 0){
-          errorMessageV.violation2 = "violation darf nicht kleiner 0 sein.";
-        }
-
-        if(!onlyChild){ 
-          for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
-            // gibt violation vom anderen Kreis aus
-            if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
-            if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation2 >= 0 && violation2 >= 0)) {
-              errorMessageV.violation2 = "violation darf nicht gesetzt werden.";
-            }
+          //if((Number(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) >= 0 && Number(violation) >= 0)) {
+            errorMessageV.violation2 = "violation darf nicht gesetzt werden.";
+          //}
+        }}
+          if (String(violation2).match(/^[0-9]([a-z0-9]+)*$/) && !(String(violation2).match(/^[0-9]+$/))) {
+           
+            if((!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation2) 
+            || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation2).match(/^[0-9]([a-z0-9]+)*$/)) 
+            && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation2 != '' ){
+            errorMessageV.violation2 = "violation darf nicht gesetzt werden.";
           }
         }
+
+        }
       }
-        return errorMessageV;
-      }
+    }
+      return errorMessageV;
+    }
   }})),
   group.entries.push(entryFactory.textField({
     id : 'prioritaet2',
@@ -292,12 +334,18 @@ export default function(group, element) {
         if(element.businessObject.attachedToRef.$type == 'bpmn:SubProcess'&&
          element.businessObject.attachedToRef.suitable == 100){
 
+        // Typ
+        //console.log(element.businessObject.attachedToRef.$type);
+        // über alle durch bis children = attachers
+        // Index vom aktuellen Element
         var find;
 
         var kind;
         var li;
         // woran es drangeklebt ist
         // element.parent.children[0].attachers[0].host
+        //console.log(element.parent.children[0]);
+        //console.log(element.id);
         for(var k = 0; k < element.parent.children.length-1; k++){
           for(var l = 0; l < element.parent.children[k].attachers.length; l++){
             for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
@@ -311,15 +359,27 @@ export default function(group, element) {
 
         }
 
+        //console.log(element.parent.children[0].attachers[0].host.id);
+        //console.log(element.parent.children.length);
+        //for(var i = 0; i<element.parent.children.length-1; i++){
+          //if(element.parent.children[0].attachers[0].host.attachers[i].id == element.id){
+            //  find = i;
+          //}
+       // }
+
+        //console.log("find"+find);
+        //console.log(element.parent.children[0].attachers[0].host.attachers[i].violation);
         
         var onlyChild = false;
-       
+        //console.log("length"+ element.parent.children.length);
         if(element.parent.children.length-1 == 1){
                onlyChild = true;
+               //console.log(onlyChild);
         }
+        
         //console.log(element.parent.children);
-        if (isNaN(violation3)) {
-          errorMessageV.violation3 = "Keine valide Eingabe.";
+        if (isNaN(violation3) && !String(violation3).match(/^[0-9]([a-z0-9]+)*$/)) {
+          errorMessageV.violation3 = "Nicht valide Eingabe, da violation mit Zahl beginnen muss.";
         }
 
         if(violation3 < 0){
@@ -330,9 +390,24 @@ export default function(group, element) {
           for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
             // gibt violation vom anderen Kreis aus
             if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
-            if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3 >= 0 && violation3 >= 0)) {
+              if (String(violation3).match(/^[0-9]+$/)) {
+                if((!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3) 
+                || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3).match(/^[0-9]([a-z0-9]+)*$/)) 
+                && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3 != '' ){
+              
+            //if((Number(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) >= 0 && Number(violation) >= 0)) {
+              errorMessageV.violation3 = "violation darf nicht gesetzt werden.";
+            //}
+          }}
+            if (String(violation3).match(/^[0-9]([a-z0-9]+)*$/) && !(String(violation3).match(/^[0-9]+$/))) {
+             
+              if((!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3) 
+              || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3).match(/^[0-9]([a-z0-9]+)*$/)) 
+              && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3 != '' ){
               errorMessageV.violation3 = "violation darf nicht gesetzt werden.";
             }
+          }
+
           }
         }
       }
@@ -412,11 +487,19 @@ group.entries.push(entryFactory.textField({
         var errorMessageV = {};
         if(element.businessObject.attachedToRef.$type == 'bpmn:SubProcess'&&
          element.businessObject.attachedToRef.suitable == 100){
+
+        // Typ
+        //console.log(element.businessObject.attachedToRef.$type);
+        // über alle durch bis children = attachers
         // Index vom aktuellen Element
         var find;
 
         var kind;
         var li;
+        // woran es drangeklebt ist
+        // element.parent.children[0].attachers[0].host
+        //console.log(element.parent.children[0]);
+        //console.log(element.id);
         for(var k = 0; k < element.parent.children.length-1; k++){
           for(var l = 0; l < element.parent.children[k].attachers.length; l++){
             for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
@@ -430,14 +513,27 @@ group.entries.push(entryFactory.textField({
 
         }
 
+        //console.log(element.parent.children[0].attachers[0].host.id);
+        //console.log(element.parent.children.length);
+        //for(var i = 0; i<element.parent.children.length-1; i++){
+          //if(element.parent.children[0].attachers[0].host.attachers[i].id == element.id){
+            //  find = i;
+          //}
+       // }
+
+        //console.log("find"+find);
+        //console.log(element.parent.children[0].attachers[0].host.attachers[i].violation);
         
         var onlyChild = false;
+        //console.log("length"+ element.parent.children.length);
         if(element.parent.children.length-1 == 1){
                onlyChild = true;
+               //console.log(onlyChild);
         }
+        
         //console.log(element.parent.children);
-        if (isNaN(violation4)) {
-          errorMessageV.violation4 = "Keine valida Eingabe.";
+        if (isNaN(violation4) && !String(violation4).match(/^[0-9]([a-z0-9]+)*$/)) {
+          errorMessageV.violation4 = "Nicht valide Eingabe, da violation mit Zahl beginnen muss.";
         }
 
         if(violation4 < 0){
@@ -448,9 +544,24 @@ group.entries.push(entryFactory.textField({
           for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
             // gibt violation vom anderen Kreis aus
             if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
-            if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4 >= 0 && violation4 >= 0)) {
+              if (String(violation4).match(/^[0-9]+$/)) {
+                if((!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4) 
+                || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4).match(/^[0-9]([a-z0-9]+)*$/)) 
+                && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4 != '' ){
+              
+            //if((Number(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) >= 0 && Number(violation) >= 0)) {
+              errorMessageV.violation4 = "violation darf nicht gesetzt werden.";
+            //}
+          }}
+            if (String(violation4).match(/^[0-9]([a-z0-9]+)*$/) && !(String(violation4).match(/^[0-9]+$/))) {
+             
+              if((!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4) 
+              || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4).match(/^[0-9]([a-z0-9]+)*$/)) 
+              && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4 != '' ){
               errorMessageV.violation4 = "violation darf nicht gesetzt werden.";
             }
+          }
+
           }
         }
       }
@@ -557,4 +668,21 @@ function addEntry(group, j){
   }))
 }
  
+}
+
+String.prototype.regexLastIndexOf = function(regex, startpos) {
+  regex = (regex.global) ? regex : new RegExp(regex.source, "g" + (regex.ignoreCase ? "i" : "") + (regex.multiLine ? "m" : ""));
+  if(typeof (startpos) == "undefined") {
+      startpos = this.length;
+  } else if(startpos < 0) {
+      startpos = 0;
+  }
+  var stringToWorkWith = this.substring(0, startpos + 1);
+  var lastIndexOf = -1;
+  var nextStop = 0;
+  while((result = regex.exec(stringToWorkWith)) != null) {
+      lastIndexOf = result.index;
+      regex.lastIndex = ++nextStop;
+  }
+  return lastIndexOf;
 }
