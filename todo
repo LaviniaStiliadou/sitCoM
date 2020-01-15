@@ -1,7 +1,6 @@
 14.01.2020:
 - Diagramm machen
 - ContextPad Schlüssel entfernen (wenn Icons auf Kreisen funktionieren)
-- violation mit Zahl beginnen und dann Buchstabe erlauben
 - Icons auf Kreise legen 
 - ID Feld zu Subprozessen
 - derzeit werden ungültige violation Werte zum Beispiel (ab) ins xml übernommen..
@@ -14,6 +13,7 @@ Erledigt:
 - expand 200 bei ContextPad
 - Inputfeld & Button entfernen
 - fix validate violation
+- violation mit Zahl beginnen und dann Buchstabe erlauben
 
 
 
