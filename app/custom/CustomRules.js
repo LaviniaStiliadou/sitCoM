@@ -72,6 +72,10 @@ CustomRules.prototype.init = function() {
   // verbietet das Verbinden von inner Rects mit Score = 100
   // verbietet Verbinden von Intermediate zu Situationskreisen und umgekehrt
   function canConnect(source, target) {
+	if(target == null){
+		return false;
+	}
+	  
     var businessObject = source.businessObject;
     var targetBusinessObject = target.businessObject;
 
