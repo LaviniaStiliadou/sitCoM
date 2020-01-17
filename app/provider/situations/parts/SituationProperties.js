@@ -7,10 +7,18 @@ import {
 
 export default function(group, element) {
   
-  
+  //displays the ScopeID in the situation tab
+  if(isAny(element, ['bpmn:SubProcess']) && element.businessObject.suitable >0){
+	  group.entries.push(entryFactory.textField({
+      id : 'scope',
+      description : 'ID der Scope zu der gesprungen wird',
+      label : 'Scope ID',
+      modelProperty : 'scope'
+	  }))
+  }
+
   // Only return an entry, if the currently selected
   // element is one of these types.
-
   if (isAny(element, [
       'bpmn:IntermediateThrowEvent',
       'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent' ])&& element.businessObject.suitable >0) {

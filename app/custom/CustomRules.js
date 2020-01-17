@@ -130,6 +130,7 @@ CustomRules.prototype.init = function() {
         source = context.source,
         position = context.position;
     var businessObject = context.shapes[0].businessObject;
+	
      
     if(target != undefined){
       var targetBusinessObject = target.businessObject;
@@ -191,7 +192,7 @@ CustomRules.prototype.init = function() {
     && (is(target, 'bpmn:SubProcess')) && (businessObject.suitable !=25 && businessObject.suitable != 50 && businessObject.suitable != 100) && (targetBusinessObject.suitable == 200)){
       return false;
     }
-
+	
     }
   }  
 

@@ -2,6 +2,9 @@ const SUITABILITY_SCORE_HIGH = 100,
       SUITABILITY_SCORE_OUTER_RECT = 200,
       SUITABILITY_SCORE_AVERGE = 50,
       SUITABILITY_SCORE_LOW = 25;
+	  
+var counter = 1;
+var counter2 = 1;
 
 export default class CustomPalette {
   constructor(bpmnFactory, create, elementFactory, palette, translate) {
@@ -36,6 +39,8 @@ export default class CustomPalette {
         });
 
         shape.businessObject.di.isExpanded = true;
+		businessObject.$attrs.scope = 'InnerScope_'+ counter;
+		counter++;
         create.start(event, shape); 
 
       }else {
@@ -47,6 +52,8 @@ export default class CustomPalette {
         });
         
         shape.businessObject.di.isExpanded = true;
+		businessObject.$attrs.scope = 'OuterScope_'+ counter2;
+		counter2++;
         create.start(event, shape); 
       }
     }
