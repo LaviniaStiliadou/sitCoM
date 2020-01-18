@@ -71,9 +71,8 @@ export default class CustomRenderer extends BaseRenderer {
           svgRemove(shape);
         }
 		
-<<<<<<< Updated upstream
       const color = this.getColor(suitabilityScore);
-=======
+
 		if (is(element, 'bpmn:BoundaryEvent')) {
       
 			const circle2 = drawCircle(parentNode, element.width, element.height);
@@ -113,7 +112,7 @@ export default class CustomRenderer extends BaseRenderer {
 		
 		
 	  /*const color = this.getColor(suitabilityScore);
->>>>>>> Stashed changes
+
 
       const rect = drawRect(parentNode, 50, 20, TASK_BORDER_RADIUS, color);
   
@@ -134,9 +133,11 @@ export default class CustomRenderer extends BaseRenderer {
     
       svgAppend(parentNode, text);
     }
+    */
 
     return shape;
-  }
+  
+  }}
 
   getShapePath(shape) {
     if (is(shape, 'bpmn:SubProcess')) {
@@ -188,8 +189,6 @@ function drawRect(parentNode, width, height, borderRadius, color) {
   return rect;
 }
 
-<<<<<<< Updated upstream
-=======
 function drawCircle(parentNode, width, height) {
 	const circle = svgCreate('circle');
 	
@@ -220,7 +219,7 @@ function drawCircleI(parentNode, width, height) {
   return circle;
 }
 
->>>>>>> Stashed changes
+
 // copied from https://github.com/bpmn-io/diagram-js/blob/master/lib/core/GraphicsFactory.js
 function prependTo(newNode, parentNode, siblingNode) {
   parentNode.insertBefore(newNode, siblingNode || parentNode.firstChild);
