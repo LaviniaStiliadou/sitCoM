@@ -45,6 +45,8 @@ export default class CustomRenderer extends BaseRenderer {
     const suitabilityScore = this.getSuitabilityScore(element);
 	
 	var businessObject = element.businessObject;
+	
+	
 
     if (!isNil(suitabilityScore)) {
 		
@@ -71,7 +73,41 @@ export default class CustomRenderer extends BaseRenderer {
           svgRemove(shape);
         }
 		
-      const color = this.getColor(suitabilityScore);
+		if (is(element, 'bpmn:BoundaryEvent')) {
+			
+			const circle = drawCircle(parentNode, 28, 28);
+			
+			if (businessObject.suitable == 25) {
+			svgAttr(circle, {
+			fill: 'red',
+			stroke: 'red',
+			transform: 'translate(-10, -10)'
+			});
+			}
+			
+			if (businessObject.suitable == 50) {
+			svgAttr(circle, {
+			fill: 'yellow',
+			stroke: 'yellow',
+			transform: 'translate(-10, -10)'
+			});
+			}
+			
+			if (businessObject.suitable == 100) {
+			svgAttr(circle, {
+			fill: 'green',
+			stroke: 'green',
+			transform: 'translate(-10, -10)'
+			});
+			}
+			prependTo(circle, parentNode);
+
+            svgRemove(shape);
+			return shape;
+		}
+		
+		
+	  /*const color = this.getColor(suitabilityScore);
 
       const rect = drawRect(parentNode, 50, 20, TASK_BORDER_RADIUS, color);
   
@@ -90,7 +126,7 @@ export default class CustomRenderer extends BaseRenderer {
     
       svgAppend(text, document.createTextNode(suitabilityScore)); 
     
-      svgAppend(parentNode, text);
+      svgAppend(parentNode, text);*/
     }
 
     return shape;
@@ -144,6 +180,21 @@ function drawRect(parentNode, width, height, borderRadius, color) {
   svgAppend(parentNode, rect);
 
   return rect;
+}
+
+function drawCircle(parentNode, width, height) {
+	const circle = svgCreate('circle');
+	
+	svgAttr(circle, {
+		cx: width,
+		cy: height,
+		r: Math.round((width + height) / 4),
+        strokeWidth: 2,
+	});
+	
+	svgAppend(parentNode, circle);
+
+  return circle;
 }
 
 // copied from https://github.com/bpmn-io/diagram-js/blob/master/lib/core/GraphicsFactory.js
