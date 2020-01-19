@@ -59,6 +59,9 @@ CustomRules.prototype.init = function() {
     if (!is(shape, 'bpmn:SubProcess') && (targetBusinessObject.suitable == 200)) {
 	    return false;
     }
+    if (is(shape, 'bpmn:SubProcess')  && (businessObject.suitable != 200)  && (businessObject.suitable != 100)&& (targetBusinessObject.suitable == 200)) {
+	    return false;
+    }
 
     // SituationsEvents dürfen nicht frei erzeugt werden
     if (isAny(shape, ['bpmn:IntermediateThrowEvent','bpmn:IntermediateCatchEvent',

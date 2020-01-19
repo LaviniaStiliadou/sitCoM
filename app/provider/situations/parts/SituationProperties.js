@@ -673,6 +673,169 @@ group.entries.push(entryFactory.textField({
       }
         return errorMessageP;
       }}
+})),
+group.entries.push({
+  html: '<img src="download.png" width="35">',
+  id : 'icon5'
+}),
+group.entries.push(entryFactory.textField({
+  id : 'violation5',
+  description : 'Wenn Situation verletzt wird, springe zu Scope ID.',
+  label : 'Update-Violation',
+  modelProperty : 'violation5',
+  validate: function(element, values) {
+    var violation5 = values.violation5;
+    var errorMessageV = {};
+    if(element.businessObject.attachedToRef.$type == 'bpmn:SubProcess'&&
+     element.businessObject.attachedToRef.suitable == 100){
+
+    // Typ
+    //console.log(element.businessObject.attachedToRef.$type);
+    // über alle durch bis children = attachers
+    // Index vom aktuellen Element
+    var find;
+
+    var kind;
+    var li;
+    // woran es drangeklebt ist
+    // element.parent.children[0].attachers[0].host
+    //console.log(element.parent.children[0]);
+    //console.log(element.id);
+    for(var k = 0; k < element.parent.children.length-1; k++){
+      for(var l = 0; l < element.parent.children[k].attachers.length; l++){
+        for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
+        if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
+            kind = k;
+            li = l;
+            find = m;
+        }
+        }
+      }
+
+    }
+
+    //console.log(element.parent.children[0].attachers[0].host.id);
+    //console.log(element.parent.children.length);
+    //for(var i = 0; i<element.parent.children.length-1; i++){
+      //if(element.parent.children[0].attachers[0].host.attachers[i].id == element.id){
+        //  find = i;
+      //}
+   // }
+
+    //console.log("find"+find);
+    //console.log(element.parent.children[0].attachers[0].host.attachers[i].violation);
+    
+    var onlyChild = false;
+    //console.log("length"+ element.parent.children.length);
+    if(element.parent.children.length-1 == 1){
+           onlyChild = true;
+           //console.log(onlyChild);
+    }
+    console.log(values);
+    
+    
+    //console.log(element.parent.children);
+    if (isNaN(violation5) && !String(violation5).match(/^[0-9]([a-z0-9]+)*$/)) {
+      errorMessageV.violation5 = "Nicht valide Eingabe, da violation mit Zahl beginnen muss.";
+      delete element.businessObject.$attrs.violation5; 
+    }
+
+    if(violation5 < 0){
+      errorMessageV.violation5 = "violation darf nicht kleiner 0 sein.";
+      delete element.businessObject.$attrs.violation5; 
+    }
+
+    if(!onlyChild){ 
+      for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
+        // gibt violation vom anderen Kreis aus
+        if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
+          if (String(violation5).match(/^[0-9]+$/)) {
+            if((!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation5) || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation5).match(/^[0-9]([a-z0-9]+)*$/)) && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation5 != '' ){
+          
+        //if((Number(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) >= 0 && Number(violation) >= 0)) {
+          errorMessageV.violation5 = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
+          delete element.businessObject.$attrs.violation5; 
+          //delete element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation;
+        //}
+      }}
+        if (String(violation5).match(/^[0-9]([a-z0-9]+)*$/) && !(String(violation5).match(/^[0-9]+$/))) {
+         
+          if((!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation5) 
+          || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation5).match(/^[0-9]([a-z0-9]+)*$/)) 
+          && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation5 != '' ){
+          errorMessageV.violation5 = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
+          delete element.businessObject.$attrs.violation5; 
+          //delete element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation;
+          
+        }
+      }
+
+      }
+    }
+  }
+    return errorMessageV;
+  }
+}})),
+group.entries.push(entryFactory.textField({
+  id : 'prioritaet5',
+  description : 'Priorität',
+  label : 'Akku-Priorität',
+  modelProperty : 'prioritaet5',
+  validate: function(element, values) {
+    var prioritaet5 = values.prioritaet5;
+    var errorMessageP = {};
+    if(element.businessObject.$attrs.violation5 == undefined){
+      errorMessageP.prioritaet5 = "Setze zuerst violation Attribut.";
+      delete element.businessObject.$attrs.prioritaet5;
+    }
+
+    if (isNaN(prioritaet5)) {
+      errorMessageP.prioritaet5 = "Priorität muss eine Nummmer sein.";
+      delete element.businessObject.$attrs.prioritaet5;
+    }
+
+    if(element.businessObject.attachedToRef.$type == 'bpmn:SubProcess'&&
+       element.businessObject.attachedToRef.suitable == 100){
+       // Index vom aktuellen Element
+        var find;
+
+        var kind;
+        var li;
+        for(var k = 0; k < element.parent.children.length-1; k++){
+          for(var l = 0; l < element.parent.children[k].attachers.length; l++){
+            for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
+              if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
+                kind = k;
+                li = l;
+                find = m;
+              }
+            }
+           }
+        }
+
+    var onlyChild = false;
+    if(element.parent.children.length-1 == 1){
+           onlyChild = true;
+    }
+
+    if(prioritaet5 < 0){
+      errorMessageP.prioritaet5 = "Priorität darf nicht kleiner 0 sein.";
+      delete element.businessObject.$attrs.prioritaet5;
+    }
+
+    if(!onlyChild){ 
+      for(var i = 0; i < element.parent.children[kind].attachers[li].host.attachers.length; i++){
+        // gibt prioritaet vom anderen Kreis aus
+        if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
+          if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.prioritaet5 >= 0 && prioritaet5 >= 0)) {
+            errorMessageP.prioritaet5 = "Priorität darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
+            delete element.businessObject.$attrs.prioritaet5;
+          }
+        }
+      }
+    }
+    return errorMessageP;
+  }}
 }))
   //addEntry(group, document.getElementById('situations').value);
 } 
@@ -714,21 +877,4 @@ function addEntry(group, j){
   }))
 }
  
-}
-
-String.prototype.regexLastIndexOf = function(regex, startpos) {
-  regex = (regex.global) ? regex : new RegExp(regex.source, "g" + (regex.ignoreCase ? "i" : "") + (regex.multiLine ? "m" : ""));
-  if(typeof (startpos) == "undefined") {
-      startpos = this.length;
-  } else if(startpos < 0) {
-      startpos = 0;
-  }
-  var stringToWorkWith = this.substring(0, startpos + 1);
-  var lastIndexOf = -1;
-  var nextStop = 0;
-  while((result = regex.exec(stringToWorkWith)) != null) {
-      lastIndexOf = result.index;
-      regex.lastIndex = ++nextStop;
-  }
-  return lastIndexOf;
 }
