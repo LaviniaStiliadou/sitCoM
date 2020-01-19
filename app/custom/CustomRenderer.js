@@ -73,6 +73,47 @@ export default class CustomRenderer extends BaseRenderer {
 		
       const color = this.getColor(suitabilityScore);
 
+		if (is(element, 'bpmn:BoundaryEvent')) {
+      
+			const circle2 = drawCircle(parentNode, element.width, element.height);
+			const circle = drawCircleI(circle2, 28, 28);
+			
+			if (businessObject.suitable == 25) {
+        
+			svgAttr(circle2, {
+			fill: 'white',
+			stroke: 'red'
+      });
+    }
+			
+			if (businessObject.suitable == 50) {
+			svgAttr(circle2, {
+			fill: 'white',
+			stroke: 'yellow'
+			});
+			}
+			
+			if (businessObject.suitable == 100) {
+			svgAttr(circle2, {
+			fill: 'white',
+			stroke: 'green'
+			});
+      }
+       
+      prependTo(circle, circle2);
+      //prependTo(circle2, parentNode);
+      
+      svgRemove(shape);
+			//prependTo(circle2, circle);
+
+      
+			return shape;
+		}
+		
+		
+	  /*const color = this.getColor(suitabilityScore);
+
+
       const rect = drawRect(parentNode, 50, 20, TASK_BORDER_RADIUS, color);
   
       svgAttr(rect, {
@@ -92,9 +133,11 @@ export default class CustomRenderer extends BaseRenderer {
     
       svgAppend(parentNode, text);
     }
+    */
 
     return shape;
-  }
+  
+  }}
 
   getShapePath(shape) {
     if (is(shape, 'bpmn:SubProcess')) {
@@ -145,6 +188,37 @@ function drawRect(parentNode, width, height, borderRadius, color) {
 
   return rect;
 }
+
+function drawCircle(parentNode, width, height) {
+	const circle = svgCreate('circle');
+	
+	svgAttr(circle, {
+		cx: width/2,
+		cy: height/2,
+		r: Math.round((width + height) / 4),
+        strokeWidth: 2,
+	});
+	
+	svgAppend(parentNode, circle);
+
+  return circle;
+}
+
+function drawCircleI(parentNode, width, height) {
+	const circle = svgCreate('circle');
+	
+	svgAttr(circle, {
+		cx: width,
+		cy: height,
+		r: Math.round((width + height) / 4),
+        strokeWidth: 2,
+	});
+	
+	svgAppend(parentNode, circle);
+
+  return circle;
+}
+
 
 // copied from https://github.com/bpmn-io/diagram-js/blob/master/lib/core/GraphicsFactory.js
 function prependTo(newNode, parentNode, siblingNode) {
