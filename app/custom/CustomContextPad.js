@@ -1,3 +1,5 @@
+import {incrementCounter2} from './CustomPalette';
+
 const SUITABILITY_SCORE_HIGH = 100,
 SUITABILITY_SCORE_AVERGE = 50,
 SUITABILITY_SCORE_LOW = 25,
@@ -67,6 +69,7 @@ export default class CustomContextPad {
               businessObject: businessObject
             });
             shape.businessObject.di.isExpanded = true;
+			businessObject.$attrs.scope = 'OuterScope_'+ incrementCounter2();
             autoPlace.append(element, shape);
           } else {
             appendOuterRectStart(event, element);
@@ -87,6 +90,7 @@ export default class CustomContextPad {
             businessObject: businessObject
           });
           shape.businessObject.di.isExpanded = true;
+		  businessObject.$attrs.scope = 'OuterScope_'+ incrementCounter2();
           create.start(event, shape, element);
         }
       }

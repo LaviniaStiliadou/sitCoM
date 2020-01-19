@@ -3,8 +3,15 @@ const SUITABILITY_SCORE_HIGH = 100,
       SUITABILITY_SCORE_AVERGE = 50,
       SUITABILITY_SCORE_LOW = 25;
 	  
-var counter = 1;
-var counter2 = 1;
+var counter = 0;
+var counter2 = 0;
+
+//export counter for contextPad
+export function incrementCounter2(){
+	counter2++;
+	return counter2;
+}
+
 
 export default class CustomPalette {
   constructor(bpmnFactory, create, elementFactory, palette, translate) {
@@ -24,6 +31,7 @@ export default class CustomPalette {
       translate
     } = this;
 
+
     function createRect(suitabilityScore) {
       return function(event) {
         const businessObject = bpmnFactory.create('bpmn:SubProcess');
@@ -39,8 +47,7 @@ export default class CustomPalette {
         });
 
         shape.businessObject.di.isExpanded = true;
-		businessObject.$attrs.scope = 'InnerScope_'+ counter;
-		counter++;
+		businessObject.$attrs.scope = 'InnerScope_'+ ++counter;
         create.start(event, shape); 
 
       }else {
@@ -52,12 +59,12 @@ export default class CustomPalette {
         });
         
         shape.businessObject.di.isExpanded = true;
-		businessObject.$attrs.scope = 'OuterScope_'+ counter2;
-		counter2++;
+		businessObject.$attrs.scope = 'OuterScope_'+ ++counter2;
         create.start(event, shape); 
       }
     }
     }
+	
   // wird jetzt nicht mehr benutzt
 	function createGroup(suitabilityScore) {
       return function(event) {
