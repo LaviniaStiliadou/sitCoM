@@ -31,6 +31,7 @@ export default function CustomContextPadProvider(injector, connect, translate) {
       delete entries["append.gateway"];
       delete entries["append.append-task"];
       delete entries["append.text-annotation"];
+      delete entries["replace"];
       // loescht die Arrows, also die Möglichkeit Objekte zu verbinden
       delete entries["connect"];
     } else if (element.type === "bpmn:SubProcess" && businessObject.suitable == 100){
