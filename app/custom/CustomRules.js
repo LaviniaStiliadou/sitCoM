@@ -222,7 +222,8 @@ CustomRules.prototype.init = function() {
   // damit IntermediateEvents nicht an Situationsscopes geklebt werden 
   this.addRule('shape.attach', HIGH_PRIORITY, function(context) {
     var shape = context.shape,
-      target = context.target;
+      target = context.target,
+	  position = context.position;
     var businessObject = shape.businessObject;
     var targetBusinessObject = target.businessObject;
 
@@ -256,7 +257,7 @@ CustomRules.prototype.init = function() {
       (businessObject.suitable == 100 || businessObject.suitable == 50 || 
       businessObject.suitable == 25) &&
       (is(target, 'bpmn:SubProcess') &&
-      (targetBusinessObject.suitable == 100))) {
+      (targetBusinessObject.suitable == 100)) && (position && isBoundaryAttachment(position, target))) {
           //console.log("hier");
      var find;
      var allowed = true;
