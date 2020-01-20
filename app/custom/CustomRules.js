@@ -12,6 +12,10 @@ import {
   is
 } from 'bpmn-js/lib/util/ModelUtil';
 
+import {
+  getBoundaryAttachment as isBoundaryAttachment
+} from 'bpmn-js/lib/features/snapping/BpmnSnappingUtil';
+
 import RuleProvider from 'diagram-js/lib/features/rules/RuleProvider';
 
 var HIGH_PRIORITY = 1500;
@@ -176,7 +180,7 @@ CustomRules.prototype.init = function() {
     // SituationsEvents können innerhalb des Rects 100 überall erzeugt werden, werden jedoch der Border zugewiesen
     if((isAny(context.shapes[0], ['bpmn:IntermediateThrowEvent','bpmn:IntermediateCatchEvent',
      'bpmn:BoundaryEvent']))
-    && (is(target, 'bpmn:SubProcess') && (targetBusinessObject.suitable == 100) && businessObject.suitable > 0)){
+    && (is(target, 'bpmn:SubProcess') && (targetBusinessObject.suitable == 100) && businessObject.suitable > 0) && (position && !isBoundaryAttachment(position, target))){
       return false;
     }
 
