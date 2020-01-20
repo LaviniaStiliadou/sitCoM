@@ -25,7 +25,7 @@ export default function(group, element) {
       modelProperty : 'akkuCheckbox',
       validate: function(element, values) {
         var violation = values.akkuCheckbox;
-        console.log(violation);
+        //console.log(violation);
         var errorMessageV = {};
         if(element.businessObject.attachedToRef.$type == 'bpmn:SubProcess'&&
          element.businessObject.attachedToRef.suitable == 100){
@@ -61,7 +61,7 @@ export default function(group, element) {
                onlyChild = true;
                //console.log(onlyChild);
         }
-        console.log(values);
+        //console.log(values);
         
         
         //console.log(element.parent.children);
@@ -102,7 +102,7 @@ export default function(group, element) {
       modelProperty : 'spinneCheckbox',
       validate: function(element, values) {
         var violation = values.spinneCheckbox;
-        console.log(violation);
+        //console.log(violation);
         var errorMessageV = {};
         if(element.businessObject.attachedToRef.$type == 'bpmn:SubProcess'&&
          element.businessObject.attachedToRef.suitable == 100){
@@ -138,7 +138,7 @@ export default function(group, element) {
                onlyChild = true;
                //console.log(onlyChild);
         }
-        console.log(values);
+        //console.log(values);
         
         
         //console.log(element.parent.children);
@@ -179,7 +179,7 @@ export default function(group, element) {
       modelProperty : 'menschCheckbox',
       validate: function(element, values) {
         var violation = values.menschCheckbox;
-        console.log(violation);
+        //console.log(violation);
         var errorMessageV = {};
         if(element.businessObject.attachedToRef.$type == 'bpmn:SubProcess'&&
          element.businessObject.attachedToRef.suitable == 100){
@@ -215,7 +215,7 @@ export default function(group, element) {
                onlyChild = true;
                //console.log(onlyChild);
         }
-        console.log(values);
+        //console.log(values);
         
         
         //console.log(element.parent.children);
@@ -256,7 +256,7 @@ export default function(group, element) {
       modelProperty : 'kameraCheckbox',
       validate: function(element, values) {
         var violation = values.kameraCheckbox;
-        console.log(violation);
+        //console.log(violation);
         var errorMessageV = {};
         if(element.businessObject.attachedToRef.$type == 'bpmn:SubProcess'&&
          element.businessObject.attachedToRef.suitable == 100){
@@ -292,7 +292,7 @@ export default function(group, element) {
                onlyChild = true;
                //console.log(onlyChild);
         }
-        console.log(values);
+        //console.log(values);
         
         
         //console.log(element.parent.children);
@@ -333,7 +333,7 @@ export default function(group, element) {
       modelProperty : 'updateCheckbox',
       validate: function(element, values) {
         var violation = values.updateCheckbox;
-        console.log(violation);
+        //console.log(violation);
         var errorMessageV = {};
         if(element.businessObject.attachedToRef.$type == 'bpmn:SubProcess'&&
          element.businessObject.attachedToRef.suitable == 100){
@@ -369,7 +369,7 @@ export default function(group, element) {
                onlyChild = true;
                //console.log(onlyChild);
         }
-        console.log(values);
+        //console.log(values);
         
         
         //console.log(element.parent.children);
@@ -468,7 +468,7 @@ export default function(group, element) {
                onlyChild = true;
                //console.log(onlyChild);
         }
-        console.log(values);
+        //console.log(values);
         
         
         //console.log(element.parent.children);
@@ -1155,7 +1155,7 @@ group.entries.push(entryFactory.textField({
            onlyChild = true;
            //console.log(onlyChild);
     }
-    console.log(values);
+    //console.log(values);
     
     
     //console.log(element.parent.children);

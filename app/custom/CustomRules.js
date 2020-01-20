@@ -247,6 +247,28 @@ CustomRules.prototype.init = function() {
         return false;
     }
 
+    if (isAny(shape, [
+      'bpmn:IntermediateThrowEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent'])  &&
+      (businessObject.suitable == 100 || businessObject.suitable == 50 || 
+      businessObject.suitable == 25) &&
+      (is(target, 'bpmn:SubProcess') &&
+      (targetBusinessObject.suitable == 100))) {
+          //console.log("hier");
+     var find;
+     var allowed = true;
+     //console.log(shape);
+    for(var i = 0; i< target.attachers.length; i++){
+      //console.log(shape);
+          if(target.attachers[i].businessObject.suitable == shape.businessObject.suitable){
+            //console.log('gleich');
+            allowed = false;
+            return false;
+          }
+      }
+      return true;
+      
+      }
+
     // damit normale IntermediateEvents nicht an Situationsscopes geklebt werden duerfen
     if (isAny(shape, [
     'bpmn:IntermediateThrowEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent'])  &&
