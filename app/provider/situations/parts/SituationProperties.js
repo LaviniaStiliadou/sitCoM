@@ -560,6 +560,15 @@ export default function(group, element) {
           delete element.businessObject.$attrs.prioritaet;
         }
 
+        if(!isNaN(element.businessObject.$attrs.prioritaet) && (
+          (element.businessObject.$attrs.prioritaet == element.businessObject.$attrs.prioritaet5)||
+          (element.businessObject.$attrs.prioritaet == element.businessObject.$attrs.prioritaet4)||
+          (element.businessObject.$attrs.prioritaet == element.businessObject.$attrs.prioritaet3) ||
+          (element.businessObject.$attrs.prioritaet == element.businessObject.$attrs.prioritaet2))){
+            errorMessageP.prioritaet = "Priorität muss eindeutig sein.";
+            delete element.businessObject.$attrs.prioritaet;
+          }
+
         if(!onlyChild){ 
           for(var i = 0; i < element.parent.children[kind].attachers[li].host.attachers.length; i++){
             // gibt prioritaet vom anderen Kreis aus
@@ -644,6 +653,8 @@ export default function(group, element) {
         delete element.businessObject.$attrs.violation2;
       }
 
+      
+
       if(!onlyChild){ 
         for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
           // gibt violation vom anderen Kreis aus
@@ -722,6 +733,15 @@ export default function(group, element) {
           errorMessageP.prioritaet2 = "Priorität darf nicht kleiner 0 sein.";
           delete element.businessObject.$attrs.prioritaet2;
         }
+
+        if(!isNaN(element.businessObject.$attrs.prioritaet2) && (
+          (element.businessObject.$attrs.prioritaet2 == element.businessObject.$attrs.prioritaet5)||
+          (element.businessObject.$attrs.prioritaet2 == element.businessObject.$attrs.prioritaet4)||
+          (element.businessObject.$attrs.prioritaet2 == element.businessObject.$attrs.prioritaet3) ||
+          (element.businessObject.$attrs.prioritaet2 == element.businessObject.$attrs.prioritaet))){
+            errorMessageP.prioritaet2 = "Priorität muss eindeutig sein.";
+            delete element.businessObject.$attrs.prioritaet2;
+          }
 
         if(!onlyChild){ 
           for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
@@ -884,6 +904,14 @@ export default function(group, element) {
           errorMessageP.prioritaet3 = "Priorität darf nicht kleiner 0 sein.";
           delete element.businessObject.$attrs.prioritaet3;
         }
+        if(!isNaN(element.businessObject.$attrs.prioritaet3) && (
+          (element.businessObject.$attrs.prioritaet3 == element.businessObject.$attrs.prioritaet5)||
+          (element.businessObject.$attrs.prioritaet3 == element.businessObject.$attrs.prioritaet4)||
+          (element.businessObject.$attrs.prioritaet3 == element.businessObject.$attrs.prioritaet2) ||
+          (element.businessObject.$attrs.prioritaet3 == element.businessObject.$attrs.prioritaet))){
+            errorMessageP.prioritaet3 = "Priorität muss eindeutig sein.";
+            delete element.businessObject.$attrs.prioritaet3;
+          }
 
         if(!onlyChild){ 
           for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
@@ -1047,6 +1075,14 @@ group.entries.push(entryFactory.textField({
           errorMessageP.prioritaet4 = "Priorität darf nicht kleiner 0 sein.";
           delete element.businessObject.$attrs.prioritaet4;
         }
+        if(!isNaN(element.businessObject.$attrs.prioritaet4) && (
+          (element.businessObject.$attrs.prioritaet4 == element.businessObject.$attrs.prioritaet5)||
+          (element.businessObject.$attrs.prioritaet4 == element.businessObject.$attrs.prioritaet3)||
+          (element.businessObject.$attrs.prioritaet4 == element.businessObject.$attrs.prioritaet2) ||
+          (element.businessObject.$attrs.prioritaet4 == element.businessObject.$attrs.prioritaet))){
+            errorMessageP.prioritaet4 = "Priorität muss eindeutig sein.";
+            delete element.businessObject.$attrs.prioritaet4;
+          }
 
         if(!onlyChild){ 
           for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
@@ -1208,6 +1244,15 @@ group.entries.push(entryFactory.textField({
 
     if(prioritaet5 < 0){
       errorMessageP.prioritaet5 = "Priorität darf nicht kleiner 0 sein.";
+      delete element.businessObject.$attrs.prioritaet5;
+    }
+
+    if(!isNaN(element.businessObject.$attrs.prioritaet5) && (
+    (element.businessObject.$attrs.prioritaet5 == element.businessObject.$attrs.prioritaet4)||
+    (element.businessObject.$attrs.prioritaet5 == element.businessObject.$attrs.prioritaet3)||
+    (element.businessObject.$attrs.prioritaet5 == element.businessObject.$attrs.prioritaet2) ||
+    (element.businessObject.$attrs.prioritaet5 == element.businessObject.$attrs.prioritaet))){
+      errorMessageP.prioritaet5 = "Priorität muss eindeutig sein.";
       delete element.businessObject.$attrs.prioritaet5;
     }
 
