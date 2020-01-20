@@ -12,8 +12,9 @@ Erledigt:
 - ContextPad Schlüssel entfernen (wenn Icons auf Kreisen funktionieren)
 - ID Feld zu Subprozessen
 - Objekte richtig darstellen (Kreise rot, gelb & grün) 
-- SituationEvents (Kreise) dürfen nicht in Rect 100 reingezogen werden (bisher: gar keine Bewegung mehr nach Drankleben erlaubt)
+- SituationEvents (Kreise) dürfen nicht in Rect 100 reingezogen werden
 - Rect mit Score 100 hat die grünen/gelben/roten Kreise (evtl 1 oder mehrere, noch unsicher) drangeklebt  
+- SituationEvents sind nun am Rand des Scopes beweggbar 
 
 
 
