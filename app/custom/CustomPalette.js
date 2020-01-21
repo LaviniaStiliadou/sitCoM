@@ -50,6 +50,7 @@ export default class CustomPalette {
 		var number = shape.id.split(/[_]/);
 		shape.id = 'InnerScope_'+ number[1];
 		businessObject.id = shape.id;
+		businessObject.di.id = shape.id + '_di';
 
         shape.businessObject.di.isExpanded = true;
 		businessObject.$attrs.scope = 'InnerScope_'+ ++counter;
@@ -67,6 +68,7 @@ export default class CustomPalette {
 		var number = shape.id.split(/[_]/);
 		shape.id = 'OuterScope_'+ number[1];
 		businessObject.id = shape.id;
+		businessObject.di.id = shape.id + '_di';
 		
         shape.businessObject.di.isExpanded = true;
 		businessObject.$attrs.scope = 'OuterScope_'+ ++counter2;

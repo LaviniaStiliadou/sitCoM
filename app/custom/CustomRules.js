@@ -144,7 +144,7 @@ CustomRules.prototype.init = function() {
         position = context.position;
     var businessObject = context.shapes[0].businessObject;
 	
-     
+    console.log(context.shapes[0]);
     if(target != undefined){
       var targetBusinessObject = target.businessObject;
     if((is(context.shapes[0], 'bpmn:SubProcess')) && (businessObject.suitable == 200) &&
