@@ -16,7 +16,58 @@ export default function(group, element) {
       modelProperty : 'scope'
 	  }))
   }
+  
+  //display checkbox to activate compensation
+  //todo: validate erzeugt copmensationsymbol
+  if(isAny(element, ['bpmn:SubProcess']) && element.businessObject.suitable == 100){  
+	  group.entries.push(entryFactory.textField({
+      id : 'prioritaet',
+      description : 'Priorität',
+      label : 'Scope-Priorität',
+      modelProperty : 'prioritaet',
+      validate: function(element, values) {
+        var prioritaet = values.prioritaet;
+        var errorMessageP = {};
 
+        if (isNaN(prioritaet)) {
+          errorMessageP.prioritaet = "Priorität muss eine Nummer sein.";
+          delete element.businessObject.$attrs.prioritaet;
+        }
+		
+        var onlyChild = false;
+        if(element.parent.children.length == 1){
+             onlyChild = true;
+        }
+
+        if(prioritaet < 0){
+          errorMessageP.prioritaet = "Priorität darf nicht kleiner 0 sein.";
+          delete element.businessObject.$attrs.prioritaet;
+        }
+
+        if(!onlyChild){ 
+          for(var i = 0; i < element.parent.children.length; i++){
+            if(element != element.parent.children[i]){
+				if((element.businessObject.$attrs.prioritaet == element.parent.children[i].businessObject.$attrs.prioritaet) && (!isNaN(prioritaet))){
+					errorMessageP.prioritaet = "Priorität darf nicht gesetzt werden, da sie bereits in einem anderen Scope gesetzt wurde.";
+                    delete element.businessObject.$attrs.prioritaet;
+				}
+			}
+          }
+        }
+		
+        return errorMessageP;
+	  }
+  })),
+	  
+	  group.entries.push(entryFactory.checkbox({
+      id : 'compensationCheckbox',
+      description : 'Wenn Sie die Checkbox anklicken, ist compensation im scope erlaubt',
+      label : 'Compensation',
+      modelProperty : 'compensationCheckbox'
+	  }))
+  }
+
+  
   if(isAny(element, ['bpmn:BoundaryEvent']) && element.businessObject.suitable ==50){
 	  group.entries.push(entryFactory.checkbox({
       id : 'akkuCheckbox',
