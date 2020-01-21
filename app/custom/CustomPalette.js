@@ -45,6 +45,11 @@ export default class CustomPalette {
           width: 250,
           businessObject: businessObject
         });
+		
+		// Array - Splite die shape.id in NAME & Nummer (ohne _)
+		var number = shape.id.split(/[_]/);
+		shape.id = 'InnerScope_'+ number[1];
+		businessObject.id = shape.id;
 
         shape.businessObject.di.isExpanded = true;
 		businessObject.$attrs.scope = 'InnerScope_'+ ++counter;
@@ -58,6 +63,11 @@ export default class CustomPalette {
           businessObject: businessObject
         });
         
+        // Array - Splite die shape.id in NAME & Nummer (ohne _)
+		var number = shape.id.split(/[_]/);
+		shape.id = 'OuterScope_'+ number[1];
+		businessObject.id = shape.id;
+		
         shape.businessObject.di.isExpanded = true;
 		businessObject.$attrs.scope = 'OuterScope_'+ ++counter2;
         create.start(event, shape); 

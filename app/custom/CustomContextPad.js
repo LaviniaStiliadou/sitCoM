@@ -68,6 +68,11 @@ export default class CustomContextPad {
               width: 450,
               businessObject: businessObject
             });
+        	// Array - Splite die shape.id in NAME & Nummer (ohne _)
+            var number = shape.id.split(/[_]/);
+            shape.id = 'OuterScope_'+ number[1];
+            businessObject.id = shape.id;
+
             shape.businessObject.di.isExpanded = true;
 			businessObject.$attrs.scope = 'OuterScope_'+ incrementCounter2();
             autoPlace.append(element, shape);
@@ -89,6 +94,11 @@ export default class CustomContextPad {
             width: 450,
             businessObject: businessObject
           });
+          // Array - Splite die shape.id in NAME & Nummer (ohne _)
+          var number = shape.id.split(/[_]/);
+          shape.id = 'OuterScope_'+ number[1];
+          businessObject.id = shape.id;
+
           shape.businessObject.di.isExpanded = true;
 		  businessObject.$attrs.scope = 'OuterScope_'+ incrementCounter2();
           create.start(event, shape, element);
