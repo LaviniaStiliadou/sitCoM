@@ -112,11 +112,16 @@ CustomRules.prototype.init = function() {
       && targetBusinessObject.suitable == 100){
       return false;
     }
+	
+	// keine Verbindung von Scope 100 / 200 aus
+	if(is(source, 'bpmn:SubProcess') && (businessObject.suitable == 200 || businessObject.suitable == 100)) {
+	  return false;
+	}
 
-    if ((is(target, 'bpmn:SubProcess')) && targetBusinessObject.suitable == 100){
+	// keine Verbindung zu Scope 100 / 200 hin
+    if ((is(target, 'bpmn:SubProcess')) && (targetBusinessObject.suitable == 200 || targetBusinessObject.suitable == 100)){
       return false;
     }
-
 
     // damit Rect mit Score = 100 nicht mit Score = 200 verbunden werden duerfen
     if (is(target, 'bpmn:SubProcess') &&
@@ -124,6 +129,7 @@ CustomRules.prototype.init = function() {
       && targetBusinessObject.suitable == 200){
       return false;
     }
+		
   }
 
   /**
