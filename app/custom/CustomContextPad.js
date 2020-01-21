@@ -72,6 +72,7 @@ export default class CustomContextPad {
             var number = shape.id.split(/[_]/);
             shape.id = 'OuterScope_'+ number[1];
             businessObject.id = shape.id;
+            businessObject.di.id = shape.id + '_di';
 
             shape.businessObject.di.isExpanded = true;
 			businessObject.$attrs.scope = 'OuterScope_'+ incrementCounter2();
@@ -98,6 +99,7 @@ export default class CustomContextPad {
           var number = shape.id.split(/[_]/);
           shape.id = 'OuterScope_'+ number[1];
           businessObject.id = shape.id;
+          businessObject.di.id = shape.id + '_di';
 
           shape.businessObject.di.isExpanded = true;
 		  businessObject.$attrs.scope = 'OuterScope_'+ incrementCounter2();
