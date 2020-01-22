@@ -43,19 +43,130 @@ export default function(group, element) {
           errorMessageP.prioritaet = "Priorität darf nicht kleiner 0 sein.";
           delete element.businessObject.$attrs.prioritaet;
         }
+        //console.log(element);
 
         if(!onlyChild){ 
+    
           for(var i = 0; i < element.parent.children.length; i++){
-            if(element != element.parent.children[i]){
-				if((element.businessObject.$attrs.prioritaet == element.parent.children[i].businessObject.$attrs.prioritaet) && (!isNaN(prioritaet))){
-					errorMessageP.prioritaet = "Priorität darf nicht gesetzt werden, da sie bereits in einem anderen Scope gesetzt wurde.";
-                    delete element.businessObject.$attrs.prioritaet;
-				}
+            if(element != element.parent.children[i] && element.parent.children[i].type == 'bpmn:SubProcess' 
+            && element.parent.children[i].businessObject.suitable == 100){
+              var findOtherRed, findRed;
+              var findOtherGreen, findGreen;
+              var findOtherYellow, findYellow;
+              for(var j = 0; j < element.attachers.length; j++){
+                if(element.attachers[j].businessObject.suitable ==25){
+                  findRed = j;
+                }
+                
+                if(element.attachers[j].businessObject.suitable ==50){
+                  findYellow = j;
+                }
+                
+                if(element.attachers[j].businessObject.suitable ==100){
+                  findGreen = j;
+                }
+              
+              }
+              for(var j = 0; j < element.parent.children[i].attachers.length; j++){
+                  if(element.parent.children[i].attachers[j].businessObject.suitable ==25){
+                    findOtherRed = j;
+                  }
+                  if(element.parent.children[i].attachers[j].businessObject.suitable ==50){
+                    findOtherYellow = j;
+                  }
+                  if(element.parent.children[i].attachers[j].businessObject.suitable ==100){
+                    findOtherGreen = j;
+                  }
+                
+                }
+                if(!isNaN(findGreen) && !isNaN(findOtherGreen)){ 
+                  //console.log(element.attachers[findGreen].businessObject.$attrs.violation);
+                  var greenSame = false;
+                  if((element.attachers[findGreen].businessObject.$attrs.violation ==
+                     element.parent.children[i].attachers[findOtherGreen].businessObject.$attrs.violation)&&
+                     (element.attachers[findGreen].businessObject.$attrs.violation1 ==
+                      element.parent.children[i].attachers[findOtherGreen].businessObject.$attrs.violation1)&&
+                      (element.attachers[findGreen].businessObject.$attrs.violation2 ==
+                        element.parent.children[i].attachers[findOtherGreen].businessObject.$attrs.violation2)&&
+                        (element.attachers[findGreen].businessObject.$attrs.violation3 ==
+                          element.parent.children[i].attachers[findOtherGreen].businessObject.$attrs.violation3)&&
+                          (element.attachers[findGreen].businessObject.$attrs.violation4 ==
+                            element.parent.children[i].attachers[findOtherGreen].businessObject.$attrs.violation4)&&
+                            (element.attachers[findGreen].businessObject.$attrs.violation5 ==
+                              element.parent.children[i].attachers[findOtherGreen].businessObject.$attrs.violation5)){
+                                greenSame = true;
+                                
+                              }
+                            } 
+                  if(!isNaN(findRed) && !isNaN(findOtherRed)) {
+                    var redSame = false;
+                  if (element.attachers[findRed].businessObject.$attrs.violation ==
+                    element.parent.children[i].attachers[findOtherRed].businessObject.$attrs.violation &&
+                    (element.attachers[findRed].businessObject.$attrs.violation1 ==
+                     element.parent.children[i].attachers[findOtherRed].businessObject.$attrs.violation1)&&
+                     (element.attachers[findRed].businessObject.$attrs.violation2 ==
+                       element.parent.children[i].attachers[findOtherRed].businessObject.$attrs.violation2)&&
+                       (element.attachers[findRed].businessObject.$attrs.violation3 ==
+                         element.parent.children[i].attachers[findOtherRed].businessObject.$attrs.violation3)&&
+                         (element.attachers[findRed].businessObject.$attrs.violation4 ==
+                           element.parent.children[i].attachers[findOtherRed].businessObject.$attrs.violation4)&&
+                           (element.attachers[findRed].businessObject.$attrs.violation5 ==
+                             element.parent.children[i].attachers[findOtherRed].businessObject.$attrs.violation5)) {
+                                 redSame = true;
+                             }
+                            }
+                    if(!isNaN(findYellow) && !isNaN(findOtherYellow) ){     
+                      var yellowSame = false;
+                    if(element.attachers[findYellow].businessObject.$attrs.violation ==
+                        element.parent.children[i].attachers[findOtherYellow].businessObject.$attrs.violation&&
+                          (element.attachers[findYellow].businessObject.$attrs.violation1 ==
+                               element.parent.children[i].attachers[findOtherYellow].businessObject.$attrs.violation1)&&
+                               (element.attachers[findYellow].businessObject.$attrs.violation2 ==
+                                 element.parent.children[i].attachers[findOtherYellow].businessObject.$attrs.violation2)&&
+                                 (element.attachers[findYellow].businessObject.$attrs.violation3 ==
+                                   element.parent.children[i].attachers[findOtherYellow].businessObject.$attrs.violation3)&&
+                                   (element.attachers[findYellow].businessObject.$attrs.violation4 ==
+                                     element.parent.children[i].attachers[findOtherYellow].businessObject.$attrs.violation4)&&
+                                     (element.attachers[findYellow].businessObject.$attrs.violation5 ==
+                                       element.parent.children[i].attachers[findOtherYellow].businessObject.$attrs.violation5)){   
+                                    yellowSame = true;      
+                    }
+                  }
+                  if(yellowSame && redSame && greenSame){
+                  errorMessageP.prioritaet = "Die Scopes " + element.id + " und " + element.parent.children[i].id + " sind identisch."
+                  }
+                  if(((redSame && greenSame) || (redSame && yellowSame) || (yellowSame && greenSame))&& element.attachers.length == 2 && element.parent.children[i].attachers.length == 2){
+                    errorMessageP.prioritaet = "Die Scopes " + element.id + " und " + element.parent.children[i].id + " sind identisch."
+                  }
+                
+                  if(greenSame && element.attachers.length == 1 && element.parent.children[i].attachers.length == 1){
+                    errorMessageP.prioritaet = "Die Scopes " + element.id + " und " + element.parent.children[i].id + " sind identisch."
+                  }
+                  if(yellowSame && element.attachers.length == 1 && element.parent.children[i].attachers.length == 1){
+                    errorMessageP.prioritaet = "Die Scopes " + element.id + " und " + element.parent.children[i].id + " sind identisch."
+                  }
+                  if(redSame && element.attachers.length == 1 && element.parent.children[i].attachers.length == 1){
+                    errorMessageP.prioritaet = "Die Scopes " + element.id + " und " + element.parent.children[i].id + " sind identisch."
+                  }
+
+                  
+                 // console.log(element.parent.children[i].attachers[j]);
+
+                  //console.log(element.attachers[j]);
+                //if(element.attachers[j].businessObject.suitable == 25 && element.parent.children[i].attachers[j].businessObject.suitable == 25){
+                   //console.log("h");  
+                //}
+              }
+              if((element.businessObject.$attrs.prioritaet == element.parent.children[i].businessObject.$attrs.prioritaet) 
+              && (!isNaN(prioritaet))){
+					      errorMessageP.prioritaet = "Priorität darf nicht gesetzt werden, da sie bereits in einem anderen Scope gesetzt wurde.";
+                delete element.businessObject.$attrs.prioritaet;
+                              }
 			}
           }
-        }
+        
 		
-        return errorMessageP;
+          return errorMessageP;
 	  }
   })),
 	  
@@ -527,12 +638,74 @@ export default function(group, element) {
           errorMessageV.violation = "Nicht valide Eingabe, da violation mit Zahl beginnen muss.";
           delete element.businessObject.$attrs.violation; 
         }
+        
 
         if(violation < 0){
           errorMessageV.violation = "violation darf nicht kleiner 0 sein.";
           delete element.businessObject.$attrs.violation; 
         }
-
+        if(String(violation).match(/^[0-9]([a-z0-9]+)*$/)){
+          var matchFoundR = false, matchCircleR = false;
+          var matchFoundG = false, matchCircleG = false;
+          var scope;
+          for(var i=0; i<element.parent.children.length; i++){
+            console.log(element.parent.children[i].businessObject.$attrs.scope == violation);
+            if(element.parent.children[i].businessObject.$attrs.scope == violation){
+              scope = i;
+              if(element.businessObject.suitable == 25){
+                console.log(25);
+                for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+                  
+                  if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
+                    if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.violation > 0)){
+                      console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation);
+                     matchCircleR = true;
+                     console.log(100);
+                  }
+                }
+                }
+                for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+                  console.log(scope);
+                  if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
+                     matchFoundR = true;
+                     console.log(100);
+                  }
+                }  
+                if(!matchCircleR || !matchFoundR){
+            
+                  errorMessageV.violation = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
+                  delete element.businessObject.$attrs.violation; 
+                }
+              }
+              if(element.businessObject.suitable == 100){
+                console.log(25);
+                for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+                  
+                  if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
+                    if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.violation > 0)){
+                      console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation);
+                     matchCircleG = true;
+                     console.log(100);
+                  }
+                }
+                }
+                for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+                  console.log(scope);
+                  if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
+                     matchFoundG = true;
+                     console.log(100);
+                  }
+                } 
+                if(!matchCircleG || !matchFoundG){
+          
+                  errorMessageV.violation = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
+                  delete element.businessObject.$attrs.violation; 
+                } 
+              }
+        
+        }}
+        
+    }
         if(!onlyChild){ 
           for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
             // gibt violation vom anderen Kreis aus
@@ -704,7 +877,68 @@ export default function(group, element) {
         delete element.businessObject.$attrs.violation2;
       }
 
+      if(String(violation2).match(/^[0-9]([a-z0-9]+)*$/)){
+        var matchFoundR = false, matchCircleR = false;
+        var matchFoundG = false, matchCircleG = false;
+        var scope;
+        for(var i=0; i<element.parent.children.length; i++){
+          console.log(element.parent.children[i].businessObject.$attrs.scope == violation2);
+          if(element.parent.children[i].businessObject.$attrs.scope == violation2){
+            scope = i;
+            if(element.businessObject.suitable == 25){
+              console.log(25);
+              for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+                
+                if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
+                  if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.violation2 > 0)){
+                    console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation2);
+                   matchCircleR = true;
+                   console.log(100);
+                }
+              }
+              }
+              for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+                console.log(scope);
+                if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
+                   matchFoundR = true;
+                   console.log(100);
+                }
+              }  
+              if(!matchCircleR || !matchFoundR){
+          
+                errorMessageV.violation2= "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
+                delete element.businessObject.$attrs.violation2; 
+              }
+            }
+            if(element.businessObject.suitable == 100){
+              console.log(25);
+              for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+                
+                if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
+                  if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.violation2 > 0)){
+                    console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation2);
+                   matchCircleG = true;
+                   console.log(100);
+                }
+              }
+              }
+              for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+                console.log(scope);
+                if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
+                   matchFoundG = true;
+                   console.log(100);
+                }
+              } 
+              if(!matchCircleG || !matchFoundG){
+        
+                errorMessageV.violation2 = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
+                delete element.businessObject.$attrs.violation2; 
+              } 
+            }
       
+      }}
+      
+  }
 
       if(!onlyChild){ 
         for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
@@ -877,6 +1111,69 @@ export default function(group, element) {
           delete element.businessObject.$attrs.violation3;
         }
 
+        if(String(violation3).match(/^[0-9]([a-z0-9]+)*$/)){
+          var matchFoundR = false, matchCircleR = false;
+          var matchFoundG = false, matchCircleG = false;
+          var scope;
+          for(var i=0; i<element.parent.children.length; i++){
+            console.log(element.parent.children[i].businessObject.$attrs.scope == violation3);
+            if(element.parent.children[i].businessObject.$attrs.scope == violation3){
+              scope = i;
+              if(element.businessObject.suitable == 25){
+                console.log(25);
+                for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+                  
+                  if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
+                    if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.violation3 > 0)){
+                      console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation3);
+                     matchCircleR = true;
+                     console.log(100);
+                  }
+                }
+                }
+                for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+                  console.log(scope);
+                  if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
+                     matchFoundR = true;
+                     console.log(100);
+                  }
+                }  
+                if(!matchCircleR || !matchFoundR){
+            
+                  errorMessageV.violation3 = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
+                  delete element.businessObject.$attrs.violation3; 
+                }
+              }
+              if(element.businessObject.suitable == 100){
+                console.log(25);
+                for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+                  
+                  if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
+                    if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.violation3 > 0)){
+                      console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation3);
+                     matchCircleG = true;
+                     console.log(100);
+                  }
+                }
+                }
+                for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+                  console.log(scope);
+                  if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
+                     matchFoundG = true;
+                     console.log(100);
+                  }
+                } 
+                if(!matchCircleG || !matchFoundG){
+          
+                  errorMessageV.violation3 = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
+                  delete element.businessObject.$attrs.violation3; 
+                } 
+              }
+        
+        }}
+        
+    }
+
         if(!onlyChild){ 
           for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
             // gibt violation vom anderen Kreis aus
@@ -1046,6 +1343,69 @@ group.entries.push(entryFactory.textField({
           errorMessageV.violation4 = "violation darf nicht kleiner 0 sein.";
           delete element.businessObject.$attrs.violation4;
         }
+
+        if(String(violation4).match(/^[0-9]([a-z0-9]+)*$/)){
+          var matchFoundR = false, matchCircleR = false;
+          var matchFoundG = false, matchCircleG = false;
+          var scope;
+          for(var i=0; i<element.parent.children.length; i++){
+            console.log(element.parent.children[i].businessObject.$attrs.scope == violation4);
+            if(element.parent.children[i].businessObject.$attrs.scope == violation4){
+              scope = i;
+              if(element.businessObject.suitable == 25){
+                console.log(25);
+                for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+                  
+                  if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
+                    if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.violation4 > 0)){
+                      console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation4);
+                     matchCircleR = true;
+                     console.log(100);
+                  }
+                }
+                }
+                for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+                  console.log(scope);
+                  if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
+                     matchFoundR = true;
+                     console.log(100);
+                  }
+                }  
+                if(!matchCircleR || !matchFoundR){
+            
+                  errorMessageV.violation4 = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
+                  delete element.businessObject.$attrs.violation4; 
+                }
+              }
+              if(element.businessObject.suitable == 100){
+                console.log(25);
+                for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+                  
+                  if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
+                    if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.violation4 > 0)){
+                      console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation4);
+                     matchCircleG = true;
+                     console.log(100);
+                  }
+                }
+                }
+                for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+                  console.log(scope);
+                  if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
+                     matchFoundG = true;
+                     console.log(100);
+                  }
+                } 
+                if(!matchCircleG || !matchFoundG){
+          
+                  errorMessageV.violation4 = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
+                  delete element.businessObject.$attrs.violation4; 
+                } 
+              }
+        
+        }}
+        
+    }
 
         if(!onlyChild){ 
           for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
@@ -1219,6 +1579,69 @@ group.entries.push(entryFactory.textField({
       errorMessageV.violation5 = "violation darf nicht kleiner 0 sein.";
       delete element.businessObject.$attrs.violation5; 
     }
+
+    if(String(violation5).match(/^[0-9]([a-z0-9]+)*$/)){
+      var matchFoundR = false, matchCircleR = false;
+      var matchFoundG = false, matchCircleG = false;
+      var scope;
+      for(var i=0; i<element.parent.children.length; i++){
+        console.log(element.parent.children[i].businessObject.$attrs.scope == violation5);
+        if(element.parent.children[i].businessObject.$attrs.scope == violation5){
+          scope = i;
+          if(element.businessObject.suitable == 25){
+            console.log(25);
+            for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+              
+              if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
+                if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.violation5 > 0)){
+                  console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation5);
+                 matchCircleR = true;
+                 console.log(100);
+              }
+            }
+            }
+            for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+              console.log(scope);
+              if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
+                 matchFoundR = true;
+                 console.log(100);
+              }
+            }  
+            if(!matchCircleR || !matchFoundR){
+        
+              errorMessageV.violation5 = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
+              delete element.businessObject.$attrs.violation5; 
+            }
+          }
+          if(element.businessObject.suitable == 100){
+            console.log(25);
+            for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+              
+              if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
+                if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.violation5 > 0)){
+                  console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation5);
+                 matchCircleG = true;
+                 console.log(100);
+              }
+            }
+            }
+            for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+              console.log(scope);
+              if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
+                 matchFoundG = true;
+                 console.log(100);
+              }
+            } 
+            if(!matchCircleG || !matchFoundG){
+      
+              errorMessageV.violation5 = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
+              delete element.businessObject.$attrs.violation5; 
+            } 
+          }
+    
+    }}
+    
+}
 
     if(!onlyChild){ 
       for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){

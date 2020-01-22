@@ -1,3 +1,33 @@
+21.02.2020:
+Alex:
+- gleicher Prefix gleiche Situationen 
+
+Pawel:
+-Icons hinzufügen
+
+Marvin:
+- id von Subprozessen (beginnend mit Zahl)
+
+Alle:
+- Token Simulation für den jetzigen Use Case
+
+
+Erledigt:
+Marvin: 
+- fetter Scope Messageflow verbieten
+- Scope 100 zu Task in anderen Pool verbiete
+
+Timm:
+- Prioritätsfeld von Scope
+- Checkbox compensate
+
+Lavinia:
+- gleiche Scopes verhindern
+- Validieren von Eingaben, wenn Akku (grün) violation auf 2 gesetzt wird, aber
+bei Scope 2 Akku grün ist
+- violation id nur auf existierende scope id verweisen
+
+
 14.01.2020:
 - Icons auf Kreise legen 
 
