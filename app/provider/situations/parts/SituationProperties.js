@@ -13,7 +13,44 @@ export default function(group, element) {
       id : 'scope',
       description : 'ID der Scope zu der gesprungen wird',
       label : 'Scope ID',
-      modelProperty : 'scope'
+      modelProperty : 'scope',
+      validate: function(element, values) {
+        var scope = values.scope;
+        var errorMessageP = {};
+    
+       
+        if (isNaN(scope) && !String(scope).match(/^[0-9]([a-z0-9]+)*$/)) {
+          errorMessageP.scope = "Nicht valide Eingabe, da violation mit Zahl beginnen muss.";
+          delete element.businessObject.$attrs.scope;
+        }
+            
+        var onlyChild = false;
+        console.log("children");
+        console.log(element.parent.children.length-1);
+        if(element.parent.children.length-1 == 1){
+            onlyChild = true;
+        }
+            //console.log(element.parent.children);
+        if(scope < 0){
+            errorMessageP.scope = "Scope Id darf nicht kleiner 0 sein.";
+            delete element.businessObject.$attrs.scope;
+        }
+        console.log(1);
+        if(!onlyChild){ 
+         
+          for(var i = 0; i < element.parent.children.length; i++){
+            if(element.parent.children[i].type == 'bpmn:SubProcess' && element.id != element.parent.children[i].id ){
+            
+              if(String(element.parent.children[i].businessObject.$attrs.scope) === String(element.businessObject.$attrs.scope) && element.businessObject.$attrs.scope != ''){
+                errorMessageP.scope = "Scope Id muss eindeutig sein.";
+                delete element.businessObject.$attrs.scope;
+              }
+            }
+            
+          }
+        }
+            return errorMessageP;
+          }
 	  }))
   }
   
