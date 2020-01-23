@@ -649,7 +649,6 @@ export default function(group, element) {
           var matchFoundG = false, matchCircleG = false;
           var scope;
           for(var i=0; i<element.parent.children.length; i++){
-            console.log(element.parent.children[i].businessObject.$attrs.scope == violation);
             if(element.parent.children[i].businessObject.$attrs.scope == violation){
               scope = i;
               if(element.businessObject.suitable == 25){
@@ -671,11 +670,7 @@ export default function(group, element) {
                      console.log(100);
                   }
                 }  
-                if(!matchCircleR || !matchFoundR){
-            
-                  errorMessageV.violation = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
-                  delete element.businessObject.$attrs.violation; 
-                }
+                
               }
               if(element.businessObject.suitable == 100){
                 console.log(25);
@@ -696,14 +691,21 @@ export default function(group, element) {
                      console.log(100);
                   }
                 } 
-                if(!matchCircleG || !matchFoundG){
-          
-                  errorMessageV.violation = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
-                  delete element.businessObject.$attrs.violation; 
-                } 
+               
               }
         
-        }}
+        }
+      }
+      if((!matchCircleR || !matchFoundR) && (!matchCircleG || !matchFoundG)){
+            
+        errorMessageV.violation = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
+        delete element.businessObject.$attrs.violation; 
+      }
+      if((!matchCircleG || !matchFoundG) && (!matchCircleR || !matchFoundR)) {
+          
+        errorMessageV.violation = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
+        delete element.businessObject.$attrs.violation; 
+      } 
         
     }
         if(!onlyChild){ 
@@ -882,7 +884,6 @@ export default function(group, element) {
         var matchFoundG = false, matchCircleG = false;
         var scope;
         for(var i=0; i<element.parent.children.length; i++){
-          console.log(element.parent.children[i].businessObject.$attrs.scope == violation2);
           if(element.parent.children[i].businessObject.$attrs.scope == violation2){
             scope = i;
             if(element.businessObject.suitable == 25){
@@ -904,11 +905,7 @@ export default function(group, element) {
                    console.log(100);
                 }
               }  
-              if(!matchCircleR || !matchFoundR){
-          
-                errorMessageV.violation2= "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
-                delete element.businessObject.$attrs.violation2; 
-              }
+              
             }
             if(element.businessObject.suitable == 100){
               console.log(25);
@@ -929,14 +926,21 @@ export default function(group, element) {
                    console.log(100);
                 }
               } 
-              if(!matchCircleG || !matchFoundG){
-        
-                errorMessageV.violation2 = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
-                delete element.businessObject.$attrs.violation2; 
-              } 
+             
             }
       
-      }}
+      }
+    }
+    if((!matchCircleR || !matchFoundR) && (!matchCircleG || !matchFoundG)){
+          
+      errorMessageV.violation2 = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
+      delete element.businessObject.$attrs.violation2; 
+    }
+    if((!matchCircleG || !matchFoundG) && (!matchCircleR || !matchFoundR)) {
+        
+      errorMessageV.violation2 = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
+      delete element.businessObject.$attrs.violation2; 
+    } 
       
   }
 
@@ -1111,12 +1115,12 @@ export default function(group, element) {
           delete element.businessObject.$attrs.violation3;
         }
 
+        
         if(String(violation3).match(/^[0-9]([a-z0-9]+)*$/)){
           var matchFoundR = false, matchCircleR = false;
           var matchFoundG = false, matchCircleG = false;
           var scope;
           for(var i=0; i<element.parent.children.length; i++){
-            console.log(element.parent.children[i].businessObject.$attrs.scope == violation3);
             if(element.parent.children[i].businessObject.$attrs.scope == violation3){
               scope = i;
               if(element.businessObject.suitable == 25){
@@ -1138,11 +1142,7 @@ export default function(group, element) {
                      console.log(100);
                   }
                 }  
-                if(!matchCircleR || !matchFoundR){
-            
-                  errorMessageV.violation3 = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
-                  delete element.businessObject.$attrs.violation3; 
-                }
+                
               }
               if(element.businessObject.suitable == 100){
                 console.log(25);
@@ -1163,17 +1163,23 @@ export default function(group, element) {
                      console.log(100);
                   }
                 } 
-                if(!matchCircleG || !matchFoundG){
-          
-                  errorMessageV.violation3 = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
-                  delete element.businessObject.$attrs.violation3; 
-                } 
+               
               }
         
-        }}
+        }
+      }
+      if((!matchCircleR || !matchFoundR) && (!matchCircleG || !matchFoundG)){
+            
+        errorMessageV.violation3 = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
+        delete element.businessObject.$attrs.violation3; 
+      }
+      if((!matchCircleG || !matchFoundG) && (!matchCircleR || !matchFoundR)) {
+          
+        errorMessageV.violation3 = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
+        delete element.businessObject.$attrs.violation3; 
+      } 
         
     }
-
         if(!onlyChild){ 
           for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
             // gibt violation vom anderen Kreis aus
@@ -1349,7 +1355,6 @@ group.entries.push(entryFactory.textField({
           var matchFoundG = false, matchCircleG = false;
           var scope;
           for(var i=0; i<element.parent.children.length; i++){
-            console.log(element.parent.children[i].businessObject.$attrs.scope == violation4);
             if(element.parent.children[i].businessObject.$attrs.scope == violation4){
               scope = i;
               if(element.businessObject.suitable == 25){
@@ -1371,11 +1376,7 @@ group.entries.push(entryFactory.textField({
                      console.log(100);
                   }
                 }  
-                if(!matchCircleR || !matchFoundR){
-            
-                  errorMessageV.violation4 = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
-                  delete element.businessObject.$attrs.violation4; 
-                }
+                
               }
               if(element.businessObject.suitable == 100){
                 console.log(25);
@@ -1396,14 +1397,21 @@ group.entries.push(entryFactory.textField({
                      console.log(100);
                   }
                 } 
-                if(!matchCircleG || !matchFoundG){
-          
-                  errorMessageV.violation4 = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
-                  delete element.businessObject.$attrs.violation4; 
-                } 
+               
               }
         
-        }}
+        }
+      }
+      if((!matchCircleR || !matchFoundR) && (!matchCircleG || !matchFoundG)){
+            
+        errorMessageV.violation4 = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
+        delete element.businessObject.$attrs.violation4; 
+      }
+      if((!matchCircleG || !matchFoundG) && (!matchCircleR || !matchFoundR)) {
+          
+        errorMessageV.violation4 = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
+        delete element.businessObject.$attrs.violation4; 
+      } 
         
     }
 
@@ -1585,7 +1593,6 @@ group.entries.push(entryFactory.textField({
       var matchFoundG = false, matchCircleG = false;
       var scope;
       for(var i=0; i<element.parent.children.length; i++){
-        console.log(element.parent.children[i].businessObject.$attrs.scope == violation5);
         if(element.parent.children[i].businessObject.$attrs.scope == violation5){
           scope = i;
           if(element.businessObject.suitable == 25){
@@ -1607,11 +1614,7 @@ group.entries.push(entryFactory.textField({
                  console.log(100);
               }
             }  
-            if(!matchCircleR || !matchFoundR){
-        
-              errorMessageV.violation5 = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
-              delete element.businessObject.$attrs.violation5; 
-            }
+            
           }
           if(element.businessObject.suitable == 100){
             console.log(25);
@@ -1632,14 +1635,21 @@ group.entries.push(entryFactory.textField({
                  console.log(100);
               }
             } 
-            if(!matchCircleG || !matchFoundG){
-      
-              errorMessageV.violation5 = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
-              delete element.businessObject.$attrs.violation5; 
-            } 
+           
           }
     
-    }}
+    }
+  }
+  if((!matchCircleR || !matchFoundR) && (!matchCircleG || !matchFoundG)){
+        
+    errorMessageV.violation5 = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
+    delete element.businessObject.$attrs.violation5; 
+  }
+  if((!matchCircleG || !matchFoundG) && (!matchCircleR || !matchFoundR)) {
+      
+    errorMessageV.violation5 = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
+    delete element.businessObject.$attrs.violation5; 
+  } 
     
 }
 
