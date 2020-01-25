@@ -8,10 +8,6 @@ Pawel:
 
 Alle:
 - Token Simulation für den jetzigen Use Case
-- Id von Subprozessen 
-Stand: klappt ohne Participants, 
-       - Prüfung mit Participants
-       - aber bisher keine Prüfung, das für alle Innerscope.id != Outerscope.id gilt
 
 
 Erledigt:
@@ -28,6 +24,7 @@ Lavinia:
 - Validieren von Eingaben, wenn Akku (grün) violation auf 2 gesetzt wird, aber
 bei Scope 2 Akku grün ist
 - violation id nur auf existierende scope id verweisen
+- violation refrenziert auf Subprocess Prefix, deshalb scope Attribut nicht mehr nötig
 
 
 
