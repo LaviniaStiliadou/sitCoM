@@ -681,7 +681,7 @@ export default function(group, element) {
         
         
         //console.log(element.parent.children);
-        if (isNaN(violation) && !String(violation).match(/^[0-9]([a-z0-9]+)*$/)) {
+        if (!String(violation).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)) {
           errorMessageV.violation = "Nicht valide Eingabe, da violation mit Zahl beginnen muss.";
           delete element.businessObject.$attrs.violation; 
         }
@@ -691,57 +691,61 @@ export default function(group, element) {
           errorMessageV.violation = "violation darf nicht kleiner 0 sein.";
           delete element.businessObject.$attrs.violation; 
         }
-        if(String(violation).match(/^[0-9]([a-z0-9]+)*$/)){
+  
+        if(String(violation).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)){
+
           var matchFoundR = false, matchCircleR = false;
           var matchFoundG = false, matchCircleG = false;
           var scope;
           for(var i=0; i<element.parent.children.length; i++){
-            console.log(element.parent.children[kind].attachers[li].host);
+           // console.log(element.parent.children[kind].attachers[li].host);
             if(element.parent.children[i].businessObject.$attrs.scope == violation &&
               element.parent.children[kind].attachers[li].host.businessObject.$attrs.scope != violation){
               scope = i;
               if(element.businessObject.suitable == 25){
+             //   console.log("gg");
                 for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
                   var rot = false;
                   if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
-                    console.log("violation");
-                    rot = true;
-                    console.log(!(element.parent.children[scope].attachers[j].businessObject.$attrs.violation >0));
-                    if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.violation >0)){
-                      console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation);
-                     matchCircleR = true;
-                     console.log(100);
-                  }
+                  if((element.parent.children[scope].attachers[j].businessObject.$attrs.violation == undefined)){
+               //     console.log("vi");
+                    
+                   matchCircleR = true;
+                 //  console.log(matchCircleR);
                 }
+                
+                }
+                //console.log("va");
+                //console.log(matchCircleR);
                 }
                 for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
-                  console.log(scope);
-                  console.log()
-                  console.log(element.parent.children[scope].attachers[j].businessObject.suitable);
+                  //console.log(scope);
+                  //console.log()
+                  //console.log(element.parent.children[scope].attachers[j].businessObject.suitable);
                   if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
                      matchFoundR = true;
-                     console.log(100);
+                    // console.log(100);
                   }
                 }  
                 
               }
               if(element.businessObject.suitable == 100){
-                console.log(25);
+                //console.log(25);
                 for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
                   
                   if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
-                    if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.violation > 0)){
-                      console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation);
+                    if((element.parent.children[scope].attachers[j].businessObject.$attrs.violation == undefined)){
+                  //    console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation);
                      matchCircleG = true;
-                     console.log(100);
+                    // console.log(100);
                   }
                 }
                 }
                 for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
-                  console.log(scope);
+                 // console.log(scope);
                   if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
                      matchFoundG = true;
-                     console.log(100);
+                    // console.log(100);
                   }
                 } 
                 
@@ -749,8 +753,8 @@ export default function(group, element) {
         
         }
       }
-      console.log(!matchCircleR);
-      console.log(!matchFoundR);
+      //console.log(!matchCircleR);
+      //console.log(!matchFoundR);
       if(element.businessObject.suitable == 25){
           if((!matchCircleR || !matchFoundR) ){
             
@@ -772,8 +776,11 @@ export default function(group, element) {
           for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
             // gibt violation vom anderen Kreis aus
             if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
-              if (String(violation).match(/^[0-9]+$/)) {
-                if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.akkuCheckbox ||(!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation).match(/^[0-9]([a-z0-9]+)*$/)) && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation != '' ){
+              if (String(violation).match(/^InnerScope_[0-9]+$/)) {
+                if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.akkuCheckbox 
+                  ||(!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation)
+                   || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)) 
+                   && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation != '' ){
               
             //if((Number(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) >= 0 && Number(violation) >= 0)) {
               errorMessageV.violation = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
@@ -781,10 +788,11 @@ export default function(group, element) {
               //delete element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation;
             //}
           }}
-            if (String(violation).match(/^[0-9]([a-z0-9]+)*$/) && !(String(violation).match(/^[0-9]+$/))) {
+            if (String(violation).match(/^InnerScope_[0-9]([a-z0-9]+)*$/) && !(String(violation).match(/^InnerScope_[0-9]+$/))) {
              
-              if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.akkuCheckbox ||!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) 
-              || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation).match(/^[0-9]([a-z0-9]+)*$/)) 
+              if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.akkuCheckbox 
+                ||!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) 
+              || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)) 
               && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation != '' ){
               errorMessageV.violation = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
               delete element.businessObject.$attrs.violation; 
@@ -884,7 +892,6 @@ export default function(group, element) {
       if(element.businessObject.attachedToRef.$type == 'bpmn:SubProcess'&&
        element.businessObject.attachedToRef.suitable == 100){
 
-        
       // Typ
       //console.log(element.businessObject.attachedToRef.$type);
       // über alle durch bis children = attachers
@@ -927,104 +934,127 @@ export default function(group, element) {
              onlyChild = true;
              //console.log(onlyChild);
       }
+      //console.log(values);
+      
       
       //console.log(element.parent.children);
-      if (isNaN(violation2) && !String(violation2).match(/^[0-9]([a-z0-9]+)*$/)) {
+      if (!String(violation2).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)) {
         errorMessageV.violation2 = "Nicht valide Eingabe, da violation mit Zahl beginnen muss.";
-        delete element.businessObject.$attrs.violation2;
+        delete element.businessObject.$attrs.violation2; 
       }
+      
 
       if(violation2 < 0){
         errorMessageV.violation2 = "violation darf nicht kleiner 0 sein.";
-        delete element.businessObject.$attrs.violation2;
+        delete element.businessObject.$attrs.violation2; 
       }
 
-      if(String(violation2).match(/^[0-9]([a-z0-9]+)*$/)){
+      if(String(violation2).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)){
+
         var matchFoundR = false, matchCircleR = false;
         var matchFoundG = false, matchCircleG = false;
         var scope;
         for(var i=0; i<element.parent.children.length; i++){
-          if(element.parent.children[i].businessObject.$attrs.scope == violation2){
+         // console.log(element.parent.children[kind].attachers[li].host);
+          if(element.parent.children[i].businessObject.$attrs.scope == violation2 &&
+            element.parent.children[kind].attachers[li].host.businessObject.$attrs.scope != violation2){
             scope = i;
             if(element.businessObject.suitable == 25){
-              console.log(25);
+           //   console.log("gg");
               for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
-                
+                var rot = false;
                 if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
-                  if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.violation2 > 0)){
-                    console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation2);
-                   matchCircleR = true;
-                   console.log(100);
-                }
+                if((element.parent.children[scope].attachers[j].businessObject.$attrs.violation2 == undefined)){
+             //     console.log("vi");
+                  
+                 matchCircleR = true;
+               ///  console.log(matchCircleR);
               }
+              
+              }
+              //console.log("va");
+              //console.log(matchCircleR);
               }
               for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
-                console.log(scope);
+                //console.log(scope);
+                //console.log()
+                //console.log(element.parent.children[scope].attachers[j].businessObject.suitable);
                 if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
                    matchFoundR = true;
-                   console.log(100);
+                  // console.log(100);
                 }
               }  
               
             }
             if(element.businessObject.suitable == 100){
-              console.log(25);
+             // console.log(25);
               for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
                 
                 if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
-                  if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.violation2 > 0)){
-                    console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation2);
+                  if((element.parent.children[scope].attachers[j].businessObject.$attrs.violation2 == undefined)){
+                   // console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation2);
                    matchCircleG = true;
-                   console.log(100);
+                  // console.log(100);
                 }
               }
               }
               for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
-                console.log(scope);
+               // console.log(scope);
                 if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
                    matchFoundG = true;
-                   console.log(100);
+                  // console.log(100);
                 }
               } 
-             
+              
             }
       
       }
     }
-    if((!matchCircleR || !matchFoundR) && (!matchCircleG || !matchFoundG)){
+   // console.log(!matchCircleR);
+    //console.log(!matchFoundR);
+    if(element.businessObject.suitable == 25){
+        if((!matchCircleR || !matchFoundR) ){
           
       errorMessageV.violation2 = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
       delete element.businessObject.$attrs.violation2; 
     }
-    if((!matchCircleG || !matchFoundG) && (!matchCircleR || !matchFoundR)) {
+  }
+  if(element.businessObject.suitable == 100){
+  if((!matchCircleG || !matchFoundG)) {
         
-      errorMessageV.violation2 = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
-      delete element.businessObject.$attrs.violation2; 
-    } 
+    errorMessageV.violation2 = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
+    delete element.businessObject.$attrs.violation2; 
+  } 
+}
+  
       
   }
-
       if(!onlyChild){ 
         for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
           // gibt violation vom anderen Kreis aus
           if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
-            if (String(violation2).match(/^[0-9]+$/)) {
-              if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.spinneCheckbox || (!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation2) 
-              || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation2).match(/^[0-9]([a-z0-9]+)*$/))
-               && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation2 != '' ){
+            if (String(violation2).match(/^InnerScope_[0-9]+$/)) {
+              if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.spinneCheckbox 
+                ||(!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation2)
+                 || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation2).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)) 
+                 && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation2 != '' ){
             
           //if((Number(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) >= 0 && Number(violation) >= 0)) {
             errorMessageV.violation2 = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
-            delete element.businessObject.$attrs.violation2;
+            delete element.businessObject.$attrs.violation2; 
+            //delete element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation;
           //}
         }}
-          if (String(violation2).match(/^[0-9]([a-z0-9]+)*$/) && !(String(violation2).match(/^[0-9]+$/))) {
+          if (String(violation2).match(/^InnerScope_[0-9]([a-z0-9]+)*$/) && !(String(violation2).match(/^InnerScope_[0-9]+$/))) {
            
-            if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.spinneCheckbox ||(!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation2) 
-            || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation2).match(/^[0-9]([a-z0-9]+)*$/)) 
+            if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.spinneCheckbox 
+              ||!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation2) 
+            || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation2).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)) 
             && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation2 != '' ){
             errorMessageV.violation2 = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
-            delete element.businessObject.$attrs.violation2;
+            delete element.businessObject.$attrs.violation2; 
+            //delete element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation;
+            
           }
         }
 
@@ -1117,158 +1147,181 @@ export default function(group, element) {
     modelProperty : 'violation3',
     validate: function(element, values) {
       var violation3 = values.violation3;
-        var errorMessageV = {};
-        if(element.businessObject.attachedToRef.$type == 'bpmn:SubProcess'&&
-         element.businessObject.attachedToRef.suitable == 100){
+      var errorMessageV = {};
+      if(element.businessObject.attachedToRef.$type == 'bpmn:SubProcess'&&
+       element.businessObject.attachedToRef.suitable == 100){
 
-        // Typ
-        //console.log(element.businessObject.attachedToRef.$type);
-        // über alle durch bis children = attachers
-        // Index vom aktuellen Element
-        var find;
+      // Typ
+      //console.log(element.businessObject.attachedToRef.$type);
+      // über alle durch bis children = attachers
+      // Index vom aktuellen Element
+      var find;
 
-        var kind;
-        var li;
-        // woran es drangeklebt ist
-        // element.parent.children[0].attachers[0].host
-        //console.log(element.parent.children[0]);
-        //console.log(element.id);
-        for(var k = 0; k < element.parent.children.length-1; k++){
-          for(var l = 0; l < element.parent.children[k].attachers.length; l++){
-            for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
-            if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
-                kind = k;
-                li = l;
-                find = m;
-            }
-            }
+      var kind;
+      var li;
+      // woran es drangeklebt ist
+      // element.parent.children[0].attachers[0].host
+      //console.log(element.parent.children[0]);
+      //console.log(element.id);
+      for(var k = 0; k < element.parent.children.length-1; k++){
+        for(var l = 0; l < element.parent.children[k].attachers.length; l++){
+          for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
+          if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
+              kind = k;
+              li = l;
+              find = m;
           }
-
+          }
         }
 
-        //console.log(element.parent.children[0].attachers[0].host.id);
-        //console.log(element.parent.children.length);
-        //for(var i = 0; i<element.parent.children.length-1; i++){
-          //if(element.parent.children[0].attachers[0].host.attachers[i].id == element.id){
-            //  find = i;
-          //}
-       // }
-
-        //console.log("find"+find);
-        //console.log(element.parent.children[0].attachers[0].host.attachers[i].violation);
-        
-        var onlyChild = false;
-        //console.log("length"+ element.parent.children.length);
-        if(element.parent.children.length-1 == 1){
-               onlyChild = true;
-               //console.log(onlyChild);
-        }
-        
-        //console.log(element.parent.children);
-        if (isNaN(violation3) && !String(violation3).match(/^[0-9]([a-z0-9]+)*$/)) {
-          errorMessageV.violation3 = "Nicht valide Eingabe, da violation mit Zahl beginnen muss.";
-          delete element.businessObject.$attrs.violation3;
-        }
-
-        if(violation3 < 0){
-          errorMessageV.violation3 = "violation darf nicht kleiner 0 sein.";
-          delete element.businessObject.$attrs.violation3;
-        }
-
-        
-        if(String(violation3).match(/^[0-9]([a-z0-9]+)*$/)){
-          var matchFoundR = false, matchCircleR = false;
-          var matchFoundG = false, matchCircleG = false;
-          var scope;
-          for(var i=0; i<element.parent.children.length; i++){
-            if(element.parent.children[i].businessObject.$attrs.scope == violation3){
-              scope = i;
-              if(element.businessObject.suitable == 25){
-                console.log(25);
-                for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
-                  
-                  if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
-                    if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.violation3 > 0)){
-                      console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation3);
-                     matchCircleR = true;
-                     console.log(100);
-                  }
-                }
-                }
-                for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
-                  console.log(scope);
-                  if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
-                     matchFoundR = true;
-                     console.log(100);
-                  }
-                }  
-                
-              }
-              if(element.businessObject.suitable == 100){
-                console.log(25);
-                for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
-                  
-                  if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
-                    if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.violation3 > 0)){
-                      console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation3);
-                     matchCircleG = true;
-                     console.log(100);
-                  }
-                }
-                }
-                for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
-                  console.log(scope);
-                  if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
-                     matchFoundG = true;
-                     console.log(100);
-                  }
-                } 
-               
-              }
-        
-        }
       }
-      if((!matchCircleR || !matchFoundR) && (!matchCircleG || !matchFoundG)){
-            
-        errorMessageV.violation3 = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
+
+      //console.log(element.parent.children[0].attachers[0].host.id);
+      //console.log(element.parent.children.length);
+      //for(var i = 0; i<element.parent.children.length-1; i++){
+        //if(element.parent.children[0].attachers[0].host.attachers[i].id == element.id){
+          //  find = i;
+        //}
+     // }
+
+      //console.log("find"+find);
+      //console.log(element.parent.children[0].attachers[0].host.attachers[i].violation);
+      
+      var onlyChild = false;
+      //console.log("length"+ element.parent.children.length);
+      if(element.parent.children.length-1 == 1){
+             onlyChild = true;
+             //console.log(onlyChild);
+      }
+      //console.log(values);
+      
+      
+      //console.log(element.parent.children);
+      if (!String(violation3).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)) {
+        errorMessageV.violation3 = "Nicht valide Eingabe, da violation mit Zahl beginnen muss.";
         delete element.businessObject.$attrs.violation3; 
       }
-      if((!matchCircleG || !matchFoundG) && (!matchCircleR || !matchFoundR)) {
-          
-        errorMessageV.violation3 = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
+      
+
+      if(violation3 < 0){
+        errorMessageV.violation3 = "violation darf nicht kleiner 0 sein.";
         delete element.businessObject.$attrs.violation3; 
-      } 
-        
-    }
-        if(!onlyChild){ 
-          for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
-            // gibt violation vom anderen Kreis aus
-            if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
-              if (String(violation3).match(/^[0-9]+$/)) {
-                if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.menschCheckbox ||(!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3) 
-                || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3).match(/^[0-9]([a-z0-9]+)*$/)) 
-                && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3 != '' ){
+      }
+
+      if(String(violation3).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)){
+
+        var matchFoundR = false, matchCircleR = false;
+        var matchFoundG = false, matchCircleG = false;
+        var scope;
+        for(var i=0; i<element.parent.children.length; i++){
+          //console.log(element.parent.children[kind].attachers[li].host);
+          if(element.parent.children[i].businessObject.$attrs.scope == violation3 &&
+            element.parent.children[kind].attachers[li].host.businessObject.$attrs.scope != violation3){
+            scope = i;
+            if(element.businessObject.suitable == 25){
+              //console.log("gg");
+              for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+                var rot = false;
+                if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
+                if((element.parent.children[scope].attachers[j].businessObject.$attrs.violation3 == undefined)){
+                //  console.log("vi");
+                  
+                 matchCircleR = true;
+                 //console.log(matchCircleR);
+              }
               
-            //if((Number(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) >= 0 && Number(violation) >= 0)) {
-              errorMessageV.violation3 = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
-              delete element.businessObject.$attrs.violation3;
-            //}
-          }}
-            if (String(violation3).match(/^[0-9]([a-z0-9]+)*$/) && !(String(violation3).match(/^[0-9]+$/))) {
-             
-              if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.menschCheckbox ||(!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3) 
-              || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3).match(/^[0-9]([a-z0-9]+)*$/)) 
-              && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3 != '' ){
-              errorMessageV.violation3 = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
-              delete element.businessObject.$attrs.violation3;
+              }
+              //console.log("va");
+              //console.log(matchCircleR);
+              }
+              for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+                //console.log(scope);
+                //console.log()
+                //console.log(element.parent.children[scope].attachers[j].businessObject.suitable);
+                if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
+                   matchFoundR = true;
+                  // console.log(100);
+                }
+              }  
+              
             }
-          }
-
+            if(element.businessObject.suitable == 100){
+              //console.log(25);
+              for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+                
+                if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
+                  if((element.parent.children[scope].attachers[j].businessObject.$attrs.violation3 == undefined)){
+                    //console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation3);
+                   matchCircleG = true;
+                   //console.log(100);
+                }
+              }
+              }
+              for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+                //console.log(scope);
+                if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
+                   matchFoundG = true;
+                  // console.log(100);
+                }
+              } 
+              
+            }
+      
+      }
+    }
+    //console.log(!matchCircleR);
+    //console.log(!matchFoundR);
+    if(element.businessObject.suitable == 25){
+        if((!matchCircleR || !matchFoundR) ){
+          
+      errorMessageV.violation3 = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
+      delete element.businessObject.$attrs.violation3; 
+    }
+  }
+  if(element.businessObject.suitable == 100){
+  if((!matchCircleG || !matchFoundG)) {
+        
+    errorMessageV.violation3 = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
+    delete element.businessObject.$attrs.violation3; 
+  } 
+}
+  
+      
+  }
+      if(!onlyChild){ 
+        for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
+          // gibt violation vom anderen Kreis aus
+          if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
+            if (String(violation3).match(/^InnerScope_[0-9]+$/)) {
+              if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.menschCheckbox 
+                ||(!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3)
+                 || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)) 
+                 && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3 != '' ){
+            
+          //if((Number(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) >= 0 && Number(violation) >= 0)) {
+            errorMessageV.violation3 = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
+            delete element.businessObject.$attrs.violation3; 
+            //delete element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation;
+          //}
+        }}
+          if (String(violation3).match(/^InnerScope_[0-9]([a-z0-9]+)*$/) && !(String(violation3).match(/^InnerScope_[0-9]+$/))) {
+           
+            if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.menschCheckbox 
+              ||!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3) 
+            || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)) 
+            && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3 != '' ){
+            errorMessageV.violation = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
+            delete element.businessObject.$attrs.violation3; 
+            //delete element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation;
+            
           }
         }
+
+        }
       }
-        return errorMessageV;
-      }}
+    }
+      return errorMessageV;
+    }}
   })),
   group.entries.push(entryFactory.textField({
     id : 'prioritaet3',
@@ -1352,158 +1405,181 @@ group.entries.push(entryFactory.textField({
   modelProperty : 'violation4',
   validate: function(element, values) {
     var violation4 = values.violation4;
-        var errorMessageV = {};
-        if(element.businessObject.attachedToRef.$type == 'bpmn:SubProcess'&&
-         element.businessObject.attachedToRef.suitable == 100){
+    var errorMessageV = {};
+    if(element.businessObject.attachedToRef.$type == 'bpmn:SubProcess'&&
+     element.businessObject.attachedToRef.suitable == 100){
 
-        // Typ
-        //console.log(element.businessObject.attachedToRef.$type);
-        // über alle durch bis children = attachers
-        // Index vom aktuellen Element
-        var find;
+    // Typ
+    //console.log(element.businessObject.attachedToRef.$type);
+    // über alle durch bis children = attachers
+    // Index vom aktuellen Element
+    var find;
 
-        var kind;
-        var li;
-        // woran es drangeklebt ist
-        // element.parent.children[0].attachers[0].host
-        //console.log(element.parent.children[0]);
-        //console.log(element.id);
-        for(var k = 0; k < element.parent.children.length-1; k++){
-          for(var l = 0; l < element.parent.children[k].attachers.length; l++){
-            for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
-            if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
-                kind = k;
-                li = l;
-                find = m;
-            }
-            }
-          }
-
+    var kind;
+    var li;
+    // woran es drangeklebt ist
+    // element.parent.children[0].attachers[0].host
+    //console.log(element.parent.children[0]);
+    //console.log(element.id);
+    for(var k = 0; k < element.parent.children.length-1; k++){
+      for(var l = 0; l < element.parent.children[k].attachers.length; l++){
+        for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
+        if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
+            kind = k;
+            li = l;
+            find = m;
         }
-
-        //console.log(element.parent.children[0].attachers[0].host.id);
-        //console.log(element.parent.children.length);
-        //for(var i = 0; i<element.parent.children.length-1; i++){
-          //if(element.parent.children[0].attachers[0].host.attachers[i].id == element.id){
-            //  find = i;
-          //}
-       // }
-
-        //console.log("find"+find);
-        //console.log(element.parent.children[0].attachers[0].host.attachers[i].violation);
-        
-        var onlyChild = false;
-        //console.log("length"+ element.parent.children.length);
-        if(element.parent.children.length-1 == 1){
-               onlyChild = true;
-               //console.log(onlyChild);
-        }
-        
-        //console.log(element.parent.children);
-        if (isNaN(violation4) && !String(violation4).match(/^[0-9]([a-z0-9]+)*$/)) {
-          errorMessageV.violation4 = "Nicht valide Eingabe, da violation mit Zahl beginnen muss.";
-          delete element.businessObject.$attrs.violation4;
-        }
-
-        if(violation4 < 0){
-          errorMessageV.violation4 = "violation darf nicht kleiner 0 sein.";
-          delete element.businessObject.$attrs.violation4;
-        }
-
-        if(String(violation4).match(/^[0-9]([a-z0-9]+)*$/)){
-          var matchFoundR = false, matchCircleR = false;
-          var matchFoundG = false, matchCircleG = false;
-          var scope;
-          for(var i=0; i<element.parent.children.length; i++){
-            if(element.parent.children[i].businessObject.$attrs.scope == violation4){
-              scope = i;
-              if(element.businessObject.suitable == 25){
-                console.log(25);
-                for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
-                  
-                  if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
-                    if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.violation4 > 0)){
-                      console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation4);
-                     matchCircleR = true;
-                     console.log(100);
-                  }
-                }
-                }
-                for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
-                  console.log(scope);
-                  if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
-                     matchFoundR = true;
-                     console.log(100);
-                  }
-                }  
-                
-              }
-              if(element.businessObject.suitable == 100){
-                console.log(25);
-                for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
-                  
-                  if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
-                    if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.violation4 > 0)){
-                      console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation4);
-                     matchCircleG = true;
-                     console.log(100);
-                  }
-                }
-                }
-                for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
-                  console.log(scope);
-                  if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
-                     matchFoundG = true;
-                     console.log(100);
-                  }
-                } 
-               
-              }
-        
         }
       }
-      if((!matchCircleR || !matchFoundR) && (!matchCircleG || !matchFoundG)){
-            
-        errorMessageV.violation4 = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
-        delete element.businessObject.$attrs.violation4; 
-      }
-      if((!matchCircleG || !matchFoundG) && (!matchCircleR || !matchFoundR)) {
-          
-        errorMessageV.violation4 = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
-        delete element.businessObject.$attrs.violation4; 
-      } 
-        
+
     }
 
-        if(!onlyChild){ 
-          for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
-            // gibt violation vom anderen Kreis aus
-            if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
-              if (String(violation4).match(/^[0-9]+$/)) {
-                if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.kameraCheckbox ||(!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4) 
-                || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4).match(/^[0-9]([a-z0-9]+)*$/)) 
-                && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4 != '' ){
-              
-            //if((Number(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) >= 0 && Number(violation) >= 0)) {
-              errorMessageV.violation4 = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
-              delete element.businessObject.$attrs.violation4;
-            //}
-          }}
-            if (String(violation4).match(/^[0-9]([a-z0-9]+)*$/) && !(String(violation4).match(/^[0-9]+$/))) {
-             
-              if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.kameraCheckbox ||(!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4) 
-              || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4).match(/^[0-9]([a-z0-9]+)*$/)) 
-              && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4 != '' ){
-              errorMessageV.violation4 = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
-              delete element.businessObject.$attrs.violation4;
-            }
-          }
+    //console.log(element.parent.children[0].attachers[0].host.id);
+    //console.log(element.parent.children.length);
+    //for(var i = 0; i<element.parent.children.length-1; i++){
+      //if(element.parent.children[0].attachers[0].host.attachers[i].id == element.id){
+        //  find = i;
+      //}
+   // }
 
+    //console.log("find"+find);
+    //console.log(element.parent.children[0].attachers[0].host.attachers[i].violation);
+    
+    var onlyChild = false;
+    //console.log("length"+ element.parent.children.length);
+    if(element.parent.children.length-1 == 1){
+           onlyChild = true;
+           //console.log(onlyChild);
+    }
+    //console.log(values);
+    
+    
+    //console.log(element.parent.children);
+    if (!String(violation4).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)) {
+      errorMessageV.violation4 = "Nicht valide Eingabe, da violation mit Zahl beginnen muss.";
+      delete element.businessObject.$attrs.violation4; 
+    }
+    
+
+    if(violation4 < 0){
+      errorMessageV.violation = "violation darf nicht kleiner 0 sein.";
+      delete element.businessObject.$attrs.violation4; 
+    }
+
+    if(String(violation4).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)){
+
+      var matchFoundR = false, matchCircleR = false;
+      var matchFoundG = false, matchCircleG = false;
+      var scope;
+      for(var i=0; i<element.parent.children.length; i++){
+       // console.log(element.parent.children[kind].attachers[li].host);
+        if(element.parent.children[i].businessObject.$attrs.scope == violation4&&
+          element.parent.children[kind].attachers[li].host.businessObject.$attrs.scope != violation4){
+          scope = i;
+          if(element.businessObject.suitable == 25){
+           // console.log("gg");
+            for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+              var rot = false;
+              if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
+              if((element.parent.children[scope].attachers[j].businessObject.$attrs.violation4 == undefined)){
+             ///   console.log("vi");
+                
+               matchCircleR = true;
+               //console.log(matchCircleR);
+            }
+            
+            }
+            //console.log("va");
+            //console.log(matchCircleR);
+            }
+            for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+              ///console.log(scope);
+              //console.log()
+              //console.log(element.parent.children[scope].attachers[j].businessObject.suitable);
+              if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
+                 matchFoundR = true;
+                // console.log(100);
+              }
+            }  
+            
           }
+          if(element.businessObject.suitable == 100){
+            //console.log(25);
+            for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+              
+              if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
+                if((element.parent.children[scope].attachers[j].businessObject.$attrs.violation4 == undefined)){
+              //    console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation4);
+                 matchCircleG = true;
+                // console.log(100);
+              }
+            }
+            }
+            for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+              //console.log(scope);
+              if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
+                 matchFoundG = true;
+                // console.log(100);
+              }
+            } 
+            
+          }
+    
+    }
+  }
+  //console.log(!matchCircleR);
+  //console.log(!matchFoundR);
+  if(element.businessObject.suitable == 25){
+      if((!matchCircleR || !matchFoundR) ){
+        
+    errorMessageV.violation4 = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
+    delete element.businessObject.$attrs.violation4; 
+  }
+}
+if(element.businessObject.suitable == 100){
+if((!matchCircleG || !matchFoundG)) {
+      
+  errorMessageV.violation4 = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
+  delete element.businessObject.$attrs.violation4; 
+} 
+}
+
+    
+}
+    if(!onlyChild){ 
+      for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
+        // gibt violation vom anderen Kreis aus
+        if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
+          if (String(violation4).match(/^InnerScope_[0-9]+$/)) {
+            if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.kameraCheckbox 
+              ||(!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4)
+               || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)) 
+               && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4 != '' ){
+          
+        //if((Number(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) >= 0 && Number(violation) >= 0)) {
+          errorMessageV.violation4 = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
+          delete element.businessObject.$attrs.violation4; 
+          //delete element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation;
+        //}
+      }}
+        if (String(violation4).match(/^InnerScope_[0-9]([a-z0-9]+)*$/) && !(String(violation4).match(/^InnerScope_[0-9]+$/))) {
+         
+          if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.akkuCheckbox 
+            ||!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4) 
+          || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)) 
+          && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4 != '' ){
+          errorMessageV.violation4 = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
+          delete element.businessObject.$attrs.violation4; 
+          //delete element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation;
+          
         }
       }
-        return errorMessageV;
-      }}
+
+      }
+    }
+  }
+    return errorMessageV;
+  }}
 })),
 group.entries.push(entryFactory.textField({
   id : 'prioritaet4',
@@ -1638,87 +1714,106 @@ group.entries.push(entryFactory.textField({
     
     
     //console.log(element.parent.children);
-    if (isNaN(violation5) && !String(violation5).match(/^[0-9]([a-z0-9]+)*$/)) {
+    if (!String(violation5).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)) {
       errorMessageV.violation5 = "Nicht valide Eingabe, da violation mit Zahl beginnen muss.";
       delete element.businessObject.$attrs.violation5; 
     }
+    
 
     if(violation5 < 0){
       errorMessageV.violation5 = "violation darf nicht kleiner 0 sein.";
       delete element.businessObject.$attrs.violation5; 
     }
 
-    if(String(violation5).match(/^[0-9]([a-z0-9]+)*$/)){
+    if(String(violation5).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)){
+
       var matchFoundR = false, matchCircleR = false;
       var matchFoundG = false, matchCircleG = false;
       var scope;
       for(var i=0; i<element.parent.children.length; i++){
-        if(element.parent.children[i].businessObject.$attrs.scope == violation5){
+       // console.log(element.parent.children[kind].attachers[li].host);
+        if(element.parent.children[i].businessObject.$attrs.scope == violation5 &&
+          element.parent.children[kind].attachers[li].host.businessObject.$attrs.scope != violation5){
           scope = i;
           if(element.businessObject.suitable == 25){
-            console.log(25);
+           // console.log("gg");
             for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
-              
+              var rot = false;
               if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
-                if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.violation5 > 0)){
-                  console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation5);
-                 matchCircleR = true;
-                 console.log(100);
-              }
+              if((element.parent.children[scope].attachers[j].businessObject.$attrs.violation5 == undefined)){
+             //   console.log("vi");
+                
+               matchCircleR = true;
+               //console.log(matchCircleR);
             }
+            
+            }
+            //console.log("va");
+            //console.log(matchCircleR);
             }
             for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
-              console.log(scope);
+              //console.log(scope);
+              //console.log()
+              //console.log(element.parent.children[scope].attachers[j].businessObject.suitable);
               if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
                  matchFoundR = true;
-                 console.log(100);
+                 //console.log(100);
               }
             }  
             
           }
           if(element.businessObject.suitable == 100){
-            console.log(25);
+           // console.log(25);
             for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
               
               if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
-                if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.violation5 > 0)){
-                  console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation5);
+                if((element.parent.children[scope].attachers[j].businessObject.$attrs.violation5 == undefined)){
+             //     console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation5);
                  matchCircleG = true;
-                 console.log(100);
+               //  console.log(100);
               }
             }
             }
             for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
-              console.log(scope);
+             // console.log(scope);
               if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
                  matchFoundG = true;
-                 console.log(100);
+               //  console.log(100);
               }
             } 
-           
+            
           }
     
     }
   }
-  if((!matchCircleR || !matchFoundR) && (!matchCircleG || !matchFoundG)){
+  //console.log(!matchCircleR);
+  //console.log(!matchFoundR);
+  if(element.businessObject.suitable == 25){
+      if((!matchCircleR || !matchFoundR) ){
         
     errorMessageV.violation5 = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
     delete element.businessObject.$attrs.violation5; 
   }
-  if((!matchCircleG || !matchFoundG) && (!matchCircleR || !matchFoundR)) {
+}
+if(element.businessObject.suitable == 100){
+if((!matchCircleG || !matchFoundG)) {
       
-    errorMessageV.violation5 = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
-    delete element.businessObject.$attrs.violation5; 
-  } 
-    
+  errorMessageV.violation5 = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
+  delete element.businessObject.$attrs.violation5; 
+} 
 }
 
+    
+}
     if(!onlyChild){ 
       for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
         // gibt violation vom anderen Kreis aus
         if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
-          if (String(violation5).match(/^[0-9]+$/)) {
-            if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.updateCheckbox ||(!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation5) || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation5).match(/^[0-9]([a-z0-9]+)*$/)) && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation5 != '' ){
+          if (String(violation5).match(/^InnerScope_[0-9]+$/)) {
+            if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.upgradeCheckbox 
+              ||(!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation5)
+               || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation5).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)) 
+               && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation5 != '' ){
           
         //if((Number(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) >= 0 && Number(violation) >= 0)) {
           errorMessageV.violation5 = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
@@ -1726,10 +1821,11 @@ group.entries.push(entryFactory.textField({
           //delete element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation;
         //}
       }}
-        if (String(violation5).match(/^[0-9]([a-z0-9]+)*$/) && !(String(violation5).match(/^[0-9]+$/))) {
+        if (String(violation5).match(/^InnerScope_[0-9]([a-z0-9]+)*$/) && !(String(violation5).match(/^InnerScope_[0-9]+$/))) {
          
-          if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.updateCheckbox ||(!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation5) 
-          || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation5).match(/^[0-9]([a-z0-9]+)*$/)) 
+          if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.upgradeCheckbox 
+            ||!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation5) 
+          || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation5).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)) 
           && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation5 != '' ){
           errorMessageV.violation5 = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
           delete element.businessObject.$attrs.violation5; 
@@ -1742,76 +1838,6 @@ group.entries.push(entryFactory.textField({
     }
   }
     return errorMessageV;
-  }
-}})),
-group.entries.push(entryFactory.textField({
-  id : 'prioritaet5',
-  description : 'Priorität',
-  label : 'Update-Priorität',
-  modelProperty : 'prioritaet5',
-  validate: function(element, values) {
-    var prioritaet5 = values.prioritaet5;
-    var errorMessageP = {};
-    if(element.businessObject.$attrs.violation5 == undefined){
-      errorMessageP.prioritaet5 = "Setze zuerst violation Attribut.";
-      delete element.businessObject.$attrs.prioritaet5;
-    }
-
-    if (isNaN(prioritaet5)) {
-      errorMessageP.prioritaet5 = "Priorität muss eine Nummer sein.";
-      delete element.businessObject.$attrs.prioritaet5;
-    }
-
-    if(element.businessObject.attachedToRef.$type == 'bpmn:SubProcess'&&
-       element.businessObject.attachedToRef.suitable == 100){
-       // Index vom aktuellen Element
-        var find;
-
-        var kind;
-        var li;
-        for(var k = 0; k < element.parent.children.length-1; k++){
-          for(var l = 0; l < element.parent.children[k].attachers.length; l++){
-            for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
-              if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
-                kind = k;
-                li = l;
-                find = m;
-              }
-            }
-           }
-        }
-
-    var onlyChild = false;
-    if(element.parent.children.length-1 == 1){
-           onlyChild = true;
-    }
-
-    if(prioritaet5 < 0){
-      errorMessageP.prioritaet5 = "Priorität darf nicht kleiner 0 sein.";
-      delete element.businessObject.$attrs.prioritaet5;
-    }
-
-    if(!isNaN(element.businessObject.$attrs.prioritaet5) && (
-    (element.businessObject.$attrs.prioritaet5 == element.businessObject.$attrs.prioritaet4)||
-    (element.businessObject.$attrs.prioritaet5 == element.businessObject.$attrs.prioritaet3)||
-    (element.businessObject.$attrs.prioritaet5 == element.businessObject.$attrs.prioritaet2) ||
-    (element.businessObject.$attrs.prioritaet5 == element.businessObject.$attrs.prioritaet))){
-      errorMessageP.prioritaet5 = "Priorität muss eindeutig sein.";
-      delete element.businessObject.$attrs.prioritaet5;
-    }
-
-    if(!onlyChild){ 
-      for(var i = 0; i < element.parent.children[kind].attachers[li].host.attachers.length; i++){
-        // gibt prioritaet vom anderen Kreis aus
-        if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
-          if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.prioritaet5 >= 0 && prioritaet5 >= 0)) {
-            errorMessageP.prioritaet5 = "Priorität darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
-            delete element.businessObject.$attrs.prioritaet5;
-          }
-        }
-      }
-    }
-    return errorMessageP;
   }}
 }))
   //addEntry(group, document.getElementById('situations').value);
