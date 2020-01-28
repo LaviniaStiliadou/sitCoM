@@ -2,16 +2,26 @@
 
 Pawel:
 -Icons hinzufügen
+- für gelben Kreis ein dont care icon.. such dir eins aus
+evtl. [- Spinne, Akku, Kamera, Update, Mensch Icons hinzufügen (siehe Situation Tab)]
 
+Alex:
+- gleicher Prefix gleiche Situationen  (OuterScope übergreifend)
 
 Alle:
 - Token Simulation für den jetzigen Use Case
+- Palette farbe fixen (2 sind schwarz)
+- Participant Atttribut
+- Pawels zeug einbinden
+- übersetzen ins Englische (kompletter Code)
+- proof reading (aus Benutzersicht)
+- BPMNRenderer Zeile 1599 innerer Kreis stroke: none
+- scope-Attribut entfernen
 
 
 Erledigt:
 
-Alex:
-- gleicher Prefix gleiche Situationen 
+
 
 Marvin: 
 - fetter Scope Messageflow verbieten
