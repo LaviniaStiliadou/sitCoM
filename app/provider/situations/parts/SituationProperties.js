@@ -205,7 +205,7 @@ export default function(group, element) {
                 //}
               }
               if((element.businessObject.$attrs.prioritaet == element.parent.children[i].businessObject.$attrs.prioritaet) 
-              && (!isNaN(prioritaet))){
+              && (!isNaN(prioritaet)) && (element != element.parent.children[i])){
 					      errorMessageP.prioritaet = "Priorität darf nicht gesetzt werden, da sie bereits in einem anderen Scope gesetzt wurde.";
                 delete element.businessObject.$attrs.prioritaet;
                               }
