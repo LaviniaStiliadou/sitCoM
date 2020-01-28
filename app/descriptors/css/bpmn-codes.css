@@ -110,4 +110,8 @@
 .bpmn-icon-emo-angry:before { content: '\e86c'; } /* '' */
 .bpmn-icon-marquee:before { content: '\e86d'; } /* '' */
 .bpmn-icon-check-empty:before { content: '\e86e'; } /* '' */
+.bpmn-icon-bat1:before { content: '\e86f'; } /* '' */
+.bpmn-icon-bat4:before { content: '\e870'; } /* '' */
+.bpmn-icon-adult:before { content: '\e871'; } /* '' */
+.bpmn-icon-spider:before { content: '\e872'; } /* '' */
 .bpmn-icon-transaction:before { content: '\e8c4'; } /* '' */
