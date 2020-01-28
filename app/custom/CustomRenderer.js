@@ -81,21 +81,23 @@ export default class CustomRenderer extends BaseRenderer {
 			if (businessObject.suitable == 25) {
         
 			svgAttr(circle2, {
-			fill: 'white',
+			fill: 'none',
 			stroke: 'red'
       });
     }
 			
 			if (businessObject.suitable == 50) {
+			svgAttr(circle, {fill: 'yellow',
+			stroke: 'yellow'});
 			svgAttr(circle2, {
-			fill: 'white',
+			fill: 'none',
 			stroke: 'yellow'
 			});
 			}
 			
 			if (businessObject.suitable == 100) {
 			svgAttr(circle2, {
-			fill: 'white',
+			fill: 'none',
 			stroke: 'green'
 			});
       }
@@ -103,7 +105,7 @@ export default class CustomRenderer extends BaseRenderer {
       prependTo(circle, circle2);
       //prependTo(circle2, parentNode);
       
-      svgRemove(shape);
+      //svgRemove(shape);
 			//prependTo(circle2, circle);
 
       
@@ -212,6 +214,8 @@ function drawCircleI(parentNode, width, height) {
 		cy: height,
 		r: Math.round((width + height) / 4),
         strokeWidth: 2,
+		fill: 'white',
+		stroke: 'yellow'
 	});
 	
 	svgAppend(parentNode, circle);

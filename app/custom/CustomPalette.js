@@ -113,8 +113,8 @@ export default class CustomPalette {
     return {
       'create.red-circle': {
         group: 'activity',
-        className: 'bpmn-icon-intermediate-event-none red',
-        title: translate('Create red circle'),
+        className: 'bpmn-icon-start-event-none red',
+        title: translate('Create Situation (Inactive)'),
         action: {
           dragstart: createCircle(SUITABILITY_SCORE_LOW),
           click: createCircle(SUITABILITY_SCORE_LOW)
@@ -122,8 +122,8 @@ export default class CustomPalette {
       },
       'create.yellow-circle': {
         group: 'activity',
-        className: 'bpmn-icon-intermediate-event-none yellow',
-        title: translate('Create yellow circle'),
+        className: 'bpmn-icon-start-event-none yellow',
+        title: translate('Create Situation (Don\'t care)'),
         action: {
           dragstart: createCircle(SUITABILITY_SCORE_AVERGE),
           click: createCircle(SUITABILITY_SCORE_AVERGE)
@@ -131,8 +131,8 @@ export default class CustomPalette {
       },
       'create.green-circle': {
         group: 'activity',
-        className: 'bpmn-icon-intermediate-event-none green',
-        title: translate('Create green circle'),
+        className: 'bpmn-icon-start-event-none green',
+        title: translate('Create Situation (Active)'),
         action: {
           dragstart: createCircle(SUITABILITY_SCORE_HIGH),
           click: createCircle(SUITABILITY_SCORE_HIGH)
