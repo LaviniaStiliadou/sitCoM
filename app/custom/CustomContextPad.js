@@ -1,3 +1,5 @@
+import {incrementCounter2} from './CustomPalette';
+
 const SUITABILITY_SCORE_HIGH = 100,
 SUITABILITY_SCORE_AVERGE = 50,
 SUITABILITY_SCORE_LOW = 25,
@@ -62,8 +64,12 @@ export default class CustomContextPad {
             businessObject.suitable = suitabilityScore;
             const shape = elementFactory.createShape({
               type: 'bpmn:SubProcess',
+              height: 400,
+              width: 450,
               businessObject: businessObject
             });
+            shape.businessObject.di.isExpanded = true;
+			businessObject.$attrs.scope = 'OuterScope_'+ incrementCounter2();
             autoPlace.append(element, shape);
           } else {
             appendOuterRectStart(event, element);
@@ -79,13 +85,18 @@ export default class CustomContextPad {
   
           const shape = elementFactory.createShape({
             type: 'bpmn:SubProcess',
+            height: 400,
+            width: 450,
             businessObject: businessObject
           });
+          shape.businessObject.di.isExpanded = true;
+		  businessObject.$attrs.scope = 'OuterScope_'+ incrementCounter2();
           create.start(event, shape, element);
         }
       }
 
     var businessObject = element.businessObject;
+    /** 
     if ((element.type === "bpmn:SubProcess") && (businessObject.suitable == 100)){
         return {
             'append.red-circle': {
@@ -117,7 +128,9 @@ export default class CustomContextPad {
             }
         }
     };
-    } else if ((element.type === 'bpmn:SubProcess') && (businessObject.suitable == 200)){
+}
+    */
+     if ((element.type === 'bpmn:SubProcess') && (businessObject.suitable == 200)){
         return{
             'append.outer-rect': {
                 group: 'model',

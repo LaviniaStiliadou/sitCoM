@@ -4,7 +4,8 @@ import {
   append as svgAppend,
   attr as svgAttr,
   classes as svgClasses,
-  create as svgCreate
+  create as svgCreate,
+  remove as svgRemove
 } from 'tiny-svg';
 
 import {
@@ -42,9 +43,76 @@ export default class CustomRenderer extends BaseRenderer {
     const shape = this.bpmnRenderer.drawShape(parentNode, element);
 
     const suitabilityScore = this.getSuitabilityScore(element);
+	
+	var businessObject = element.businessObject;
 
     if (!isNil(suitabilityScore)) {
+		
+	  if (is(element, 'bpmn:SubProcess')) {
+
+          const rect2 = drawRect(parentNode, element.width, element.height, 10, '#000000');
+
+          if (businessObject.suitable == 200) {
+            svgAttr(rect2, {
+		    fill: 'white',
+            strokeWidth: 8
+            });
+          }
+
+          if (businessObject.suitable == 100) {
+            svgAttr(rect2, {
+		    fill: 'white',
+            strokeDasharray: '5,5'
+            });
+          }
+	  
+	      prependTo(rect2, parentNode);
+
+          svgRemove(shape);
+        }
+		
       const color = this.getColor(suitabilityScore);
+
+		if (is(element, 'bpmn:BoundaryEvent')) {
+      
+			const circle2 = drawCircle(parentNode, element.width, element.height);
+			const circle = drawCircleI(circle2, 28, 28);
+			
+			if (businessObject.suitable == 25) {
+        
+			svgAttr(circle2, {
+			fill: 'white',
+			stroke: 'red'
+      });
+    }
+			
+			if (businessObject.suitable == 50) {
+			svgAttr(circle2, {
+			fill: 'white',
+			stroke: 'yellow'
+			});
+			}
+			
+			if (businessObject.suitable == 100) {
+			svgAttr(circle2, {
+			fill: 'white',
+			stroke: 'green'
+			});
+      }
+       
+      prependTo(circle, circle2);
+      //prependTo(circle2, parentNode);
+      
+      svgRemove(shape);
+			//prependTo(circle2, circle);
+
+      
+			return shape;
+		}
+		
+		
+	  /*const color = this.getColor(suitabilityScore);
+
 
       const rect = drawRect(parentNode, 50, 20, TASK_BORDER_RADIUS, color);
   
@@ -65,12 +133,14 @@ export default class CustomRenderer extends BaseRenderer {
     
       svgAppend(parentNode, text);
     }
+    */
 
     return shape;
-  }
+  
+  }}
 
   getShapePath(shape) {
-    if (is(shape, 'bpmn:Task')) {
+    if (is(shape, 'bpmn:SubProcess')) {
       return getRoundRectPath(shape, TASK_BORDER_RADIUS);
     }
 
@@ -117,4 +187,40 @@ function drawRect(parentNode, width, height, borderRadius, color) {
   svgAppend(parentNode, rect);
 
   return rect;
+}
+
+function drawCircle(parentNode, width, height) {
+	const circle = svgCreate('circle');
+	
+	svgAttr(circle, {
+		cx: width/2,
+		cy: height/2,
+		r: Math.round((width + height) / 4),
+        strokeWidth: 2,
+	});
+	
+	svgAppend(parentNode, circle);
+
+  return circle;
+}
+
+function drawCircleI(parentNode, width, height) {
+	const circle = svgCreate('circle');
+	
+	svgAttr(circle, {
+		cx: width,
+		cy: height,
+		r: Math.round((width + height) / 4),
+        strokeWidth: 2,
+	});
+	
+	svgAppend(parentNode, circle);
+
+  return circle;
+}
+
+
+// copied from https://github.com/bpmn-io/diagram-js/blob/master/lib/core/GraphicsFactory.js
+function prependTo(newNode, parentNode, siblingNode) {
+  parentNode.insertBefore(newNode, siblingNode || parentNode.firstChild);
 }

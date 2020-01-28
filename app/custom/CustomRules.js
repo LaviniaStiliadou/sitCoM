@@ -12,6 +12,10 @@ import {
   is
 } from 'bpmn-js/lib/util/ModelUtil';
 
+import {
+  getBoundaryAttachment as isBoundaryAttachment
+} from 'bpmn-js/lib/features/snapping/BpmnSnappingUtil';
+
 import RuleProvider from 'diagram-js/lib/features/rules/RuleProvider';
 
 var HIGH_PRIORITY = 1500;
@@ -59,6 +63,9 @@ CustomRules.prototype.init = function() {
     if (!is(shape, 'bpmn:SubProcess') && (targetBusinessObject.suitable == 200)) {
 	    return false;
     }
+    if (is(shape, 'bpmn:SubProcess')  && (businessObject.suitable != 200)  && (businessObject.suitable != 100)&& (targetBusinessObject.suitable == 200)) {
+	    return false;
+    }
 
     // SituationsEvents dürfen nicht frei erzeugt werden
     if (isAny(shape, ['bpmn:IntermediateThrowEvent','bpmn:IntermediateCatchEvent',
@@ -72,6 +79,10 @@ CustomRules.prototype.init = function() {
   // verbietet das Verbinden von inner Rects mit Score = 100
   // verbietet Verbinden von Intermediate zu Situationskreisen und umgekehrt
   function canConnect(source, target) {
+	if(target == null){
+		return false;
+	}
+	  
     var businessObject = source.businessObject;
     var targetBusinessObject = target.businessObject;
 
@@ -98,13 +109,14 @@ CustomRules.prototype.init = function() {
     // damit Rect mit Score = 200 nicht mit Score = 100 verbunden werden duerfen
     if (!is(target, 'bpmn:IntermediateThrowEvent') &&
      (is(source, 'bpmn:SubProcess')) && businessObject.suitable == 200
-      && targetBusinessObject.suitable >0){
+      && targetBusinessObject.suitable == 100){
       return false;
     }
 
     if ((is(target, 'bpmn:SubProcess')) && targetBusinessObject.suitable == 100){
       return false;
     }
+
 
     // damit Rect mit Score = 100 nicht mit Score = 200 verbunden werden duerfen
     if (is(target, 'bpmn:SubProcess') &&
@@ -125,10 +137,10 @@ CustomRules.prototype.init = function() {
         source = context.source,
         position = context.position;
     var businessObject = context.shapes[0].businessObject;
+	
      
     if(target != undefined){
       var targetBusinessObject = target.businessObject;
-    
     if((is(context.shapes[0], 'bpmn:SubProcess')) && (businessObject.suitable == 200) &&
       ((is(target, 'bpmn:SubProcess') && targetBusinessObject.suitable ==200 && businessObject.suitable!=100))){
         return false;
@@ -168,8 +180,8 @@ CustomRules.prototype.init = function() {
     // SituationsEvents können innerhalb des Rects 100 überall erzeugt werden, werden jedoch der Border zugewiesen
     if((isAny(context.shapes[0], ['bpmn:IntermediateThrowEvent','bpmn:IntermediateCatchEvent',
      'bpmn:BoundaryEvent']))
-    && (is(target, 'bpmn:SubProcess') && (targetBusinessObject.suitable == 100) && businessObject.suitable > 0)){
-      return 'attach';
+    && (is(target, 'bpmn:SubProcess') && (targetBusinessObject.suitable == 100) && businessObject.suitable > 0) && (position && !isBoundaryAttachment(position, target))){
+      return false;
     }
 
 
@@ -177,6 +189,7 @@ CustomRules.prototype.init = function() {
 	if((isAny(context.shapes[0], ['bpmn:IntermediateThrowEvent','bpmn:IntermediateCatchEvent',
      'bpmn:BoundaryEvent']))
     && (is(target, 'bpmn:SubProcess')) && (businessObject.suitable !=25 && businessObject.suitable != 50 && businessObject.suitable != 100) && (targetBusinessObject.suitable == 100)){
+      //console.log(target.id);
       return true;
     }
 
@@ -186,7 +199,7 @@ CustomRules.prototype.init = function() {
     && (is(target, 'bpmn:SubProcess')) && (businessObject.suitable !=25 && businessObject.suitable != 50 && businessObject.suitable != 100) && (targetBusinessObject.suitable == 200)){
       return false;
     }
-
+	
     }
   }  
 
@@ -209,7 +222,8 @@ CustomRules.prototype.init = function() {
   // damit IntermediateEvents nicht an Situationsscopes geklebt werden 
   this.addRule('shape.attach', HIGH_PRIORITY, function(context) {
     var shape = context.shape,
-      target = context.target;
+      target = context.target,
+	  position = context.position;
     var businessObject = shape.businessObject;
     var targetBusinessObject = target.businessObject;
 
@@ -237,6 +251,28 @@ CustomRules.prototype.init = function() {
     (targetBusinessObject.suitable != 100)) {
         return false;
     }
+
+    if (isAny(shape, [
+      'bpmn:IntermediateThrowEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent'])  &&
+      (businessObject.suitable == 100 || businessObject.suitable == 50 || 
+      businessObject.suitable == 25) &&
+      (is(target, 'bpmn:SubProcess') &&
+      (targetBusinessObject.suitable == 100)) && (position && isBoundaryAttachment(position, target))) {
+          //console.log("hier");
+     var find;
+     var allowed = true;
+     //console.log(shape);
+    for(var i = 0; i< target.attachers.length; i++){
+      //console.log(shape);
+          if(target.attachers[i].businessObject.suitable == shape.businessObject.suitable){
+            //console.log('gleich');
+            allowed = false;
+            return false;
+          }
+      }
+      return true;
+      
+      }
 
     // damit normale IntermediateEvents nicht an Situationsscopes geklebt werden duerfen
     if (isAny(shape, [
