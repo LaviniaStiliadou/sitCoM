@@ -736,23 +736,19 @@ a:link {
   color: #cc0000 !important;
 }
 /* line 127, styles/app.less */
-.bpmn-icon-intermediate-event-none.yellow {
+.bpmn-icon-start-event-none.yellow {
   color: #ffc800 !important;
 }
 /* line 131, styles/app.less */
-.bpmn-icon-intermediate-event-none.green {
+.bpmn-icon-start-event-none.green {
   color: #52B415 !important;
 }
 /* line 135, styles/app.less */
-.bpmn-icon-start-event-none.red {
-  color: #cc0000 !important;
-}
-/* line 138, styles/app.less */
 .icon-custom-circle-green {
   background: url('https://png.pngtree.com/png-clipart/20190516/original/pngtree-vector-charging-battery-icon-png-image_4101449.jpg');
   background-position: bottom right;
 }
-/* line 142, styles/app.less */
+/* line 139, styles/app.less */
 .properties-panel-parent {
   position: absolute;
   top: 0;
@@ -763,11 +759,11 @@ a:link {
   border-left: 1px solid #ccc;
   overflow: auto;
 }
-/* line 151, styles/app.less */
+/* line 148, styles/app.less */
 .properties-panel-parent:empty {
   display: none;
 }
-/* line 154, styles/app.less */
+/* line 151, styles/app.less */
 .properties-panel-parent > .djs-properties-panel {
   padding-bottom: 70px;
   min-height: 100%;
