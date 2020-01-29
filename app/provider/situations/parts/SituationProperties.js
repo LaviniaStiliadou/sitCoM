@@ -36,7 +36,7 @@ export default function(group, element) {
         
        
         if ((!String(participant).match(/^Participant_[0-9]([a-z0-9]+)*$/)) && participant !=undefined) {
-          errorMessageP.participant = "Not valid input, because the participant idd should start with the prefix Participant_. Example Participant_1rj1vs7";
+          errorMessageP.participant = "Not valid input, because the participant id should start with the prefix Participant_. Example Participant_1rj1vs7";
           delete element.businessObject.$attrs.participant; 
         }
             
@@ -187,7 +187,7 @@ export default function(group, element) {
               }
               if((element.businessObject.$attrs.prioritaet == element.parent.children[i].businessObject.$attrs.prioritaet) 
               && (!isNaN(prioritaet)) && (element != element.parent.children[i])){
-					      errorMessageP.prioritaet = "Priority must not be set, because it has already been set in another scope.";
+					      errorMessageP.prioritaet = "Priority may not be set, because it has already been set in another scope.";
                 delete element.businessObject.$attrs.prioritaet;
                               }
 			}
@@ -200,7 +200,7 @@ export default function(group, element) {
 	  
 	  group.entries.push(entryFactory.checkbox({
       id : 'compensationCheckbox',
-      description : 'If you select the checkbox compensation is permitted in this scope.',
+      description : 'If you select the checkbox, compensation is permitted in this scope.',
       label : 'Compensation',
       modelProperty : 'compensationCheckbox'
 	  }))
@@ -210,8 +210,8 @@ export default function(group, element) {
   if(isAny(element, ['bpmn:BoundaryEvent']) && element.businessObject.suitable ==50){
 	  group.entries.push(entryFactory.checkbox({
       id : 'akkuCheckbox',
-      description : 'If you select the checkbox, you cannot put any violation in the other circles. ',
-      label : 'Akku',
+      description : 'If you select the checkbox, you cannot put any violation in the other circles.',
+      label : 'Battery',
       modelProperty : 'akkuCheckbox',
       validate: function(element, values) {
         var violation = values.akkuCheckbox;
@@ -270,7 +270,7 @@ export default function(group, element) {
                 || element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation > 0){
               
             //if((Number(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) >= 0 && Number(violation) >= 0)) {
-              errorMessageV.akkuCheckbox = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
+              errorMessageV.akkuCheckbox = "Violation must not be set, because it has already been set in another circle. ";
               delete element.businessObject.$attrs.akkuCheckbox; 
               //delete element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation;
             //}
@@ -287,8 +287,8 @@ export default function(group, element) {
     })), 
     group.entries.push(entryFactory.checkbox({
       id : 'spinneCheckbox',
-      description : 'Wenn Sie die Checkbox anklicken, können Sie in den anderen Kreise keine violation setzen.',
-      label : 'Spinne',
+      description : 'If you select the checkbox, you cannot put any violation in the other circles.',
+      label : 'Spider',
       modelProperty : 'spinneCheckbox',
       validate: function(element, values) {
         var violation = values.spinneCheckbox;
@@ -347,7 +347,7 @@ export default function(group, element) {
                 || element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation2 > 0){
               
             //if((Number(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) >= 0 && Number(violation) >= 0)) {
-              errorMessageV.spinneCheckbox = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
+              errorMessageV.spinneCheckbox = "Violation must not be set, because it has already been set in another circle. ";
               delete element.businessObject.$attrs.spinneCheckbox; 
               //delete element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation;
             //}
@@ -364,8 +364,8 @@ export default function(group, element) {
     })), 
     group.entries.push(entryFactory.checkbox({
       id : 'menschCheckbox',
-      description : 'Wenn Sie die Checkbox anklicken, können Sie in den anderen Kreise keine violation setzen.',
-      label : 'Mensch',
+      description : 'If you select the checkbox, you cannot put any violation in the other circles.',
+      label : 'Human',
       modelProperty : 'menschCheckbox',
       validate: function(element, values) {
         var violation = values.menschCheckbox;
@@ -424,7 +424,7 @@ export default function(group, element) {
                 || element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3 > 0){
               
             //if((Number(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) >= 0 && Number(violation) >= 0)) {
-              errorMessageV.menschCheckbox = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
+              errorMessageV.menschCheckbox = "Violation must not be set, because it has already been set in another circle. ";
               delete element.businessObject.$attrs.menschCheckbox; 
               //delete element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation;
             //}
@@ -441,8 +441,8 @@ export default function(group, element) {
     })), 
     group.entries.push(entryFactory.checkbox({
       id : 'kameraCheckbox',
-      description : 'Wenn Sie die Checkbox anklicken, können Sie in den anderen Kreise keine violation setzen.',
-      label : 'Kamera',
+      description : 'If you select the checkbox, you cannot put any violation in the other circles.',
+      label : 'Camera',
       modelProperty : 'kameraCheckbox',
       validate: function(element, values) {
         var violation = values.kameraCheckbox;
@@ -501,7 +501,7 @@ export default function(group, element) {
                 || element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4 > 0){
               
             //if((Number(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) >= 0 && Number(violation) >= 0)) {
-              errorMessageV.kameraCheckbox = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
+              errorMessageV.kameraCheckbox = "Violation must not be set, because it has already been set in another circle. ";
               delete element.businessObject.$attrs.kameraCheckbox; 
               //delete element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation;
             //}
@@ -518,7 +518,7 @@ export default function(group, element) {
     })), 
     group.entries.push(entryFactory.checkbox({
       id : 'updateCheckbox',
-      description : 'Wenn Sie die Checkbox anklicken, können Sie in den anderen Kreise keine violation setzen.',
+      description : 'If you select the checkbox, you cannot put any violation in the other circles.',
       label : 'Update',
       modelProperty : 'updateCheckbox',
       validate: function(element, values) {
@@ -578,7 +578,7 @@ export default function(group, element) {
                 || element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation5 > 0){
               
             //if((Number(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) >= 0 && Number(violation) >= 0)) {
-              errorMessageV.updateCheckbox = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
+              errorMessageV.updateCheckbox = "Violation must not be set, because it has already been set in another circle. ";
               delete element.businessObject.$attrs.updateCheckbox; 
               //delete element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation;
             //}
@@ -607,8 +607,8 @@ export default function(group, element) {
     }),
     group.entries.push(entryFactory.textField({
       id : 'violation',
-      description : 'Wenn Situation verletzt wird, springe zu Scope ID.',
-      label : 'Akku-Violation',
+      description : 'If situation is violated, jump to scope id. ',
+      label : 'Battery-Violation',
       modelProperty : 'violation',
       validate: function(element, values) {
         var violation = values.violation;
@@ -663,15 +663,10 @@ export default function(group, element) {
         
         //console.log(element.parent.children);
         if (!String(violation).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)) {
-          errorMessageV.violation = "Nicht valide Eingabe, da violation mit Zahl beginnen muss.";
+          errorMessageV.violation = "Not valid input, because the violation attribute should start with the prefix Innerscope_. Example InnerScope_1rj1vs7.";
           delete element.businessObject.$attrs.violation; 
         }
         
-
-        if(violation < 0){
-          errorMessageV.violation = "violation darf nicht kleiner 0 sein.";
-          delete element.businessObject.$attrs.violation; 
-        }
   
         if(String(violation).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)){
 
@@ -767,14 +762,14 @@ export default function(group, element) {
       if(element.businessObject.suitable == 25){
           if((!matchCircleR || !matchFoundR) || !matchCircleYR){
             
-        errorMessageV.violation = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
+        errorMessageV.violation = "Not valid input, because either the complementary circle is missing or an input in the circle of the same color has been made. ";
         delete element.businessObject.$attrs.violation; 
       }
     }
     if(element.businessObject.suitable == 100){
     if((!matchCircleG || !matchFoundG || !matchCircleYG)) {
           
-      errorMessageV.violation = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
+      errorMessageV.violation = "Not valid input, because either the complementary circle is missing or an input in the circle of the same color has been made. ";
       delete element.businessObject.$attrs.violation; 
     } 
   }
@@ -792,7 +787,7 @@ export default function(group, element) {
                    && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation != '' ){
               
             //if((Number(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) >= 0 && Number(violation) >= 0)) {
-              errorMessageV.violation = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
+              errorMessageV.violation = "Violation must not be set, because it has already been set in another circle. ";
               delete element.businessObject.$attrs.violation; 
               //delete element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation;
             //}
@@ -803,7 +798,7 @@ export default function(group, element) {
                 ||!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) 
               || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)) 
               && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation != '' ){
-              errorMessageV.violation = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
+              errorMessageV.violation = "Violation must not be set, because it has already been set in another circle.";
               delete element.businessObject.$attrs.violation; 
               //delete element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation;
               
@@ -818,19 +813,19 @@ export default function(group, element) {
     }})),
     group.entries.push(entryFactory.textField({
       id : 'prioritaet',
-      description : 'Priorität',
-      label : 'Akku-Priorität',
+      description : 'Priority',
+      label : 'Energy-Priority',
       modelProperty : 'prioritaet',
       validate: function(element, values) {
         var prioritaet = values.prioritaet;
         var errorMessageP = {};
         if(element.businessObject.$attrs.violation == undefined){
-          errorMessageP.prioritaet = "Setze zuerst violation Attribut.";
+          errorMessageP.prioritaet = "Set violation attribute first.";
           delete element.businessObject.$attrs.prioritaet;
         }
 
         if (isNaN(prioritaet)) {
-          errorMessageP.prioritaet = "Priorität muss eine Nummer sein.";
+          errorMessageP.prioritaet = "Priority must be a number.";
           delete element.businessObject.$attrs.prioritaet;
         }
 
@@ -859,7 +854,7 @@ export default function(group, element) {
         }
 
         if(prioritaet < 0){
-          errorMessageP.prioritaet = "Priorität darf nicht kleiner 0 sein.";
+          errorMessageP.prioritaet = "Priority may not be less than 0.";
           delete element.businessObject.$attrs.prioritaet;
         }
 
@@ -868,7 +863,7 @@ export default function(group, element) {
           (element.businessObject.$attrs.prioritaet == element.businessObject.$attrs.prioritaet4)||
           (element.businessObject.$attrs.prioritaet == element.businessObject.$attrs.prioritaet3) ||
           (element.businessObject.$attrs.prioritaet == element.businessObject.$attrs.prioritaet2))){
-            errorMessageP.prioritaet = "Priorität muss eindeutig sein.";
+            errorMessageP.prioritaet = "Priority must be an unique number.";
             delete element.businessObject.$attrs.prioritaet;
           }
 
@@ -877,7 +872,7 @@ export default function(group, element) {
             // gibt prioritaet vom anderen Kreis aus
             if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
               if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.prioritaet >= 0 && prioritaet >= 0)) {
-                errorMessageP.prioritaet = "Priorität darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
+                errorMessageP.prioritaet = "Priority must not be set because it has already been set in another circle. ";
                 delete element.businessObject.$attrs.prioritaet;
               }
             }
@@ -892,8 +887,8 @@ export default function(group, element) {
   }),
   group.entries.push(entryFactory.textField({
     id : 'violation2',
-    description : 'Wenn Situation verletzt wird, springe zu Scope ID.',
-    label : 'Spinne-Violation',
+    description : 'If situation is violated, jump to scope id.',
+    label : 'Spider-Violation',
     modelProperty : 'violation2',
     validate: function(element, values) {
       var violation2 = values.violation2;
@@ -948,15 +943,10 @@ export default function(group, element) {
       
       //console.log(element.parent.children);
       if (!String(violation2).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)) {
-        errorMessageV.violation2 = "Nicht valide Eingabe, da violation mit Zahl beginnen muss.";
+        errorMessageV.violation2 = "Not valid input, because the violation attribute should start with the prefix Innerscope_. Example InnerScope_1rj1vs7.";
         delete element.businessObject.$attrs.violation2; 
       }
       
-
-      if(violation2 < 0){
-        errorMessageV.violation2 = "violation darf nicht kleiner 0 sein.";
-        delete element.businessObject.$attrs.violation2; 
-      }
 
       if(String(violation2).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)){
 
@@ -1052,14 +1042,14 @@ export default function(group, element) {
     if(element.businessObject.suitable == 25){
         if((!matchCircleR || !matchFoundR) || !matchCircleYR){
           
-      errorMessageV.violation2 = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
+      errorMessageV.violation2 = "Not valid input, because either the complementary circle is missing or an input in the circle of the same color has been made. ";
       delete element.businessObject.$attrs.violation2; 
     }
   }
   if(element.businessObject.suitable == 100){
   if((!matchCircleG || !matchFoundG || !matchCircleYG)) {
         
-    errorMessageV.violation2 = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
+    errorMessageV.violation2 = "Not valid input, because either the complementary circle is missing or an input in the circle of the same color has been made. ";
     delete element.businessObject.$attrs.violation2; 
   } 
 }
@@ -1077,7 +1067,7 @@ export default function(group, element) {
                  && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation2 != '' ){
             
           //if((Number(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) >= 0 && Number(violation) >= 0)) {
-            errorMessageV.violation2 = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
+            errorMessageV.violation2 = "Violation must not be set because it has already been set in another circle. ";
             delete element.businessObject.$attrs.violation2; 
             //delete element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation;
           //}
@@ -1088,7 +1078,7 @@ export default function(group, element) {
               ||!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation2) 
             || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation2).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)) 
             && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation2 != '' ){
-            errorMessageV.violation2 = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
+            errorMessageV.violation2 = "Violation must not be set because it has already been set in another circle. ";
             delete element.businessObject.$attrs.violation2; 
             //delete element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation;
             
@@ -1103,19 +1093,19 @@ export default function(group, element) {
   }})),
   group.entries.push(entryFactory.textField({
     id : 'prioritaet2',
-    description : 'Priorität',
-    label : 'Spinne-Priorität',
+    description : 'Priority',
+    label : 'Spider-Priority',
     modelProperty : 'prioritaet2',
     validate: function(element, values) {
     var prioritaet2 = values.prioritaet2;
     var errorMessageP = {};
     if(element.businessObject.$attrs.violation2 == undefined){
-      errorMessageP.prioritaet2 = "Setze zuerst violation Attribut.";
+      errorMessageP.prioritaet2 = "Set violation attribute first.";
       delete element.businessObject.$attrs.prioritaet2;
     }
 
     if (isNaN(prioritaet2)) {
-      errorMessageP.prioritaet2 = "Priorität muss eine Nummer sein.";
+      errorMessageP.prioritaet2 = "Priority must be a number.";
       delete element.businessObject.$attrs.prioritaet2;
     }
 
@@ -1146,7 +1136,7 @@ export default function(group, element) {
         }
 
         if(prioritaet2 < 0){
-          errorMessageP.prioritaet2 = "Priorität darf nicht kleiner 0 sein.";
+          errorMessageP.prioritaet2 = "Priority may not be less than 0.";
           delete element.businessObject.$attrs.prioritaet2;
         }
 
@@ -1155,7 +1145,7 @@ export default function(group, element) {
           (element.businessObject.$attrs.prioritaet2 == element.businessObject.$attrs.prioritaet4)||
           (element.businessObject.$attrs.prioritaet2 == element.businessObject.$attrs.prioritaet3) ||
           (element.businessObject.$attrs.prioritaet2 == element.businessObject.$attrs.prioritaet))){
-            errorMessageP.prioritaet2 = "Priorität muss eindeutig sein.";
+            errorMessageP.prioritaet2 = "Priority must be an unique number.";
             delete element.businessObject.$attrs.prioritaet2;
           }
 
@@ -1164,7 +1154,7 @@ export default function(group, element) {
             // gibt violation vom anderen Kreis aus
             if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
             if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.prioritaet2 >= 0 && prioritaet2 >= 0)) {
-              errorMessageP.prioritaet2 = "Priorität darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
+              errorMessageP.prioritaet2 = "Priority must not be set because it has already been set in another circle.";
               delete element.businessObject.$attrs.prioritaet2;
             }
           }
@@ -1179,8 +1169,8 @@ export default function(group, element) {
   }),
   group.entries.push(entryFactory.textField({
     id : 'violation3',
-    description : 'Wenn Situation verletzt wird, springe zu Scope ID.',
-    label : 'Mensch-Violation',
+    description : 'If situation is violated, jump to scope id.',
+    label : 'Human-Violation',
     modelProperty : 'violation3',
     validate: function(element, values) {
       var violation3 = values.violation3;
@@ -1235,13 +1225,7 @@ export default function(group, element) {
       
       //console.log(element.parent.children);
       if (!String(violation3).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)) {
-        errorMessageV.violation3 = "Nicht valide Eingabe, da violation mit Zahl beginnen muss.";
-        delete element.businessObject.$attrs.violation3; 
-      }
-      
-
-      if(violation3 < 0){
-        errorMessageV.violation3 = "violation darf nicht kleiner 0 sein.";
+        errorMessageV.violation3 = "Not valid input, because the violation attribute should start with the prefix Innerscope_. Example InnerScope_1rj1vs7.";
         delete element.businessObject.$attrs.violation3; 
       }
 
@@ -1339,14 +1323,14 @@ export default function(group, element) {
     if(element.businessObject.suitable == 25){
         if((!matchCircleR || !matchFoundR) || !matchCircleYR){
           
-      errorMessageV.violation3 = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
+      errorMessageV.violation3 = "Not valid input, because either the complementary circle is missing or an input in the circle of the same color has been made. ";
       delete element.businessObject.$attrs.violation3; 
     }
   }
   if(element.businessObject.suitable == 100){
   if((!matchCircleG || !matchFoundG || !matchCircleYG)) {
         
-    errorMessageV.violation3 = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
+    errorMessageV.violation3 = "Not valid input, because either the complementary circle is missing or an input in the circle of the same color has been made. ";
     delete element.businessObject.$attrs.violation3; 
   } 
 }
@@ -1363,7 +1347,7 @@ export default function(group, element) {
                  && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3 != '' ){
             
           //if((Number(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) >= 0 && Number(violation) >= 0)) {
-            errorMessageV.violation3 = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
+            errorMessageV.violation3 = "Violation must not be set, because it has already been set in another circle.";
             delete element.businessObject.$attrs.violation3; 
             //delete element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation;
           //}
@@ -1374,7 +1358,7 @@ export default function(group, element) {
               ||!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3) 
             || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)) 
             && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3 != '' ){
-            errorMessageV.violation3 = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
+            errorMessageV.violation3 = "Violation must not be set, because it has already been set in another circle.";
             delete element.businessObject.$attrs.violation3; 
             //delete element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation;
             
@@ -1389,19 +1373,19 @@ export default function(group, element) {
   })),
   group.entries.push(entryFactory.textField({
     id : 'prioritaet3',
-    description : 'Priorität',
-    label : 'Mensch-Priorität',
+    description : 'Priority',
+    label : 'Human-Priority',
     modelProperty : 'prioritaet3',
     validate: function(element, values) {
     var prioritaet3 = values.prioritaet3;
     var errorMessageP = {};
     if(element.businessObject.$attrs.violation3 == undefined){
-      errorMessageP.prioritaet3 = "Setze zuerst violation Attribut.";
+      errorMessageP.prioritaet3 = "Set violation attribute first.";
       delete element.businessObject.$attrs.prioritaet3;
     }
 
     if (isNaN(prioritaet3)) {
-      errorMessageP.prioritaet3 = "Priorität muss eine Nummer sein.";
+      errorMessageP.prioritaet3 = "Priority must be a number.";
       delete element.businessObject.$attrs.prioritaet3;
     }
 
@@ -1432,7 +1416,7 @@ export default function(group, element) {
         }
         //console.log(element.parent.children);
         if(prioritaet3 < 0){
-          errorMessageP.prioritaet3 = "Priorität darf nicht kleiner 0 sein.";
+          errorMessageP.prioritaet3 = "Priority may not be less than 0.";
           delete element.businessObject.$attrs.prioritaet3;
         }
         if(!isNaN(element.businessObject.$attrs.prioritaet3) && (
@@ -1440,7 +1424,7 @@ export default function(group, element) {
           (element.businessObject.$attrs.prioritaet3 == element.businessObject.$attrs.prioritaet4)||
           (element.businessObject.$attrs.prioritaet3 == element.businessObject.$attrs.prioritaet2) ||
           (element.businessObject.$attrs.prioritaet3 == element.businessObject.$attrs.prioritaet))){
-            errorMessageP.prioritaet3 = "Priorität muss eindeutig sein.";
+            errorMessageP.prioritaet3 = "Priority must not be set because it has already been set in another circle.";
             delete element.businessObject.$attrs.prioritaet3;
           }
 
@@ -1449,7 +1433,7 @@ export default function(group, element) {
             // gibt violation vom anderen Kreis aus
             if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
             if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.prioritaet3 >= 0 && prioritaet3 >= 0)) {
-              errorMessageP.prioritaet3 = "Priorität darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
+              errorMessageP.prioritaet3 = "Priority must not be set because it has already been set in another circle.";
               delete element.businessObject.$attrs.prioritaet3;
             }
           }
@@ -1464,8 +1448,8 @@ group.entries.push({
 }),
 group.entries.push(entryFactory.textField({
   id : 'violation4',
-  description : 'Wenn Situation verletzt wird, springe zu Scope ID.',
-  label : 'Kamera-Violation',
+  description : 'If situation is violated, jump to scope id.',
+  label : 'Camera-Violation',
   modelProperty : 'violation4',
   validate: function(element, values) {
     var violation4 = values.violation4;
@@ -1520,15 +1504,10 @@ group.entries.push(entryFactory.textField({
     
     //console.log(element.parent.children);
     if (!String(violation4).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)) {
-      errorMessageV.violation4 = "Nicht valide Eingabe, da violation mit Zahl beginnen muss.";
+      errorMessageV.violation4 = "Not valid input, because the violation attribute should start with the prefix Innerscope_. Example InnerScope_1rj1vs7.";
       delete element.businessObject.$attrs.violation4; 
     }
     
-
-    if(violation4 < 0){
-      errorMessageV.violation4 = "violation darf nicht kleiner 0 sein.";
-      delete element.businessObject.$attrs.violation4; 
-    }
 
     if(String(violation4).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)){
 
@@ -1624,14 +1603,14 @@ group.entries.push(entryFactory.textField({
   if(element.businessObject.suitable == 25){
       if((!matchCircleR || !matchFoundR) || !matchCircleYR){
         
-    errorMessageV.violation4 = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
+    errorMessageV.violation4 = "Not valid input, because either the complementary circle is missing or an input in the circle of the same color has been made. ";
     delete element.businessObject.$attrs.violation4; 
   }
 }
 if(element.businessObject.suitable == 100){
 if((!matchCircleG || !matchFoundG || !matchCircleYG)) {
       
-  errorMessageV.violation4 = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
+  errorMessageV.violation4 = "Not valid input, because either the complementary circle is missing or an input in the circle of the same color has been made. ";
   delete element.businessObject.$attrs.violation4; 
 } 
 }
@@ -1649,7 +1628,7 @@ if((!matchCircleG || !matchFoundG || !matchCircleYG)) {
                && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4 != '' ){
           
         //if((Number(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) >= 0 && Number(violation) >= 0)) {
-          errorMessageV.violation4 = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
+          errorMessageV.violation4 = "Violation must not be set, because it has already been set in another circle.";
           delete element.businessObject.$attrs.violation4; 
           //delete element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation;
         //}
@@ -1660,7 +1639,7 @@ if((!matchCircleG || !matchFoundG || !matchCircleYG)) {
             ||!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4) 
           || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)) 
           && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4 != '' ){
-          errorMessageV.violation4 = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
+          errorMessageV.violation4 = "Violation must not be set, because it has already been set in another circle.";
           delete element.businessObject.$attrs.violation4; 
           //delete element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation;
           
@@ -1675,19 +1654,19 @@ if((!matchCircleG || !matchFoundG || !matchCircleYG)) {
 })),
 group.entries.push(entryFactory.textField({
   id : 'prioritaet4',
-  description : 'Priorität',
-  label : 'Kamera-Priorität',
+  description : 'Priority',
+  label : 'Camera-Priority',
   modelProperty : 'prioritaet4',
   validate: function(element, values) {
     var prioritaet4 = values.prioritaet4;
     var errorMessageP = {};
     if(element.businessObject.$attrs.violation4 == undefined){
-      errorMessageP.prioritaet4 = "Setze zuerst violation Attribut.";
+      errorMessageP.prioritaet4 = "Set violation attribute first.";
       delete element.businessObject.$attrs.prioritaet4;
     }
 
     if (isNaN(prioritaet4)) {
-      errorMessageP.prioritaet4 = "Priorität muss eine Nummer sein.";
+      errorMessageP.prioritaet4 = "Priority must be a number.";
       delete element.businessObject.$attrs.prioritaet4;
     }
 
@@ -1719,7 +1698,7 @@ group.entries.push(entryFactory.textField({
         
 
         if(prioritaet4 < 0){
-          errorMessageP.prioritaet4 = "Priorität darf nicht kleiner 0 sein.";
+          errorMessageP.prioritaet4 = "Priority may not be less than 0.";
           delete element.businessObject.$attrs.prioritaet4;
         }
         if(!isNaN(element.businessObject.$attrs.prioritaet4) && (
@@ -1727,7 +1706,7 @@ group.entries.push(entryFactory.textField({
           (element.businessObject.$attrs.prioritaet4 == element.businessObject.$attrs.prioritaet3)||
           (element.businessObject.$attrs.prioritaet4 == element.businessObject.$attrs.prioritaet2) ||
           (element.businessObject.$attrs.prioritaet4 == element.businessObject.$attrs.prioritaet))){
-            errorMessageP.prioritaet4 = "Priorität muss eindeutig sein.";
+            errorMessageP.prioritaet4 = "Priority must not be set because it has already been set in another circle.";
             delete element.businessObject.$attrs.prioritaet4;
           }
 
@@ -1736,7 +1715,7 @@ group.entries.push(entryFactory.textField({
             // gibt violation vom anderen Kreis aus
             if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
             if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.prioritaet4 >= 0 && prioritaet4 >= 0)) {
-              errorMessageP.prioritaet4 = "Priorität darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
+              errorMessageP.prioritaet4 = "Priority must not be set because it has already been set in another circle.";
               delete element.businessObject.$attrs.prioritaet4;
             }
           }
@@ -1751,7 +1730,7 @@ group.entries.push({
 }),
 group.entries.push(entryFactory.textField({
   id : 'violation5',
-  description : 'Wenn Situation verletzt wird, springe zu Scope ID.',
+  description : 'If situation is violated, jump to scope id.',
   label : 'Update-Violation',
   modelProperty : 'violation5',
   validate: function(element, values) {
@@ -1807,13 +1786,7 @@ group.entries.push(entryFactory.textField({
     
     //console.log(element.parent.children);
     if (!String(violation5).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)) {
-      errorMessageV.violation5 = "Nicht valide Eingabe, da violation mit Zahl beginnen muss.";
-      delete element.businessObject.$attrs.violation5; 
-    }
-    
-
-    if(violation5 < 0){
-      errorMessageV.violation5 = "violation darf nicht kleiner 0 sein.";
+      errorMessageV.violation5 = "Not valid input, because the violation attribute should start with the prefix Innerscope_. Example InnerScope_1rj1vs7.";
       delete element.businessObject.$attrs.violation5; 
     }
 
@@ -1911,14 +1884,14 @@ group.entries.push(entryFactory.textField({
   if(element.businessObject.suitable == 25){
       if((!matchCircleR || !matchFoundR) || !matchCircleYR){
         
-    errorMessageV.violation5 = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
+    errorMessageV.violation5 = "Not valid input, because either the complementary circle is missing or an input in the circle of the same color has been made. ";
     delete element.businessObject.$attrs.violation5; 
   }
 }
 if(element.businessObject.suitable == 100){
 if((!matchCircleG || !matchFoundG || !matchCircleYG)) {
       
-  errorMessageV.violation5 = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
+  errorMessageV.violation5 = "Not valid input, because either the complementary circle is missing or an input in the circle of the same color has been made. ";
   delete element.businessObject.$attrs.violation5; 
 } 
 }
@@ -1936,7 +1909,7 @@ if((!matchCircleG || !matchFoundG || !matchCircleYG)) {
                && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation5 != '' ){
           
         //if((Number(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) >= 0 && Number(violation) >= 0)) {
-          errorMessageV.violation5 = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
+          errorMessageV.violation5 = "Violation must not be set, because it has already been set in another circle.";
           delete element.businessObject.$attrs.violation5; 
           //delete element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation;
         //}
@@ -1947,7 +1920,7 @@ if((!matchCircleG || !matchFoundG || !matchCircleYG)) {
             ||!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation5) 
           || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation5).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)) 
           && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation5 != '' ){
-          errorMessageV.violation5 = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
+          errorMessageV.violation5 = "Violation must not be set, because it has already been set in another circle.";
           delete element.businessObject.$attrs.violation5; 
           //delete element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation;
           
@@ -1959,6 +1932,78 @@ if((!matchCircleG || !matchFoundG || !matchCircleYG)) {
   }
     return errorMessageV;
   }}
+})),
+group.entries.push(entryFactory.textField({
+  id : 'prioritaet5',
+  description : 'Priority',
+  label : 'Update-Priority',
+  modelProperty : 'prioritaet5',
+  validate: function(element, values) {
+    var prioritaet5 = values.prioritaet5;
+    var errorMessageP = {};
+    if(element.businessObject.$attrs.violation5 == undefined){
+      errorMessageP.prioritaet5 = "Set violation attribute first.";
+      delete element.businessObject.$attrs.prioritaet5;
+    }
+
+    if (isNaN(prioritaet5)) {
+      errorMessageP.prioritaet5 = "Priority must be a number.";
+      delete element.businessObject.$attrs.prioritaet5;
+    }
+
+    if(element.businessObject.attachedToRef.$type == 'bpmn:SubProcess'&&
+        element.businessObject.attachedToRef.suitable == 100){
+        // Index vom aktuellen Element
+        var find;
+
+        var kind;
+        var li;
+        for(var k = 0; k < element.parent.children.length-1; k++){
+          for(var l = 0; l < element.parent.children[k].attachers.length; l++){
+            for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
+            if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
+                kind = k;
+                li = l;
+                find = m;
+            }
+            }
+          }
+
+        }
+
+        
+        var onlyChild = false;
+        if(element.parent.children.length-1 == 1){
+               onlyChild = true;
+        }
+        
+
+        if(prioritaet5 < 0){
+          errorMessageP.prioritaet5 = "Priority may not be less than 0.";
+          delete element.businessObject.$attrs.prioritaet5;
+        }
+        if(!isNaN(element.businessObject.$attrs.prioritaet5) && (
+          (element.businessObject.$attrs.prioritaet5 == element.businessObject.$attrs.prioritaet4)||
+          (element.businessObject.$attrs.prioritaet5 == element.businessObject.$attrs.prioritaet3)||
+          (element.businessObject.$attrs.prioritaet5 == element.businessObject.$attrs.prioritaet2) ||
+          (element.businessObject.$attrs.prioritaet5 == element.businessObject.$attrs.prioritaet))){
+            errorMessageP.prioritaet5 = "Priority must not be set because it has already been set in another circle.";
+            delete element.businessObject.$attrs.prioritaet5;
+          }
+
+        if(!onlyChild){ 
+          for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
+            // gibt violation vom anderen Kreis aus
+            if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
+            if((element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.prioritaet5 >= 0 && prioritaet5 >= 0)) {
+              errorMessageP.prioritaet5 = "Priority must not be set because it has already been set in another circle.";
+              delete element.businessObject.$attrs.prioritaet5;
+            }
+          }
+        }
+      }
+        return errorMessageP;
+      }}
 }))
   //addEntry(group, document.getElementById('situations').value);
 }
