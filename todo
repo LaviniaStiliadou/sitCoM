@@ -1,7 +1,7 @@
 28.01.2020:
 
 Pawel:
--Icons hinzufügen
+- Icons hinzufügen
 - für gelben Kreis ein dont care icon.. such dir eins aus
 evtl. [- Spinne, Akku, Kamera, Update, Mensch Icons hinzufügen (siehe Situation Tab)]
 
@@ -12,7 +12,6 @@ Alex:
 Alle:
 - Token Simulation für den jetzigen Use Case
 - Pawels zeug einbinden
-- übersetzen ins Englische (kompletter Code)
 - proof reading (aus Benutzersicht)
 - BPMNRenderer Zeile 1599 innerer Kreis stroke: none
 
@@ -32,6 +31,7 @@ bei Scope 2 Akku grün ist
 - Wenn rot auf 2 zeigt aber in gelb gesetzt
 - scope-Attribut entfernen
 - Participant Attribut
+- übersetzen ins Englische (kompletter Code)
 
 
 
