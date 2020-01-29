@@ -7,77 +7,58 @@ import {
 
 export default function(group, element) {
   
-  //displays the ScopeID in the situation tab
-  if(isAny(element, ['bpmn:SubProcess']) && element.businessObject.suitable >0){
+  //displays the participant id in the situation tab
+  
+  if(isAny(element, ['bpmn:SubProcess']) && element.businessObject.suitable == 100){
 	  group.entries.push(entryFactory.textField({
-      id : 'scope',
-      description : 'ID der Scope zu der gesprungen wird',
-      label : 'Scope ID',
-      modelProperty : 'scope'
-      /**
+      id : 'participant',
+      description : 'Participant id, which should contain a scope with the same prefix.',
+      label : 'Participant id',
+      modelProperty : 'participant',
       validate: function(element, values) {
          
-        var scope = values.scope;
+        var participant = values.participant;
         var errorMessageP = {};
-    
-       
-        if (isNaN(scope) && !String(scope).match(/^[0-9]([a-z0-9]+)*$/)) {
-          errorMessageP.scope = "Nicht valide Eingabe, da violation mit Zahl beginnen muss.";
-          delete element.businessObject.$attrs.scope;
-        }
-            
-        var onlyChild = false;
-      
-        if(element.parent.children.length-1 == 1){
-            onlyChild = true;
-        }
-            //console.log(element.parent.children);
-        if(scope < 0){
-            errorMessageP.scope = "Scope Id darf nicht kleiner 0 sein.";
-            delete element.businessObject.$attrs.scope;
-        }
-        if(!onlyChild){ 
-          console.log(element.businessObject.suitable);
-          for(var i = 0; i < element.parent.children.length; i++){
-            console.log(element.id != element.parent.children[i].id );
-            if(element.parent.children[i].type == 'bpmn:SubProcess' && element.id != element.parent.children[i].id ){
-              if(element.businessObject.suitable == 100){
-                console.log(element.parent.businessObject.$attrs.scope);
-                console.log(element.businessObject.$attrs.scope);
-                if(element.parent.businessObject.$attrs.scope != element.businessObject.$attrs.scope){
-                  errorMessageP.scope = "Scope Id darf nicht Parent Id entsprechen.";
-                  delete element.businessObject.$attrs.scope;
-                }
-              }
-            
-              if(String(element.parent.children[i].businessObject.$attrs.scope) === String(element.businessObject.$attrs.scope) && element.businessObject.$attrs.scope != ''){
-                errorMessageP.scope = "Scope Id muss eindeutig sein.";
-                delete element.businessObject.$attrs.scope;
-              }
-            }
-            
+        if(element.parent.parent.type == 'bpmn:Participant' && participant !=undefined){
+          var find = false;
+          // entspricht der Participant Id, indem ich mich gerade befinde.
+          var participantid = element.parent.parent.id;
+          for(var i = 0; i< element.parent.parent.parent.children.length; i++){
+             if(element.parent.parent.parent.children[i].id == participant  && element.parent.parent.parent.children[i].id  != participantid){
+               find = true;
+             }
+          }
+          if(!find){
+            errorMessageP.participant = "There is no participant with this id or the id corresponds to the current participant . ";
+            delete element.businessObject.$attrs.participant; 
           }
         }
+        
+       
+        if ((!String(participant).match(/^Participant_[0-9]([a-z0-9]+)*$/)) && participant !=undefined) {
+          errorMessageP.participant = "Not valid input, because the participant idd should start with the prefix Participant_. Example Participant_1rj1vs7";
+          delete element.businessObject.$attrs.participant; 
+        }
+            
             return errorMessageP;
           }
-          */
-	  }))
+    }))
   }
-  
+          
   //display checkbox to activate compensation
   //todo: validate erzeugt copmensationsymbol
   if(isAny(element, ['bpmn:SubProcess']) && element.businessObject.suitable == 100){  
 	  group.entries.push(entryFactory.textField({
       id : 'prioritaet',
-      description : 'Priorität',
-      label : 'Scope-Priorität',
+      description : 'priority of the current scope',
+      label : 'Scope-Priority',
       modelProperty : 'prioritaet',
       validate: function(element, values) {
         var prioritaet = values.prioritaet;
         var errorMessageP = {};
 
         if (isNaN(prioritaet)) {
-          errorMessageP.prioritaet = "Priorität muss eine Nummer sein.";
+          errorMessageP.prioritaet = "Priority must be a number.";
           delete element.businessObject.$attrs.prioritaet;
         }
 		
@@ -87,7 +68,7 @@ export default function(group, element) {
         }
 
         if(prioritaet < 0){
-          errorMessageP.prioritaet = "Priorität darf nicht kleiner 0 sein.";
+          errorMessageP.prioritaet = "Priority must not be less than 0.";
           delete element.businessObject.$attrs.prioritaet;
         }
         //console.log(element);
@@ -180,20 +161,20 @@ export default function(group, element) {
                     }
                   }
                   if(yellowSame && redSame && greenSame){
-                  errorMessageP.prioritaet = "Die Scopes " + element.id + " und " + element.parent.children[i].id + " sind identisch."
+                  errorMessageP.prioritaet = "The scopes " + element.id + " and " + element.parent.children[i].id + " are the same."
                   }
                   if(((redSame && greenSame) || (redSame && yellowSame) || (yellowSame && greenSame))&& element.attachers.length == 2 && element.parent.children[i].attachers.length == 2){
-                    errorMessageP.prioritaet = "Die Scopes " + element.id + " und " + element.parent.children[i].id + " sind identisch."
+                    errorMessageP.prioritaet = "The scopes " + element.id + " and " + element.parent.children[i].id + " are the same."
                   }
                 
                   if(greenSame && element.attachers.length == 1 && element.parent.children[i].attachers.length == 1){
-                    errorMessageP.prioritaet = "Die Scopes " + element.id + " und " + element.parent.children[i].id + " sind identisch."
+                    errorMessageP.prioritaet = "The scopes " + element.id + " and " + element.parent.children[i].id + " are the same."
                   }
                   if(yellowSame && element.attachers.length == 1 && element.parent.children[i].attachers.length == 1){
-                    errorMessageP.prioritaet = "Die Scopes " + element.id + " und " + element.parent.children[i].id + " sind identisch."
+                    errorMessageP.prioritaet = "The scopes " + element.id + " and " + element.parent.children[i].id + " are the same."
                   }
                   if(redSame && element.attachers.length == 1 && element.parent.children[i].attachers.length == 1){
-                    errorMessageP.prioritaet = "Die Scopes " + element.id + " und " + element.parent.children[i].id + " sind identisch."
+                    errorMessageP.prioritaet = "The scopes " + element.id + " and " + element.parent.children[i].id + " are the same."
                   }
 
                   
@@ -206,7 +187,7 @@ export default function(group, element) {
               }
               if((element.businessObject.$attrs.prioritaet == element.parent.children[i].businessObject.$attrs.prioritaet) 
               && (!isNaN(prioritaet)) && (element != element.parent.children[i])){
-					      errorMessageP.prioritaet = "Priorität darf nicht gesetzt werden, da sie bereits in einem anderen Scope gesetzt wurde.";
+					      errorMessageP.prioritaet = "Priority must not be set, because it has already been set in another scope.";
                 delete element.businessObject.$attrs.prioritaet;
                               }
 			}
@@ -219,7 +200,7 @@ export default function(group, element) {
 	  
 	  group.entries.push(entryFactory.checkbox({
       id : 'compensationCheckbox',
-      description : 'Wenn Sie die Checkbox anklicken, ist compensation im scope erlaubt',
+      description : 'If you select the checkbox compensation is permitted in this scope.',
       label : 'Compensation',
       modelProperty : 'compensationCheckbox'
 	  }))
@@ -229,7 +210,7 @@ export default function(group, element) {
   if(isAny(element, ['bpmn:BoundaryEvent']) && element.businessObject.suitable ==50){
 	  group.entries.push(entryFactory.checkbox({
       id : 'akkuCheckbox',
-      description : 'Wenn Sie die Checkbox anklicken, können Sie in den anderen Kreise keine violation setzen.',
+      description : 'If you select the checkbox, you cannot put any violation in the other circles. ',
       label : 'Akku',
       modelProperty : 'akkuCheckbox',
       validate: function(element, values) {
@@ -694,13 +675,13 @@ export default function(group, element) {
   
         if(String(violation).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)){
 
-          var matchFoundR = false, matchCircleR = false;
-          var matchFoundG = false, matchCircleG = false;
+          var matchFoundR = false, matchCircleR = false, matchCircleYR = false;
+          var matchFoundG = false, matchCircleG = false, matchCircleYG = false;
           var scope;
           for(var i=0; i<element.parent.children.length; i++){
            // console.log(element.parent.children[kind].attachers[li].host);
-            if(element.parent.children[i].businessObject.$attrs.scope == violation &&
-              element.parent.children[kind].attachers[li].host.businessObject.$attrs.scope != violation){
+            if(element.parent.children[i].id == violation &&
+              element.parent.children[kind].attachers[li].host.id != violation){
               scope = i;
               if(element.businessObject.suitable == 25){
              //   console.log("gg");
@@ -711,6 +692,20 @@ export default function(group, element) {
                //     console.log("vi");
                     
                    matchCircleR = true;
+                 //  console.log(matchCircleR);
+                }
+                
+                }
+                //console.log("va");
+                //console.log(matchCircleR);
+                }
+                for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+                  var rot = false;
+                  if(element.parent.children[scope].attachers[j].businessObject.suitable == 50){
+                  if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.akkuCheckbox)){
+               //     console.log("vi");
+                    
+                   matchCircleYR = true;
                  //  console.log(matchCircleR);
                 }
                 
@@ -742,6 +737,20 @@ export default function(group, element) {
                 }
                 }
                 for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+                  var rot = false;
+                  if(element.parent.children[scope].attachers[j].businessObject.suitable == 50){
+                  if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.akkuCheckbox)){
+               //     console.log("vi");
+                    
+                   matchCircleYG = true;
+                 //  console.log(matchCircleR);
+                }
+                
+                }
+                //console.log("va");
+                //console.log(matchCircleR);
+                }
+                for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
                  // console.log(scope);
                   if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
                      matchFoundG = true;
@@ -756,14 +765,14 @@ export default function(group, element) {
       //console.log(!matchCircleR);
       //console.log(!matchFoundR);
       if(element.businessObject.suitable == 25){
-          if((!matchCircleR || !matchFoundR) ){
+          if((!matchCircleR || !matchFoundR) || !matchCircleYR){
             
         errorMessageV.violation = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
         delete element.businessObject.$attrs.violation; 
       }
     }
     if(element.businessObject.suitable == 100){
-    if((!matchCircleG || !matchFoundG)) {
+    if((!matchCircleG || !matchFoundG || !matchCircleYG)) {
           
       errorMessageV.violation = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
       delete element.businessObject.$attrs.violation; 
@@ -951,13 +960,13 @@ export default function(group, element) {
 
       if(String(violation2).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)){
 
-        var matchFoundR = false, matchCircleR = false;
-        var matchFoundG = false, matchCircleG = false;
+        var matchFoundR = false, matchCircleR = false, matchCircleYR = false;
+        var matchFoundG = false, matchCircleG = false, matchCircleYG = false;
         var scope;
         for(var i=0; i<element.parent.children.length; i++){
          // console.log(element.parent.children[kind].attachers[li].host);
-          if(element.parent.children[i].businessObject.$attrs.scope == violation2 &&
-            element.parent.children[kind].attachers[li].host.businessObject.$attrs.scope != violation2){
+          if(element.parent.children[i].id == violation2 &&
+            element.parent.children[kind].attachers[li].host.id != violation2){
             scope = i;
             if(element.businessObject.suitable == 25){
            //   console.log("gg");
@@ -968,7 +977,21 @@ export default function(group, element) {
              //     console.log("vi");
                   
                  matchCircleR = true;
-               ///  console.log(matchCircleR);
+               //  console.log(matchCircleR);
+              }
+              
+              }
+              //console.log("va");
+              //console.log(matchCircleR);
+              }
+              for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+                var rot = false;
+                if(element.parent.children[scope].attachers[j].businessObject.suitable == 50){
+                if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.spinneCheckbox)){
+             //     console.log("vi");
+                  
+                 matchCircleYR = true;
+               //  console.log(matchCircleR);
               }
               
               }
@@ -987,16 +1010,30 @@ export default function(group, element) {
               
             }
             if(element.businessObject.suitable == 100){
-             // console.log(25);
+              //console.log(25);
               for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
                 
                 if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
                   if((element.parent.children[scope].attachers[j].businessObject.$attrs.violation2 == undefined)){
-                   // console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation2);
+                //    console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation);
                    matchCircleG = true;
                   // console.log(100);
                 }
               }
+              }
+              for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+                var rot = false;
+                if(element.parent.children[scope].attachers[j].businessObject.suitable == 50){
+                if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.spinneCheckbox)){
+             //     console.log("vi");
+                  
+                 matchCircleYG = true;
+               //  console.log(matchCircleR);
+              }
+              
+              }
+              //console.log("va");
+              //console.log(matchCircleR);
               }
               for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
                // console.log(scope);
@@ -1010,17 +1047,17 @@ export default function(group, element) {
       
       }
     }
-   // console.log(!matchCircleR);
+    //console.log(!matchCircleR);
     //console.log(!matchFoundR);
     if(element.businessObject.suitable == 25){
-        if((!matchCircleR || !matchFoundR) ){
+        if((!matchCircleR || !matchFoundR) || !matchCircleYR){
           
       errorMessageV.violation2 = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
       delete element.businessObject.$attrs.violation2; 
     }
   }
   if(element.businessObject.suitable == 100){
-  if((!matchCircleG || !matchFoundG)) {
+  if((!matchCircleG || !matchFoundG || !matchCircleYG)) {
         
     errorMessageV.violation2 = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
     delete element.businessObject.$attrs.violation2; 
@@ -1210,24 +1247,38 @@ export default function(group, element) {
 
       if(String(violation3).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)){
 
-        var matchFoundR = false, matchCircleR = false;
-        var matchFoundG = false, matchCircleG = false;
+        var matchFoundR = false, matchCircleR = false, matchCircleYR = false;
+        var matchFoundG = false, matchCircleG = false, matchCircleYG = false;
         var scope;
         for(var i=0; i<element.parent.children.length; i++){
-          //console.log(element.parent.children[kind].attachers[li].host);
-          if(element.parent.children[i].businessObject.$attrs.scope == violation3 &&
-            element.parent.children[kind].attachers[li].host.businessObject.$attrs.scope != violation3){
+         // console.log(element.parent.children[kind].attachers[li].host);
+          if(element.parent.children[i].id == violation3 &&
+            element.parent.children[kind].attachers[li].host.id != violation3){
             scope = i;
             if(element.businessObject.suitable == 25){
-              //console.log("gg");
+           //   console.log("gg");
               for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
                 var rot = false;
                 if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
                 if((element.parent.children[scope].attachers[j].businessObject.$attrs.violation3 == undefined)){
-                //  console.log("vi");
+             //     console.log("vi");
                   
                  matchCircleR = true;
-                 //console.log(matchCircleR);
+               //  console.log(matchCircleR);
+              }
+              
+              }
+              //console.log("va");
+              //console.log(matchCircleR);
+              }
+              for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+                var rot = false;
+                if(element.parent.children[scope].attachers[j].businessObject.suitable == 50){
+                if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.menschCheckbox)){
+             //     console.log("vi");
+                  
+                 matchCircleYR = true;
+               //  console.log(matchCircleR);
               }
               
               }
@@ -1251,14 +1302,28 @@ export default function(group, element) {
                 
                 if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
                   if((element.parent.children[scope].attachers[j].businessObject.$attrs.violation3 == undefined)){
-                    //console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation3);
+                //    console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation);
                    matchCircleG = true;
-                   //console.log(100);
+                  // console.log(100);
                 }
               }
               }
               for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
-                //console.log(scope);
+                var rot = false;
+                if(element.parent.children[scope].attachers[j].businessObject.suitable == 50){
+                if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.menschCheckbox)){
+             //     console.log("vi");
+                  
+                 matchCircleYG = true;
+               //  console.log(matchCircleR);
+              }
+              
+              }
+              //console.log("va");
+              //console.log(matchCircleR);
+              }
+              for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+               // console.log(scope);
                 if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
                    matchFoundG = true;
                   // console.log(100);
@@ -1272,20 +1337,19 @@ export default function(group, element) {
     //console.log(!matchCircleR);
     //console.log(!matchFoundR);
     if(element.businessObject.suitable == 25){
-        if((!matchCircleR || !matchFoundR) ){
+        if((!matchCircleR || !matchFoundR) || !matchCircleYR){
           
       errorMessageV.violation3 = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
       delete element.businessObject.$attrs.violation3; 
     }
   }
   if(element.businessObject.suitable == 100){
-  if((!matchCircleG || !matchFoundG)) {
+  if((!matchCircleG || !matchFoundG || !matchCircleYG)) {
         
     errorMessageV.violation3 = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
     delete element.businessObject.$attrs.violation3; 
   } 
 }
-  
       
   }
       if(!onlyChild){ 
@@ -1310,7 +1374,7 @@ export default function(group, element) {
               ||!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3) 
             || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)) 
             && element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3 != '' ){
-            errorMessageV.violation = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
+            errorMessageV.violation3 = "violation darf nicht gesetzt werden, da sie bereits in einem anderen Kreis gesetzt wurde.";
             delete element.businessObject.$attrs.violation3; 
             //delete element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation;
             
@@ -1462,30 +1526,30 @@ group.entries.push(entryFactory.textField({
     
 
     if(violation4 < 0){
-      errorMessageV.violation = "violation darf nicht kleiner 0 sein.";
+      errorMessageV.violation4 = "violation darf nicht kleiner 0 sein.";
       delete element.businessObject.$attrs.violation4; 
     }
 
     if(String(violation4).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)){
 
-      var matchFoundR = false, matchCircleR = false;
-      var matchFoundG = false, matchCircleG = false;
+      var matchFoundR = false, matchCircleR = false, matchCircleYR = false;
+      var matchFoundG = false, matchCircleG = false, matchCircleYG = false;
       var scope;
       for(var i=0; i<element.parent.children.length; i++){
        // console.log(element.parent.children[kind].attachers[li].host);
-        if(element.parent.children[i].businessObject.$attrs.scope == violation4&&
-          element.parent.children[kind].attachers[li].host.businessObject.$attrs.scope != violation4){
+        if(element.parent.children[i].id == violation4 &&
+          element.parent.children[kind].attachers[li].host.id != violation4){
           scope = i;
           if(element.businessObject.suitable == 25){
-           // console.log("gg");
+         //   console.log("gg");
             for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
               var rot = false;
               if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
               if((element.parent.children[scope].attachers[j].businessObject.$attrs.violation4 == undefined)){
-             ///   console.log("vi");
+           //     console.log("vi");
                 
                matchCircleR = true;
-               //console.log(matchCircleR);
+             //  console.log(matchCircleR);
             }
             
             }
@@ -1493,7 +1557,21 @@ group.entries.push(entryFactory.textField({
             //console.log(matchCircleR);
             }
             for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
-              ///console.log(scope);
+              var rot = false;
+              if(element.parent.children[scope].attachers[j].businessObject.suitable == 50){
+              if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.kameraCheckbox)){
+           //     console.log("vi");
+                
+               matchCircleYR = true;
+             //  console.log(matchCircleR);
+            }
+            
+            }
+            //console.log("va");
+            //console.log(matchCircleR);
+            }
+            for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+              //console.log(scope);
               //console.log()
               //console.log(element.parent.children[scope].attachers[j].businessObject.suitable);
               if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
@@ -1509,14 +1587,28 @@ group.entries.push(entryFactory.textField({
               
               if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
                 if((element.parent.children[scope].attachers[j].businessObject.$attrs.violation4 == undefined)){
-              //    console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation4);
+              //    console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation);
                  matchCircleG = true;
                 // console.log(100);
               }
             }
             }
             for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
-              //console.log(scope);
+              var rot = false;
+              if(element.parent.children[scope].attachers[j].businessObject.suitable == 50){
+              if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.kameraCheckbox)){
+           //     console.log("vi");
+                
+               matchCircleYG = true;
+             //  console.log(matchCircleR);
+            }
+            
+            }
+            //console.log("va");
+            //console.log(matchCircleR);
+            }
+            for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+             // console.log(scope);
               if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
                  matchFoundG = true;
                 // console.log(100);
@@ -1530,14 +1622,14 @@ group.entries.push(entryFactory.textField({
   //console.log(!matchCircleR);
   //console.log(!matchFoundR);
   if(element.businessObject.suitable == 25){
-      if((!matchCircleR || !matchFoundR) ){
+      if((!matchCircleR || !matchFoundR) || !matchCircleYR){
         
     errorMessageV.violation4 = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
     delete element.businessObject.$attrs.violation4; 
   }
 }
 if(element.businessObject.suitable == 100){
-if((!matchCircleG || !matchFoundG)) {
+if((!matchCircleG || !matchFoundG || !matchCircleYG)) {
       
   errorMessageV.violation4 = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
   delete element.businessObject.$attrs.violation4; 
@@ -1727,24 +1819,38 @@ group.entries.push(entryFactory.textField({
 
     if(String(violation5).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)){
 
-      var matchFoundR = false, matchCircleR = false;
-      var matchFoundG = false, matchCircleG = false;
+      var matchFoundR = false, matchCircleR = false, matchCircleYR = false;
+      var matchFoundG = false, matchCircleG = false, matchCircleYG = false;
       var scope;
       for(var i=0; i<element.parent.children.length; i++){
        // console.log(element.parent.children[kind].attachers[li].host);
-        if(element.parent.children[i].businessObject.$attrs.scope == violation5 &&
-          element.parent.children[kind].attachers[li].host.businessObject.$attrs.scope != violation5){
+        if(element.parent.children[i].id == violation5 &&
+          element.parent.children[kind].attachers[li].host.id != violation5){
           scope = i;
           if(element.businessObject.suitable == 25){
-           // console.log("gg");
+         //   console.log("gg");
             for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
               var rot = false;
               if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
               if((element.parent.children[scope].attachers[j].businessObject.$attrs.violation5 == undefined)){
-             //   console.log("vi");
+           //     console.log("vi");
                 
                matchCircleR = true;
-               //console.log(matchCircleR);
+             //  console.log(matchCircleR);
+            }
+            
+            }
+            //console.log("va");
+            //console.log(matchCircleR);
+            }
+            for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+              var rot = false;
+              if(element.parent.children[scope].attachers[j].businessObject.suitable == 50){
+              if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.updateCheckbox)){
+           //     console.log("vi");
+                
+               matchCircleYR = true;
+             //  console.log(matchCircleR);
             }
             
             }
@@ -1757,28 +1863,42 @@ group.entries.push(entryFactory.textField({
               //console.log(element.parent.children[scope].attachers[j].businessObject.suitable);
               if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
                  matchFoundR = true;
-                 //console.log(100);
+                // console.log(100);
               }
             }  
             
           }
           if(element.businessObject.suitable == 100){
-           // console.log(25);
+            //console.log(25);
             for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
               
               if(element.parent.children[scope].attachers[j].businessObject.suitable == 100){
                 if((element.parent.children[scope].attachers[j].businessObject.$attrs.violation5 == undefined)){
-             //     console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation5);
+              //    console.log(element.parent.children[scope].attachers[j].businessObject.$attrs.violation);
                  matchCircleG = true;
-               //  console.log(100);
+                // console.log(100);
               }
             }
+            }
+            for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
+              var rot = false;
+              if(element.parent.children[scope].attachers[j].businessObject.suitable == 50){
+              if(!(element.parent.children[scope].attachers[j].businessObject.$attrs.updateCheckbox)){
+           //     console.log("vi");
+                
+               matchCircleYG = true;
+             //  console.log(matchCircleR);
+            }
+            
+            }
+            //console.log("va");
+            //console.log(matchCircleR);
             }
             for(var j = 0; j< element.parent.children[scope].attachers.length; j++){
              // console.log(scope);
               if(element.parent.children[scope].attachers[j].businessObject.suitable == 25){
                  matchFoundG = true;
-               //  console.log(100);
+                // console.log(100);
               }
             } 
             
@@ -1789,14 +1909,14 @@ group.entries.push(entryFactory.textField({
   //console.log(!matchCircleR);
   //console.log(!matchFoundR);
   if(element.businessObject.suitable == 25){
-      if((!matchCircleR || !matchFoundR) ){
+      if((!matchCircleR || !matchFoundR) || !matchCircleYR){
         
     errorMessageV.violation5 = "Nicht valide Eingabe, da kein Scope mit gegensätzlichem Kreis existiert.";
     delete element.businessObject.$attrs.violation5; 
   }
 }
 if(element.businessObject.suitable == 100){
-if((!matchCircleG || !matchFoundG)) {
+if((!matchCircleG || !matchFoundG || !matchCircleYG)) {
       
   errorMessageV.violation5 = "Nicht valide Eingabe, g da kein Scope mit gegensätzlichem Kreis existiert.";
   delete element.businessObject.$attrs.violation5; 
