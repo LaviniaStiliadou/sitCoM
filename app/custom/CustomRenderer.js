@@ -76,6 +76,7 @@ export default class CustomRenderer extends BaseRenderer {
 
 		if (is(element, 'bpmn:BoundaryEvent')) {
       shape.nextSibling.attributes[0].nodeValue = "fill: none; stroke: none; stroke-width: 1px";
+      shape.nextSibling.attributes[3].nodeValue = "fill: none; stroke: none; stroke-width: 1px";
       console.log(element.businessObject.eventDefinitions);
       if(element.businessObject.eventDefinitions != undefined){
         if(element.businessObject.eventDefinitions[0].$type == 'bpmn:SignalEventDefinition'){
@@ -86,7 +87,7 @@ export default class CustomRenderer extends BaseRenderer {
       
       console.log(shape);
 			const circle2 = drawCircle(parentNode, element.width, element.height);
-			const circle = drawCircleI(circle2, 28, 28);
+			//const circle = drawCircleI(circle2, 28, 28);
 			
 			if (businessObject.suitable == 25) {
         
@@ -97,8 +98,7 @@ export default class CustomRenderer extends BaseRenderer {
     }
 			
 			if (businessObject.suitable == 50) {
-			svgAttr(circle, {fill: 'yellow',
-			stroke: 'yellow'});
+		
 			svgAttr(circle2, {
 			fill: 'none',
 			stroke: 'yellow'
@@ -112,7 +112,7 @@ export default class CustomRenderer extends BaseRenderer {
 			});
       }
        
-      prependTo(circle, circle2);
+     // prependTo(circle, circle2);
       //prependTo(circle2, parentNode);
       
       //svgRemove(shape);
