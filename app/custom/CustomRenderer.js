@@ -80,10 +80,21 @@ export default class CustomRenderer extends BaseRenderer {
       console.log(element.businessObject.eventDefinitions);
       if(element.businessObject.eventDefinitions != undefined){
         if(element.businessObject.eventDefinitions[0].$type == 'bpmn:SignalEventDefinition'){
-          // muss noch finden, wo das Ausrufezeichen gespeichert ist in shape
-        }
+          //shape.parentNode.children[2].attributes[0] = 'M {mx},2{my} l {e.x0},-{e.y0} l -{e.x1},2 Z'+
+          //'m 1.4,7.6 c -1.788948,0.7502 -3.8576,-0.0928 -4.6097055,-1.87438 -0.7521065,-1.78321 0.090598,-3.84627 1.8802645,-4.59604 1.78823,-0.74936 3.856881,0.0929 4.608987,1.87437 0.752106,1.78165 -0.0906,3.84612 -1.879546,4.59605 z';
         
-      }
+         shape.parentNode.children[2].attributes.style.nodeValue = "fill: red; stroke: none; stroke-width: 1px";
+         //shape.parentNode.children[2].attributes.style.ownerElement.outerHTML = '<path d="M {mx},{my} l {e.x0},{e.y0} l -{e.x1},0 Z" style="fill: red; stroke: none; stroke-width: 1px"></path>';
+         //console.log(shape.parentNode.children[2].attributes.style.ownerElement.outerHTML );
+        // console.log('M {mx},2{my} l {e.x0},-{e.y0} l -{e.x1},0 Z'+
+         //'m 1.4,7.6 c -1.788948,0.7502 -3.8576,-0.0928 -4.6097055,-1.87438 -0.7521065,-1.78321 0.090598,-3.84627 1.8802645,-4.59604 1.78823,-0.74936 3.856881,0.0929 4.608987,1.87437 0.752106,1.78165 -0.0906,3.84612 -1.879546,4.59605 z');
+          
+        }
+
+        if(element.businessObject.eventDefinitions[0].$type == 'bpmn:EscalationEventDefinition'){
+          shape.parentNode.children[2].attributes.style.nodeValue = "fill: none; stroke: green; stroke-width: 1px";
+        }
+    }
       
       console.log(shape);
 			const circle2 = drawCircle(parentNode, element.width, element.height);

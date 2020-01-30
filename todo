@@ -11,7 +11,7 @@ Alex:
 Alle:
 - Token Simulation für den jetzigen Use Case
 - proof reading (aus Benutzersicht)
-- Farbe zu den Icons ergänzen (derzeit irgendwie farblos, obwohl Pathmap drin ist)
+- default Symbole wieder erlauben (da die neuen Icons derzeit die alten Symbole überschreiben)
 
 
 Erledigt:
@@ -32,6 +32,7 @@ bei Scope 2 Akku grün ist
 - übersetzen ins Englische (kompletter Code)
 - BPMNRenderer Zeile 1599 innerer Kreis stroke: none
 - Einbinden der Icons
+- Farbe zu den Icons ergänzen 
 
 
 14.01.2020:
