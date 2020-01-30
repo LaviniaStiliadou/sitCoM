@@ -72,9 +72,19 @@ export default class CustomRenderer extends BaseRenderer {
         }
 		
       const color = this.getColor(suitabilityScore);
+    
 
 		if (is(element, 'bpmn:BoundaryEvent')) {
+      shape.nextSibling.attributes[0].nodeValue = "fill: none; stroke: none; stroke-width: 1px";
+      console.log(element.businessObject.eventDefinitions);
+      if(element.businessObject.eventDefinitions != undefined){
+        if(element.businessObject.eventDefinitions[0].$type == 'bpmn:SignalEventDefinition'){
+          // muss noch finden, wo das Ausrufezeichen gespeichert ist in shape
+        }
+        
+      }
       
+      console.log(shape);
 			const circle2 = drawCircle(parentNode, element.width, element.height);
 			const circle = drawCircleI(circle2, 28, 28);
 			
