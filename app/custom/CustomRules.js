@@ -118,12 +118,12 @@ CustomRules.prototype.init = function() {
 	  return false;
 	}
 
-
+/*
 	// keine Verbindung zu Scope 100 / 200 hin
     if ((is(target, 'bpmn:SubProcess')) && (targetBusinessObject.suitable == 200 || targetBusinessObject.suitable == 100)){
       return false;
     }
-
+*/
     // damit Rect mit Score = 100 nicht mit Score = 200 verbunden werden duerfen
     if (is(target, 'bpmn:SubProcess') &&
      (is(source, 'bpmn:SubProcess')) && businessObject.suitable == 100
@@ -195,7 +195,6 @@ CustomRules.prototype.init = function() {
 	if((isAny(context.shapes[0], ['bpmn:IntermediateThrowEvent','bpmn:IntermediateCatchEvent',
      'bpmn:BoundaryEvent']))
     && (is(target, 'bpmn:SubProcess')) && (businessObject.suitable !=25 && businessObject.suitable != 50 && businessObject.suitable != 100) && (targetBusinessObject.suitable == 100)){
-      //console.log(target.id);
       return true;
     }
 
@@ -264,14 +263,10 @@ CustomRules.prototype.init = function() {
       businessObject.suitable == 25) &&
       (is(target, 'bpmn:SubProcess') &&
       (targetBusinessObject.suitable == 100)) && (position && isBoundaryAttachment(position, target))) {
-          //console.log("hier");
      var find;
      var allowed = true;
-     //console.log(shape);
     for(var i = 0; i< target.attachers.length; i++){
-      //console.log(shape);
           if(target.attachers[i].businessObject.suitable == shape.businessObject.suitable){
-            //console.log('gleich');
             allowed = false;
             return false;
           }
