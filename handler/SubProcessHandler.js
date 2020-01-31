@@ -15,7 +15,7 @@ function SubProcessHandler(animation, eventBus, log) {
 }
 
 SubProcessHandler.prototype.consume = function(context) {
-	console.log(context);
+
   var element = context.element,
       processInstanceId = context.processInstanceId;
   var startEvent = false;
@@ -23,10 +23,10 @@ SubProcessHandler.prototype.consume = function(context) {
   // If element is OuterScope
   if(element.businessObject.suitable == 200) {
     // check if OuterScope has InnerScopes
-	innerStartEvent = element.children.filter(function(child) {
+    innerStartEvent = element.children.filter(function(child) {
       return is(child, 'bpmn:SubProcess');
     })[0];
-	// check if InnerScope has StartEvent
+    // check if InnerScope has StartEvent
     startEvent = innerStartEvent.children.filter(function(child) {
       return is(child, 'bpmn:StartEvent');
     })[0];
