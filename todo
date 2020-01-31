@@ -13,6 +13,18 @@ Alle:
 - proof reading (aus Benutzersicht)
 - default Symbole wieder erlauben (da die neuen Icons derzeit die alten Symbole überschreiben)
 
+Fehlende Features vom Token Simulator: 
+ -Pool/Participant
+ - MessageFlows / MessageTask usw..
+ 
+Marv:
+- Token Simulator eingebunden
+- Wenn OuterScope ein Token bekommt, sucht er nach Innerscopes. Dem ersten InnerScope wird, wenn ein Startevent vorhanden,
+das Token zugewiesen.
+
+WICHTIG für eventuelle zukünftige Implementierungen: OuterScopes bekommen keine eigene ProzessInstanzID.
+Im Tokenhandling werden sie quasi ignoriert, das Token wandert direkt zum InnerScope.
+
 
 Erledigt:
 - Palette farbe fixen (2 sind schwarz) -> jetzt grün/gelb/rot
