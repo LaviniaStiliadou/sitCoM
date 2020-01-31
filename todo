@@ -12,9 +12,11 @@ Alle:
 - Token Simulation für den jetzigen Use Case
 - proof reading (aus Benutzersicht)
 - default Symbole wieder erlauben (da die neuen Icons derzeit die alten Symbole überschreiben)
+- SubProcessHandler & EndEventHandler hierhin verschieben: .\node_modules\bpmn-js-token-simulation\lib\features\token-simulation-behavior\handler
 
 Fehlende Features vom Token Simulator: 
  - MessageFlows / MessageTask usw..
+ - Inclusive Gateway
  
 Marv:
 - Token Simulator eingebunden
