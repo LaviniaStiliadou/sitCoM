@@ -118,6 +118,7 @@ CustomRules.prototype.init = function() {
 	  return false;
 	}
 
+
 	// keine Verbindung zu Scope 100 / 200 hin
     if ((is(target, 'bpmn:SubProcess')) && (targetBusinessObject.suitable == 200 || targetBusinessObject.suitable == 100)){
       return false;
@@ -144,7 +145,6 @@ CustomRules.prototype.init = function() {
         position = context.position;
     var businessObject = context.shapes[0].businessObject;
 	
-    console.log(context.shapes[0]);
     if(target != undefined){
       var targetBusinessObject = target.businessObject;
     if((is(context.shapes[0], 'bpmn:SubProcess')) && (businessObject.suitable == 200) &&

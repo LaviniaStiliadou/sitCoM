@@ -39,6 +39,7 @@
   "dependencies": {
     "bpmn-js": "^6.1.1",
     "bpmn-js-properties-panel": "^0.32.0",
+    "bpmn-js-token-simulation": "^0.9.0",
     "camunda-bpmn-moddle": "^4.0.1",
     "diagram-js": "^5.0.0",
     "jquery": "^3.4.1",
