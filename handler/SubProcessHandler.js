@@ -1,3 +1,4 @@
+// Move me into .\node_modules\bpmn-js-token-simulation\lib\features\token-simulation-behavior\handler
 'use strict';
 
 var is = require('../../../util/ElementHelper').is;
