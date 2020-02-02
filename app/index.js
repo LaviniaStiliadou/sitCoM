@@ -3,6 +3,7 @@ import BpmnModeler from 'bpmn-js/lib/Modeler';
 import customModule from './custom';
 import propertiesPanelModule from 'bpmn-js-properties-panel';
 import propertiesProviderModule from './provider/situations';
+import drawSituationIconModule from './descriptors/draw';
 //import propertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
 import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda.json';
 
@@ -28,6 +29,7 @@ var bpmnModeler = new BpmnModeler({
   },
   additionalModules: [
     customModule,
+    drawSituationIconModule,
     propertiesPanelModule,
     propertiesProviderModule
   ],

@@ -51,14 +51,14 @@ export default function PathMap() {
       width:  36, 
       heightElements: [6, 14],
       widthElements: [10.5, 21]
-    },/* Original:
-    'EVENT_SIGNAL': {
+    },
+    'EVENT_SIGNAL2': {
       d: 'M {mx},{my} l {e.x0},{e.y0} l -{e.x1},0 Z',
       height: 36,
       width: 36,
       heightElements: [18],
       widthElements: [10, 20]
-    },*/
+    },
 	 'EVENT_SIGNAL': {
       d: 'M {mx},2{my} l {e.x0},-{e.y0} l -{e.x1},0 Z'+
           'm 1.4,7.6 c -1.788948,0.7502 -3.8576,-0.0928 -4.6097055,-1.87438 -0.7521065,-1.78321 0.090598,-3.84627 1.8802645,-4.59604 1.78823,-0.74936 3.856881,0.0929 4.608987,1.87437 0.752106,1.78165 -0.0906,3.84612 -1.879546,4.59605 z',

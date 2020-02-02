@@ -10,7 +10,7 @@ import {
 
 import {
   getRoundRectPath
-} from 'bpmn-js/lib/draw/BpmnRenderUtil';
+} from '../descriptors/draw/BpmnRenderUtil';
 
 import {
   is,
