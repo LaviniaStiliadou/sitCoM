@@ -2,6 +2,10 @@
 
 Pawel:
 - Icons in den Ibranch korrekt einbauen und ggf. färben
+- Update Icon
+- Spinne verkleinern
+- Akku nicht färben
+- Kommentare Original Code anschauen
 
 Alex:
 - gleicher Prefix gleiche Situationen  (OuterScope übergreifend)
@@ -10,6 +14,12 @@ Alex:
 Alle:
 - Token Simulation für den jetzigen Use Case (derzeit in Branch tokensimu)
 - proof reading (aus Benutzersicht)
+- Token Simulator: Für SituationEvents Token starten lassen (evtl. lösen durch Startevent an Innerscope)
+- Token-logik für Innerscope mit höchster Priorität bzw. welche Violation verletzt wird
+- Aus Palette Events sofort mit Icons versehen (auch beim rausziehen Icon sichtbar)
+- (OPTIONAL) Die Icons mit den ganzen Logik und so da rein
+- (OPTIONAL) Beim ziehen von Symbolen die Darstellung anpassen (z.B. Situationevents innerer Kreis links verschoben) 
+- (OPTIONAL) Token Simu Messageflows implementieren (nur wenn der Rest wirklich ok ist) SONST einfach nur "ignore"
 
 
 Erledigt:
