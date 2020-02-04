@@ -1,5 +1,5 @@
 {
-  "name": "sitCoM - situation-extended bpmn-js modeler",
+  "name": "sitCoM-situation-extended-bpmn-js-modeler",
   "version": "0.1.0",
   "description": "bpmn-js modeler extended with situation-dependent scopes  ",
   "main": "app/index.js",
