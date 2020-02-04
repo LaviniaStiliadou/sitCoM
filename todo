@@ -1,8 +1,7 @@
 28.01.2020:
 
 Pawel:
-- für gelben Kreis ein dont care icon.. such dir eins aus
-evtl. [- Spinne, Akku, Kamera, Update, Mensch Icons hinzufügen (siehe Situation Tab)]
+- Icons in den Ibranch korrekt einbauen und ggf. färben
 
 Alex:
 - gleicher Prefix gleiche Situationen  (OuterScope übergreifend)
@@ -14,6 +13,7 @@ Alle:
 
 
 Erledigt:
+- Spinne, Akku, Kamera, Update, Mensch Icons hinzufügen
 - Palette farbe fixen (2 sind schwarz) -> jetzt grün/gelb/rot
 - fetter Scope Messageflow verbieten
 - Scope 100 zu Task in anderen Pool verbiete
