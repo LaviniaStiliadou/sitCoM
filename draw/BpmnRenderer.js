@@ -654,7 +654,7 @@ export default function BpmnRenderer(
       return circle;
     },
     'bpmn:EscalationEventDefinition': function(parentGfx, event, isThrowing) {
-      var pathData = pathMap.getScaledPath('EVENT_ESCALATION', {
+      var pathData = pathMap.getScaledPath('EVENT_GOOD', {
         xScaleFactor: 1,
         yScaleFactor: 1,
         containerWidth: event.width,
@@ -684,9 +684,9 @@ export default function BpmnRenderer(
           my: 0.222
         }
       });
-
       return drawPath(parentGfx, pathData, {
         strokeWidth: 1,
+		fill: 'lightgreen',
         stroke: getStrokeColor(event, defaultStrokeColor)
       });
     },
@@ -706,7 +706,7 @@ export default function BpmnRenderer(
 
       return drawPath(parentGfx, pathData, {
         strokeWidth: 1,
-        fill: fill,
+        fill: 'black',
         stroke: getStrokeColor(event, defaultStrokeColor)
       });
     },
