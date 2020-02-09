@@ -19,12 +19,13 @@ Alle:
   [Aktuell]: OuterScope wählt ersten (0) InnerScope. Wenn SituationEvent auslöst, wird nächster (1) InnerScope gewählt.
 - [BUG] Token-Simulator: BoundaryEvents haben am InnerScope nicht direkt das ContextPad.
         Context-Pad erscheint nur durch auswählen der ProcessID (z.B. oben auf ID 2 klicken)
+- [BUG] Token-Simulator: Bei mehrmaligen durchläufen mit BoundaryEvents bleiben ProcessInstanzen offen
 - (OPTIONAL) Die Icons mit den ganzen Logik und so da rein
 - (OPTIONAL) Beim ziehen von Symbolen die Darstellung anpassen (z.B. Situationevents innerer Kreis links verschoben) 
 - (OPTIONAL) Token Simu Messageflows implementieren (nur wenn der Rest wirklich ok ist) SONST einfach nur "ignore"
 
 [TokenSimulator] - Erledigt:
-- Für SituationEvents Token starten lassen
+- SituationEvents können Tokens auslösen
 - Wenn SituationEvent Token auslöst, werden alle anderen Tokens im InnerScope beendet
 - OuterScope hat eigene ProcessInstanceId
 - OuterScope wird durch das EndEvent im InnerScope mit beendet.
