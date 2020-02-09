@@ -18,7 +18,7 @@ Alle:
 - Token-logik für Innerscope mit höchster Priorität bzw. welche Violation verletzt wird
   [Aktuell]: OuterScope wählt ersten (0) InnerScope. Wenn SituationEvent auslöst, wird nächster (1) InnerScope gewählt.
 - [BUG] Token-Simulator: BoundaryEvents haben am InnerScope nicht direkt das ContextPad.
-        Context-Pad erscheint nur durch auswählen der ProcessID (z.B. oben auf ID 2 klicken)
+        Context-Pad erscheint nur durch auswählen der ProcessID (z.B. oben auf ID 2 klicken) oder nach mehrmaligem Durchlauf
 - [BUG] Token-Simulator: Bei mehrmaligen durchläufen mit BoundaryEvents bleiben ProcessInstanzen offen
 - (OPTIONAL) Die Icons mit den ganzen Logik und so da rein
 - (OPTIONAL) Beim ziehen von Symbolen die Darstellung anpassen (z.B. Situationevents innerer Kreis links verschoben) 
