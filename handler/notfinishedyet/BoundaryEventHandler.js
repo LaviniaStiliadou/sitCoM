@@ -8,10 +8,9 @@ var events = require('../../../util/EventHelper'),
 	GENERATE_TOKEN_EVENT = events.GENERATE_TOKEN_EVENT,
     UPDATE_ELEMENT_EVENT = events.UPDATE_ELEMENT_EVENT;
 
-function BoundaryEventHandler(animation, eventBus, processInstances, elementRegistry) {
+function BoundaryEventHandler(animation, eventBus, elementRegistry) {
   this._animation = animation;
   this._eventBus = eventBus;
-  this._processInstances = processInstances;
   this._elementRegistry = elementRegistry;
 }
 
@@ -40,8 +39,6 @@ BoundaryEventHandler.prototype.generate = function(context) {
   var element = context.element,
       processInstanceId = context.processInstanceId;
 	  
-	  console.log(context);
-
   var innerScope = false,
       hasStartEvent = false;
 
@@ -77,6 +74,6 @@ BoundaryEventHandler.prototype.generate = function(context) {
   }
 };
 
-BoundaryEventHandler.$inject = [ 'animation', 'eventBus', 'processInstances', 'elementRegistry' ];
+BoundaryEventHandler.$inject = [ 'animation', 'eventBus', 'elementRegistry' ];
 
 module.exports = BoundaryEventHandler;
