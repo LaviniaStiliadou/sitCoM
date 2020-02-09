@@ -23,8 +23,12 @@ Alle:
 - (OPTIONAL) Token Simu Messageflows implementieren (nur wenn der Rest wirklich ok ist) SONST einfach nur "ignore"
 
 Erledigt:
-- Token Simulator: Für SituationEvents Token starten lassen (evtl. lösen durch Startevent an Innerscope)
+TokenSimulator:
+- Für SituationEvents Token starten lassen
+- Wenn SituationEvent Token auslöst, werden alle anderen Tokens im InnerScope beendet
 - OuterScope hat eigene ProcessInstanceId
+- OuterScope wird durch das EndEvent im InnerScope mit beendet.
+
 
 Erledigt:
 - Spinne, Akku, Kamera, Update, Mensch Icons hinzufügen
