@@ -24,15 +24,16 @@ function EndEventHandler(animation, eventBus, log, simulationState, elementRegis
 EndEventHandler.prototype.consume = function(context) {
   var element = context.element,
       processInstanceId = context.processInstanceId;
+	  
+  var isInnerScope = false;
+  
+  // check if EndEvent is in InnerScope
+  if (element.parent.businessObject.suitable == 100) {
+	  isInnerScope = true;
+  }
 
   var isTerminate = isTypedEvent(getBusinessObject(element), 'bpmn:TerminateEventDefinition'),
-      isSubProcessChild = is(element.parent, 'bpmn:SubProcess'),
-	  isInnerScope = false;
-	  
-	  // If element is InnerScope
-	  if (element.parent.businessObject.suitable == 100) {
-		  isInnerScope = true;
-	  }
+      isSubProcessChild = is(element.parent, 'bpmn:SubProcess');
 
   if (isTerminate) {
     this._eventBus.fire(TERMINATE_EVENT, context);
@@ -50,29 +51,42 @@ EndEventHandler.prototype.consume = function(context) {
   }
 
   var isFinished = this._simulationState.isFinished(element, processInstanceId);
+  // if EndEvent is in InnerScope
+  if (isInnerScope) {
+    // finish OuterScope in simulationState
+    var isOuterScopeFinished = this._simulationState.isFinished(element, this._processInstances.getProcessInstance(processInstanceId).parentProcessInstanceId);
+  }
 
   if (isFinished) {
+    if (isInnerScope) {
+	  // finish InnerScope
+      this._processInstances.finish(processInstanceId);
+	  // finish OuterScope
+	  this._processInstances.finish(this._processInstances.getProcessInstance(processInstanceId).parentProcessInstanceId);
+    } else {
+      this._processInstances.finish(processInstanceId);
+    }
 
     // finish but do NOT remove
-    this._processInstances.finish(processInstanceId);
+    
   }
 
   if ((isFinished || isTerminate) && isSubProcessChild) {
     var processInstance = this._processInstances.getProcessInstance(processInstanceId);
-
-    // If parent is InnerScope
-    if(isInnerScope) {
-    // generate token on parent of parent (as we ignore OuterScope // has no ProcessInstanceID)
-    this._eventBus.fire(GENERATE_TOKEN_EVENT, {
-      element: element.parent.parent,
-      processInstanceId: processInstance.parentProcessInstanceId
-    });
+	
+	if(isInnerScope) {
+      this._eventBus.fire(GENERATE_TOKEN_EVENT, {
+		// fire on OuterScope (element.parent is InnerScope, element.parent.parent is OuterScope)
+        element: element.parent.parent,
+		// processInstanceId 1 is always level Process/Participant.
+        processInstanceId: 1
+      });
 	} else {
-    // generate token on parent
-    this._eventBus.fire(GENERATE_TOKEN_EVENT, {
-      element: element.parent,
-      processInstanceId: processInstance.parentProcessInstanceId
-    });
+      // generate token on parent
+      this._eventBus.fire(GENERATE_TOKEN_EVENT, {
+        element: element.parent,
+        processInstanceId: processInstance.parentProcessInstanceId
+      });
 	}
   }
 
