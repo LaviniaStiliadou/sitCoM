@@ -16,13 +16,15 @@ Alle:
 - Aus Palette Events sofort mit Icons versehen (auch beim rausziehen Icon sichtbar)
 - Token Simulation für den jetzigen Use Case (derzeit in Branch tokensimu)
 - Token-logik für Innerscope mit höchster Priorität bzw. welche Violation verletzt wird
-  [Aktuell]: OuterScope wählt ersten (0) InnerScope. Wenn SituationEvent auslöst, wird nächster (1) InnerScope gewählt.
+- [Info] Aktuelle Logik: OuterScope wählt ersten (0) InnerScope. Wenn SituationEvent auslöst, wird nächster (1) InnerScope gewählt.
+- [Info] Token-Simulator: Bei mehrmaligen durchläufen mit BoundaryEvents bleiben ProcessInstanzen offen. 
+                Scheinbar muss man nach einem erfolgreichen Durchlauf reseten.
 - [BUG] Token-Simulator: BoundaryEvents haben am InnerScope nicht direkt das ContextPad.
-        Context-Pad erscheint nur durch auswählen der ProcessID (z.B. oben auf ID 2 klicken) oder nach mehrmaligem Durchlauf
-- [BUG] Token-Simulator: Bei mehrmaligen durchläufen mit BoundaryEvents bleiben ProcessInstanzen offen
+        Context-Pad erscheint nur durch auswählen der ProcessID (z.B. oben auf ID 2 klicken)
 - (OPTIONAL) Die Icons mit den ganzen Logik und so da rein
 - (OPTIONAL) Beim ziehen von Symbolen die Darstellung anpassen (z.B. Situationevents innerer Kreis links verschoben) 
 - (OPTIONAL) Token Simu Messageflows implementieren (nur wenn der Rest wirklich ok ist) SONST einfach nur "ignore"
+
 
 [TokenSimulator] - Erledigt:
 - SituationEvents können Tokens auslösen
