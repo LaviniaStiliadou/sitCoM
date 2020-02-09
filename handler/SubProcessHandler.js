@@ -81,6 +81,16 @@ SubProcessHandler.prototype.generate = function(context) {
 
   var element = context.element,
       processInstanceId = context.processInstanceId;
+	  
+  if (element.businessObject.suitable == 100) {
+	  var startEvent = element.children.filter(function(child) {
+      return is(child, 'bpmn:StartEvent');
+    })[0];
+    self._eventBus.fire(GENERATE_TOKEN_EVENT, {
+      element: startEvent,
+      parentProcessInstanceId: processInstanceId
+      });
+  } else {
 
   var outgoingSequenceFlows = element.outgoing.filter(function(outgoing) {
     return is(outgoing, 'bpmn:SequenceFlow');
@@ -94,6 +104,7 @@ SubProcessHandler.prototype.generate = function(context) {
       });
     });
   });
+  }
 
   this._eventBus.fire(UPDATE_ELEMENT_EVENT, {
     element: element

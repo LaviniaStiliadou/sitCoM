@@ -5,11 +5,13 @@ var elementHelper = require('../../../util/ElementHelper'),
 
 var events = require('../../../util/EventHelper'),
     CONSUME_TOKEN_EVENT = events.CONSUME_TOKEN_EVENT,
+	GENERATE_TOKEN_EVENT = events.GENERATE_TOKEN_EVENT,
     UPDATE_ELEMENT_EVENT = events.UPDATE_ELEMENT_EVENT;
 
-function BoundaryEventHandler(animation, eventBus, elementRegistry) {
+function BoundaryEventHandler(animation, eventBus, processInstances, elementRegistry) {
   this._animation = animation;
   this._eventBus = eventBus;
+  this._processInstances = processInstances;
   this._elementRegistry = elementRegistry;
 }
 
@@ -37,6 +39,8 @@ BoundaryEventHandler.prototype.generate = function(context) {
 
   var element = context.element,
       processInstanceId = context.processInstanceId;
+	  
+	  console.log(context);
 
   var innerScope = false,
       hasStartEvent = false;
@@ -50,9 +54,9 @@ BoundaryEventHandler.prototype.generate = function(context) {
       return is(child, 'bpmn:StartEvent');
     })[0];
     if (hasStartEvent) {
-      self._eventBus.fire(CONSUME_TOKEN_EVENT, {
-        element: innerScope,
-        processInstanceId: processInstanceId
+      self._eventBus.fire(GENERATE_TOKEN_EVENT, {
+        element: hasStartEvent,
+        parentProcessInstanceId: processInstanceId
       });
     }
    
@@ -73,6 +77,6 @@ BoundaryEventHandler.prototype.generate = function(context) {
   }
 };
 
-BoundaryEventHandler.$inject = [ 'animation', 'eventBus', 'elementRegistry' ];
+BoundaryEventHandler.$inject = [ 'animation', 'eventBus', 'processInstances', 'elementRegistry' ];
 
 module.exports = BoundaryEventHandler;

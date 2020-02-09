@@ -25,8 +25,7 @@ BoundaryEventHandler.prototype.createContextPads = function(element) {
   if (!element.attachers.length) {
     return;
   }
-console.log(this._processInstances.getProcessInstances(element));
-console.log(this._processInstances.getProcessInstances(element).length);
+
   if (!this._processInstances.getProcessInstances(element).length) {
     return;
   }
@@ -41,7 +40,7 @@ console.log(this._processInstances.getProcessInstances(element).length);
 
   
   if (isInnerScope) {
-    element.attachers.forEach(function(attachedElement) {
+    element.attachers.forEach(function(attachedElement) {	
 
     var contextPad = domify('<div class="context-pad" title="Trigger Event"><i class="fa fa-play"></i></div>');
 
@@ -51,22 +50,26 @@ console.log(this._processInstances.getProcessInstances(element).length);
     });
 
     domEvent.bind(contextPad, 'click', function() {
+      
+	  // remove all active tokens in innerscope
+      element.children.forEach(function(child) {
+        if (child.tokenCount && child.tokenCount[self._processInstances.getProcessInstances(element)[0].processInstanceId]) {
+          child.tokenCount[self._processInstances.getProcessInstances(element)[0].processInstanceId]--;
+        }
+	  });
+
+      // finish but do NOT remove
+      self._processInstances.finish(self._processInstances.getProcessInstances(element)[0].processInstanceId);
+      self._eventBus.fire(UPDATE_ELEMENT_EVENT, {
+        element: element
+      });
+      
+	  // generate token on situationEvent
       self._eventBus.fire(GENERATE_TOKEN_EVENT, {
         element: attachedElement,
 		processInstanceId: self._processInstances.getProcessInstances(element)[0].parentProcessInstanceId
 	  });
-/*
-      self._processInstances
-        .getProcessInstances(element)
-        .forEach(function(processInstance) {
-          var parentProcessInstanceId = processInstance.parentProcessInstanceId;
 
-          self._eventBus.fire(GENERATE_TOKEN_EVENT, {
-            element: attachedElement,
-            processInstanceId: parentProcessInstanceId
-          });
-        });
-*/
     });
   });
 
