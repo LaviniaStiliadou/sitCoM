@@ -97,16 +97,45 @@ export default class CustomPalette {
 	
     function createCircle(suitabilityScore) {
       return function(event) {
-        const businessObject = bpmnFactory.create('bpmn:IntermediateThrowEvent');
+        if(suitabilityScore == SUITABILITY_SCORE_HIGH){
+          const businessObject = bpmnFactory.create('bpmn:BoundaryEvent');
   
-        businessObject.suitable = suitabilityScore;
+          businessObject.suitable = suitabilityScore;
   
-        const shape = elementFactory.createShape({
-          type: 'bpmn:IntermediateThrowEvent',
-          businessObject: businessObject
-        });
+          const shape = elementFactory.createShape({
+            type: 'bpmn:BoundaryEvent',
+            eventDefinitionType: 'bpmn:EscalationEventDefinition',
+            businessObject: businessObject
+          });
   
         create.start(event, shape); 
+        }if(suitabilityScore == SUITABILITY_SCORE_AVERGE){
+          const businessObject = bpmnFactory.create('bpmn:BoundaryEvent');
+  
+          businessObject.suitable = suitabilityScore;
+  
+          const shape = elementFactory.createShape({
+            type: 'bpmn:BoundaryEvent',
+            eventDefinitionType: 'bpmn:SignalEventDefinition',
+            businessObject: businessObject
+          });
+  
+        create.start(event, shape);
+        }
+        if(suitabilityScore == SUITABILITY_SCORE_LOW){
+          const businessObject = bpmnFactory.create('bpmn:BoundaryEvent');
+  
+          businessObject.suitable = suitabilityScore;
+  
+          const shape = elementFactory.createShape({
+            type: 'bpmn:BoundaryEvent',
+            eventDefinitionType: 'bpmn:SignalEventDefinition',
+            businessObject: businessObject
+          });
+  
+        create.start(event, shape);
+        }
+        
       }
     }
 

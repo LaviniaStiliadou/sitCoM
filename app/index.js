@@ -6,6 +6,7 @@ import propertiesProviderModule from './provider/situations';
 //import propertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
 import camundaModdleDescriptor from 'camunda-bpmn-moddle/resources/camunda.json';
 import tokenSimulation from 'bpmn-js-token-simulation';
+import drawSituationIconModule from './descriptors/draw';
 
 import {
   debounce
@@ -28,6 +29,7 @@ var bpmnModeler = new BpmnModeler({
     bindTo: document
   },
   additionalModules: [
+    drawSituationIconModule,
     customModule,
     propertiesPanelModule,
     propertiesProviderModule,

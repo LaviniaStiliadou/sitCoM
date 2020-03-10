@@ -1,9 +1,10 @@
 import entryFactory from 'bpmn-js-properties-panel/lib/factory/EntryFactory';
-
+import connectM from 'diagram-js/lib/features/connect/Connect';
 import {
   isAny,
   is
 } from 'bpmn-js/lib/features/modeling/util/ModelingUtil';
+import canConnect from 'diagram-js/lib/features/connect/Connect';
 
 export default function(group, element) {
   
@@ -232,7 +233,8 @@ export default function(group, element) {
         // element.parent.children[0].attachers[0].host
         //console.log(element.parent.children[0]);
         //console.log(element.id);
-        for(var k = 0; k < element.parent.children.length-1; k++){
+        for(var k = 0; k < element.parent.children.length; k++){
+          if(element.parent.children[k].attachers !=null || element.parent.children[k].attachers !=undefined ){
           for(var l = 0; l < element.parent.children[k].attachers.length; l++){
             for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
             if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
@@ -242,7 +244,7 @@ export default function(group, element) {
             }
             }
           }
-
+        }
         }
 
         var onlyChild = false;
@@ -309,7 +311,8 @@ export default function(group, element) {
         // element.parent.children[0].attachers[0].host
         //console.log(element.parent.children[0]);
         //console.log(element.id);
-        for(var k = 0; k < element.parent.children.length-1; k++){
+        for(var k = 0; k < element.parent.children.length; k++){
+          if(element.parent.children[k].attachers !=null || element.parent.children[k].attachers !=undefined ){
           for(var l = 0; l < element.parent.children[k].attachers.length; l++){
             for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
             if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
@@ -319,7 +322,7 @@ export default function(group, element) {
             }
             }
           }
-
+        }
         }
 
         var onlyChild = false;
@@ -386,7 +389,8 @@ export default function(group, element) {
         // element.parent.children[0].attachers[0].host
         //console.log(element.parent.children[0]);
         //console.log(element.id);
-        for(var k = 0; k < element.parent.children.length-1; k++){
+        for(var k = 0; k < element.parent.children.length; k++){
+          if(element.parent.children[k].attachers !=null || element.parent.children[k].attachers !=undefined ){
           for(var l = 0; l < element.parent.children[k].attachers.length; l++){
             for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
             if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
@@ -396,7 +400,7 @@ export default function(group, element) {
             }
             }
           }
-
+        }
         }
 
         var onlyChild = false;
@@ -463,7 +467,8 @@ export default function(group, element) {
         // element.parent.children[0].attachers[0].host
         //console.log(element.parent.children[0]);
         //console.log(element.id);
-        for(var k = 0; k < element.parent.children.length-1; k++){
+        for(var k = 0; k < element.parent.children.length; k++){
+          if(element.parent.children[k].attachers !=null || element.parent.children[k].attachers !=undefined ){
           for(var l = 0; l < element.parent.children[k].attachers.length; l++){
             for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
             if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
@@ -473,7 +478,7 @@ export default function(group, element) {
             }
             }
           }
-
+        }
         }
 
         var onlyChild = false;
@@ -540,7 +545,8 @@ export default function(group, element) {
         // element.parent.children[0].attachers[0].host
         //console.log(element.parent.children[0]);
         //console.log(element.id);
-        for(var k = 0; k < element.parent.children.length-1; k++){
+        for(var k = 0; k < element.parent.children.length; k++){
+          if(element.parent.children[k].attachers !=null || element.parent.children[k].attachers !=undefined ){
           for(var l = 0; l < element.parent.children[k].attachers.length; l++){
             for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
             if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
@@ -550,7 +556,7 @@ export default function(group, element) {
             }
             }
           }
-
+        }
         }
 
         var onlyChild = false;
@@ -628,7 +634,8 @@ export default function(group, element) {
         // element.parent.children[0].attachers[0].host
         //console.log(element.parent.children[0]);
         //console.log(element.id);
-        for(var k = 0; k < element.parent.children.length-1; k++){
+        for(var k = 0; k < element.parent.children.length; k++){
+          if(element.parent.children[k].attachers !=null || element.parent.children[k].attachers !=undefined ){
           for(var l = 0; l < element.parent.children[k].attachers.length; l++){
             for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
             if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
@@ -638,7 +645,7 @@ export default function(group, element) {
             }
             }
           }
-
+        }
         }
 
         //console.log(element.parent.children[0].attachers[0].host.id);
@@ -814,7 +821,7 @@ export default function(group, element) {
     group.entries.push(entryFactory.textField({
       id : 'prioritaet',
       description : 'Priority',
-      label : 'Energy-Priority',
+      label : 'Battery-Priority',
       modelProperty : 'prioritaet',
       validate: function(element, values) {
         var prioritaet = values.prioritaet;
@@ -836,16 +843,18 @@ export default function(group, element) {
 
             var kind;
             var li;
-            for(var k = 0; k < element.parent.children.length-1; k++){
+            for(var k = 0; k < element.parent.children.length; k++){
+              if(element.parent.children[k].attachers !=null || element.parent.children[k].attachers !=undefined ){
               for(var l = 0; l < element.parent.children[k].attachers.length; l++){
                 for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
-                  if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
+                if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
                     kind = k;
                     li = l;
                     find = m;
-                  }
                 }
-               }
+                }
+              }
+            }
             }
 
         var onlyChild = false;
@@ -908,7 +917,8 @@ export default function(group, element) {
       // element.parent.children[0].attachers[0].host
       //console.log(element.parent.children[0]);
       //console.log(element.id);
-      for(var k = 0; k < element.parent.children.length-1; k++){
+      for(var k = 0; k < element.parent.children.length; k++){
+        if(element.parent.children[k].attachers !=null || element.parent.children[k].attachers !=undefined ){
         for(var l = 0; l < element.parent.children[k].attachers.length; l++){
           for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
           if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
@@ -918,7 +928,7 @@ export default function(group, element) {
           }
           }
         }
-
+      }
       }
 
       //console.log(element.parent.children[0].attachers[0].host.id);
@@ -1116,7 +1126,8 @@ export default function(group, element) {
 
         var kind;
         var li;
-        for(var k = 0; k < element.parent.children.length-1; k++){
+        for(var k = 0; k < element.parent.children.length; k++){
+          if(element.parent.children[k].attachers !=null || element.parent.children[k].attachers !=undefined ){
           for(var l = 0; l < element.parent.children[k].attachers.length; l++){
             for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
             if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
@@ -1126,7 +1137,7 @@ export default function(group, element) {
             }
             }
           }
-
+        }
         }
 
         
@@ -1190,7 +1201,8 @@ export default function(group, element) {
       // element.parent.children[0].attachers[0].host
       //console.log(element.parent.children[0]);
       //console.log(element.id);
-      for(var k = 0; k < element.parent.children.length-1; k++){
+      for(var k = 0; k < element.parent.children.length; k++){
+        if(element.parent.children[k].attachers !=null || element.parent.children[k].attachers !=undefined ){
         for(var l = 0; l < element.parent.children[k].attachers.length; l++){
           for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
           if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
@@ -1200,7 +1212,7 @@ export default function(group, element) {
           }
           }
         }
-
+      }
       }
 
       //console.log(element.parent.children[0].attachers[0].host.id);
@@ -1396,7 +1408,8 @@ export default function(group, element) {
 
         var kind;
         var li;
-        for(var k = 0; k < element.parent.children.length-1; k++){
+        for(var k = 0; k < element.parent.children.length; k++){
+          if(element.parent.children[k].attachers !=null || element.parent.children[k].attachers !=undefined ){
           for(var l = 0; l < element.parent.children[k].attachers.length; l++){
             for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
             if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
@@ -1406,7 +1419,7 @@ export default function(group, element) {
             }
             }
           }
-
+        }
         }
 
         
@@ -1469,7 +1482,8 @@ group.entries.push(entryFactory.textField({
     // element.parent.children[0].attachers[0].host
     //console.log(element.parent.children[0]);
     //console.log(element.id);
-    for(var k = 0; k < element.parent.children.length-1; k++){
+    for(var k = 0; k < element.parent.children.length; k++){
+      if(element.parent.children[k].attachers !=null || element.parent.children[k].attachers !=undefined ){
       for(var l = 0; l < element.parent.children[k].attachers.length; l++){
         for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
         if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
@@ -1479,7 +1493,7 @@ group.entries.push(entryFactory.textField({
         }
         }
       }
-
+    }
     }
 
     //console.log(element.parent.children[0].attachers[0].host.id);
@@ -1677,7 +1691,8 @@ group.entries.push(entryFactory.textField({
 
         var kind;
         var li;
-        for(var k = 0; k < element.parent.children.length-1; k++){
+        for(var k = 0; k < element.parent.children.length; k++){
+          if(element.parent.children[k].attachers !=null || element.parent.children[k].attachers !=undefined ){
           for(var l = 0; l < element.parent.children[k].attachers.length; l++){
             for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
             if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
@@ -1687,7 +1702,7 @@ group.entries.push(entryFactory.textField({
             }
             }
           }
-
+        }
         }
 
         
@@ -1751,7 +1766,8 @@ group.entries.push(entryFactory.textField({
     // element.parent.children[0].attachers[0].host
     //console.log(element.parent.children[0]);
     //console.log(element.id);
-    for(var k = 0; k < element.parent.children.length-1; k++){
+    for(var k = 0; k < element.parent.children.length; k++){
+      if(element.parent.children[k].attachers !=null || element.parent.children[k].attachers !=undefined ){
       for(var l = 0; l < element.parent.children[k].attachers.length; l++){
         for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
         if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
@@ -1761,7 +1777,7 @@ group.entries.push(entryFactory.textField({
         }
         }
       }
-
+    }
     }
 
     //console.log(element.parent.children[0].attachers[0].host.id);
@@ -1941,6 +1957,7 @@ group.entries.push(entryFactory.textField({
   validate: function(element, values) {
     var prioritaet5 = values.prioritaet5;
     var errorMessageP = {};
+
     if(element.businessObject.$attrs.violation5 == undefined){
       errorMessageP.prioritaet5 = "Set violation attribute first.";
       delete element.businessObject.$attrs.prioritaet5;
@@ -1958,7 +1975,8 @@ group.entries.push(entryFactory.textField({
 
         var kind;
         var li;
-        for(var k = 0; k < element.parent.children.length-1; k++){
+        for(var k = 0; k < element.parent.children.length; k++){
+          if(element.parent.children[k].attachers !=null || element.parent.children[k].attachers !=undefined ){
           for(var l = 0; l < element.parent.children[k].attachers.length; l++){
             for(var m = 0; m < element.parent.children[k].attachers[l].host.attachers.length; m++){
             if(element.parent.children[k].attachers[l].host.attachers[m].id == element.id){
@@ -1968,7 +1986,7 @@ group.entries.push(entryFactory.textField({
             }
             }
           }
-
+        }
         }
 
         
