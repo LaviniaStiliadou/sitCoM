@@ -261,16 +261,16 @@ export default function(group, element) {
           delete element.businessObject.$attrs.akkuCheckbox; 
         }
 
-
+        
         if(!onlyChild){ 
           for(var i = 0; i<element.parent.children[kind].attachers[li].host.attachers.length; i++){
             // gibt violation vom anderen Kreis aus
             if(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.id != element.id){
-              if (violation) {
+              if(violation){
                 if((!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) 
-                || element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.akkuCheckbox )
-                || element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation > 0){
-              
+                || element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.akkuCheckbox 
+                || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation).match(/^InnerScope_[0-9]([a-z0-9]+)*$/))){
+             
             //if((Number(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) >= 0 && Number(violation) >= 0)) {
               errorMessageV.akkuCheckbox = "Violation must not be set, because it has already been set in another circle. ";
               delete element.businessObject.$attrs.akkuCheckbox; 
@@ -347,7 +347,7 @@ export default function(group, element) {
               if (violation) {
                 if((!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation2) 
                 || element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.spinneCheckbox )
-                || element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation2 > 0){
+                || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation2).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)){
               
             //if((Number(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) >= 0 && Number(violation) >= 0)) {
               errorMessageV.spinneCheckbox = "Violation must not be set, because it has already been set in another circle. ";
@@ -425,7 +425,7 @@ export default function(group, element) {
               if (violation) {
                 if((!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3) 
                 || element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.menschCheckbox )
-                || element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3 > 0){
+                || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation3).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)){
               
             //if((Number(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) >= 0 && Number(violation) >= 0)) {
               errorMessageV.menschCheckbox = "Violation must not be set, because it has already been set in another circle. ";
@@ -503,7 +503,7 @@ export default function(group, element) {
               if (violation) {
                 if((!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4) 
                 || element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.kameraCheckbox )
-                || element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4 > 0){
+                || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation4).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)){
               
             //if((Number(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) >= 0 && Number(violation) >= 0)) {
               errorMessageV.kameraCheckbox = "Violation must not be set, because it has already been set in another circle. ";
@@ -581,7 +581,7 @@ export default function(group, element) {
               if (violation) {
                 if((!isNaN(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation5) 
                 || element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.updateCheckbox )
-                || element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation5 > 0){
+                || String(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation5).match(/^InnerScope_[0-9]([a-z0-9]+)*$/)){
               
             //if((Number(element.parent.children[kind].attachers[li].host.attachers[i].businessObject.$attrs.violation) >= 0 && Number(violation) >= 0)) {
               errorMessageV.updateCheckbox = "Violation must not be set, because it has already been set in another circle. ";

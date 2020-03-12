@@ -116,7 +116,7 @@ export default class CustomPalette {
   
           const shape = elementFactory.createShape({
             type: 'bpmn:BoundaryEvent',
-            eventDefinitionType: 'bpmn:SignalEventDefinition',
+            eventDefinitionType: 'bpmn:MessageEventDefinition',
             businessObject: businessObject
           });
   

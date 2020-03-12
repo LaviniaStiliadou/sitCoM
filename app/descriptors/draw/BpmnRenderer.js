@@ -559,6 +559,19 @@ export default function BpmnRenderer(
       return circle;
     },
     'bpmn:MessageEventDefinition': function(parentGfx, element, isThrowing) {
+      var suitable = element.businessObject.suitable;
+      if(suitable>0){
+        var pathData = pathMap.getScaledPath('EVENT_MESSAGE2', {
+          xScaleFactor: 0.9,
+          yScaleFactor: 0.9,
+          containerWidth: element.width,
+          containerHeight: element.height,
+          position: {
+            mx: 0.235,
+            my: 0.315
+          }
+        });
+      }else{
       var pathData = pathMap.getScaledPath('EVENT_MESSAGE', {
         xScaleFactor: 0.9,
         yScaleFactor: 0.9,
@@ -569,6 +582,7 @@ export default function BpmnRenderer(
           my: 0.315
         }
       });
+    }
 
       var fill = isThrowing ? getStrokeColor(element, defaultStrokeColor) : getFillColor(element, defaultFillColor);
       var stroke = isThrowing ? getFillColor(element, defaultFillColor) : getStrokeColor(element, defaultStrokeColor);
