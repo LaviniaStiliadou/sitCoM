@@ -212,62 +212,62 @@
         <bpmn:sequenceFlow id="SequenceFlow_0l9mx17" sourceRef="StartEvent_1cmgvr3" targetRef="ExclusiveGateway_1rkepr7" />
         <bpmn:sequenceFlow id="SequenceFlow_0gbdlns" sourceRef="ExclusiveGateway_1ehz3ff" targetRef="EndEvent_1va3cez" />
       </bpmn:subProcess>
-      <bpmn:boundaryEvent id="Event_1eqguzh" qa:suitable="25" attachedToRef="InnerScope_1" violation2="InnerScope_3" violation5="InnerScope_6">
+      <bpmn:boundaryEvent id="Event_1eqguzh" qa:suitable="25" attachedToRef="InnerScope_1" violation2="InnerScope_3" violation5="InnerScope_6" prioritaet5="1" prioritaet2="2" violation4="InnerScope_5" prioritaet4="3">
         <bpmn:signalEventDefinition id="SignalEventDefinition_10zbc9x" />
       </bpmn:boundaryEvent>
-      <bpmn:boundaryEvent id="Event_1jjy822" qa:suitable="100" attachedToRef="InnerScope_1" violation="InnerScope_2">
+      <bpmn:boundaryEvent id="Event_1jjy822" qa:suitable="100" attachedToRef="InnerScope_1" violation="InnerScope_2" prioritaet="1">
         <bpmn:escalationEventDefinition id="EscalationEventDefinition_1l7uhou" />
       </bpmn:boundaryEvent>
-      <bpmn:boundaryEvent id="Event_1h8fg77" qa:suitable="25" attachedToRef="InnerScope_2" violation="InnerScope_1">
+      <bpmn:boundaryEvent id="Event_1h8fg77" qa:suitable="25" attachedToRef="InnerScope_2" violation="InnerScope_1" prioritaet="1">
         <bpmn:signalEventDefinition id="SignalEventDefinition_0fv4954" />
       </bpmn:boundaryEvent>
       <bpmn:boundaryEvent id="Event_00xsutk" qa:suitable="100" attachedToRef="InnerScope_2">
         <bpmn:escalationEventDefinition id="EscalationEventDefinition_0nozdgy" />
       </bpmn:boundaryEvent>
-      <bpmn:boundaryEvent id="Event_1wcqaal" qa:suitable="25" attachedToRef="InnerScope_3" violation3="InnerScope_4" violation5="InnerScope_6">
+      <bpmn:boundaryEvent id="Event_1wcqaal" qa:suitable="25" attachedToRef="InnerScope_3" violation3="InnerScope_4" violation5="InnerScope_6" prioritaet5="1" prioritaet3="2">
         <bpmn:signalEventDefinition id="SignalEventDefinition_1v5mugu" />
       </bpmn:boundaryEvent>
-      <bpmn:boundaryEvent id="Event_1e54fyx" qa:suitable="100" attachedToRef="InnerScope_3" violation="InnerScope_2" violation2="InnerScope_1">
+      <bpmn:boundaryEvent id="Event_1e54fyx" qa:suitable="100" attachedToRef="InnerScope_3" violation="InnerScope_2" violation2="InnerScope_1" prioritaet="1" prioritaet2="2">
         <bpmn:escalationEventDefinition id="EscalationEventDefinition_0g6u5mr" />
       </bpmn:boundaryEvent>
-      <bpmn:boundaryEvent id="Event_067x0lo" qa:suitable="25" attachedToRef="InnerScope_5" violation2="InnerScope_3" violation5="InnerScope_6">
+      <bpmn:boundaryEvent id="Event_067x0lo" qa:suitable="25" attachedToRef="InnerScope_5" violation2="InnerScope_3" violation5="InnerScope_6" prioritaet5="1" prioritaet2="2">
         <bpmn:signalEventDefinition id="SignalEventDefinition_07dndvt" />
       </bpmn:boundaryEvent>
-      <bpmn:boundaryEvent id="Event_0brjaj5" qa:suitable="25" attachedToRef="InnerScope_4" violation5="InnerScope_6" violation4="InnerScope_5">
+      <bpmn:boundaryEvent id="Event_0brjaj5" qa:suitable="25" attachedToRef="InnerScope_4" violation5="InnerScope_6" violation4="InnerScope_5" prioritaet4="2" prioritaet5="1">
         <bpmn:signalEventDefinition id="SignalEventDefinition_0ftkwtg" />
       </bpmn:boundaryEvent>
-      <bpmn:boundaryEvent id="Event_1p6auh0" qa:suitable="100" attachedToRef="InnerScope_4" violation2="InnerScope_1" violation3="InnerScope_3" violation="InnerScope_2">
+      <bpmn:boundaryEvent id="Event_1p6auh0" qa:suitable="100" attachedToRef="InnerScope_4" violation2="InnerScope_1" violation3="InnerScope_3" violation="InnerScope_2" prioritaet="1" prioritaet3="2" prioritaet2="3">
         <bpmn:escalationEventDefinition id="EscalationEventDefinition_0hc89v4" />
       </bpmn:boundaryEvent>
-      <bpmn:boundaryEvent id="Event_1m1fjyk" qa:suitable="100" attachedToRef="InnerScope_5" violation4="InnerScope_1" violation="InnerScope_2">
+      <bpmn:boundaryEvent id="Event_1m1fjyk" qa:suitable="100" attachedToRef="InnerScope_5" violation="InnerScope_2" violation4="InnerScope_1" prioritaet="1" prioritaet4="2">
         <bpmn:escalationEventDefinition id="EscalationEventDefinition_0r97cod" />
       </bpmn:boundaryEvent>
       <bpmn:boundaryEvent id="Event_0pxq3ji" qa:suitable="25" attachedToRef="InnerScope_6">
         <bpmn:signalEventDefinition id="SignalEventDefinition_1fe6t9j" />
       </bpmn:boundaryEvent>
-      <bpmn:boundaryEvent id="Event_13rp9qz" qa:suitable="100" attachedToRef="InnerScope_6">
+      <bpmn:boundaryEvent id="Event_13rp9qz" qa:suitable="100" attachedToRef="InnerScope_6" violation="InnerScope_2" prioritaet="1" violation5="InnerScope_1" prioritaet5="2">
         <bpmn:escalationEventDefinition id="EscalationEventDefinition_1cixkai" />
       </bpmn:boundaryEvent>
       <bpmn:startEvent id="Event_0n1usx9">
         <bpmn:outgoing>Flow_1w1nbu7</bpmn:outgoing>
       </bpmn:startEvent>
       <bpmn:sequenceFlow id="Flow_1w1nbu7" sourceRef="Event_0n1usx9" targetRef="InnerScope_1" />
-      <bpmn:boundaryEvent id="BoundaryEvent_10qk92k" qa:suitable="50" attachedToRef="InnerScope_1">
+      <bpmn:boundaryEvent id="BoundaryEvent_10qk92k" qa:suitable="50" attachedToRef="InnerScope_1" menschCheckbox="true">
         <bpmn:messageEventDefinition id="MessageEventDefinition_17zt2h2" />
       </bpmn:boundaryEvent>
-      <bpmn:boundaryEvent id="BoundaryEvent_0zj1j3v" qa:suitable="50" attachedToRef="InnerScope_2">
+      <bpmn:boundaryEvent id="BoundaryEvent_0zj1j3v" qa:suitable="50" attachedToRef="InnerScope_2" spinneCheckbox="true" menschCheckbox="true" kameraCheckbox="true" updateCheckbox="true">
         <bpmn:messageEventDefinition id="MessageEventDefinition_01r9nje" />
       </bpmn:boundaryEvent>
-      <bpmn:boundaryEvent id="BoundaryEvent_0cacygd" qa:suitable="50" attachedToRef="InnerScope_3">
+      <bpmn:boundaryEvent id="BoundaryEvent_0cacygd" qa:suitable="50" attachedToRef="InnerScope_3" kameraCheckbox="true">
         <bpmn:messageEventDefinition id="MessageEventDefinition_1420pcn" />
       </bpmn:boundaryEvent>
       <bpmn:boundaryEvent id="BoundaryEvent_0zs84yp" qa:suitable="50" attachedToRef="InnerScope_4">
         <bpmn:messageEventDefinition id="MessageEventDefinition_1ltat35" />
       </bpmn:boundaryEvent>
-      <bpmn:boundaryEvent id="BoundaryEvent_13j009g" qa:suitable="50" attachedToRef="InnerScope_5">
+      <bpmn:boundaryEvent id="BoundaryEvent_13j009g" qa:suitable="50" attachedToRef="InnerScope_5" menschCheckbox="true">
         <bpmn:messageEventDefinition id="MessageEventDefinition_1dayflp" />
       </bpmn:boundaryEvent>
-      <bpmn:boundaryEvent id="BoundaryEvent_1ky44ok" qa:suitable="50" attachedToRef="InnerScope_6">
+      <bpmn:boundaryEvent id="BoundaryEvent_1ky44ok" qa:suitable="50" attachedToRef="InnerScope_6" menschCheckbox="true" kameraCheckbox="true" spinneCheckbox="true">
         <bpmn:messageEventDefinition id="MessageEventDefinition_0jq8mx8" />
       </bpmn:boundaryEvent>
     </bpmn:subProcess>
@@ -651,10 +651,10 @@
       <bpmn:incoming>SequenceFlow_0ky6ai5</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0ojqdex</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:task id="Task_0uh5ptp" name="benachrichtige Hausbesitzer über  Kamera Feature">
+    <bpmn:sendTask id="Task_0uh5ptp" name="benachrichtige Hausbesitzer über  Kamera Feature">
       <bpmn:incoming>SequenceFlow_0f0ytrq</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_06rnk55</bpmn:outgoing>
-    </bpmn:task>
+    </bpmn:sendTask>
   </bpmn:process>
   <bpmn:process id="Process_1yg5rg2" isExecutable="false">
     <bpmn:exclusiveGateway id="ExclusiveGateway_0i9xogy">
@@ -1907,9 +1907,6 @@
       <bpmndi:BPMNShape id="Activity_1ged540_di" bpmnElement="ReceiveTask_11u0wus">
         <dc:Bounds x="254" y="20" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1cvnr6p_di" bpmnElement="Task_0uh5ptp">
-        <dc:Bounds x="1870" y="930" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_08o41ta_di" bpmnElement="Task_1jwrhoq">
         <dc:Bounds x="1690" y="1500" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -2028,6 +2025,9 @@
         <di:waypoint x="310" y="-310" />
         <di:waypoint x="390" y="-310" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="SendTask_0t6fni4_di" bpmnElement="Task_0uh5ptp">
+        <dc:Bounds x="1870" y="930" width="100" height="80" />
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>

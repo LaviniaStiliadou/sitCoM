@@ -85,6 +85,8 @@ module.exports.supportedElements = [
   'bpmn:SequenceFlow',
   'bpmn:MessageFlow',
   'bpmn:ServiceTask',
+  'bpmn:SendTask',
+  'bpmn:ReceiveTask',
   'bpmn:StartEvent',
   'bpmn:SubProcess',
   'bpmn:Task',
