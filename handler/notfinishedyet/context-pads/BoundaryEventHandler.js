@@ -40,14 +40,16 @@ BoundaryEventHandler.prototype.createContextPads = function(element) {
 
   
   if (isInnerScope) {
-    element.attachers.forEach(function(attachedElement) {	
-
+    element.attachers.forEach(function(attachedElement) {
+	
     var contextPad = domify('<div class="context-pad" title="Trigger Event"><i class="fa fa-play"></i></div>');
 
-    contextPads.push({
-      element: attachedElement,
-      html: contextPad
-    });
+    if(attachedElement.businessObject.suitable != 50) {
+      contextPads.push({
+        element: attachedElement,
+        html: contextPad
+      });
+	}
 
     domEvent.bind(contextPad, 'click', function() {
       

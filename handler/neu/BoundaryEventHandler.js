@@ -35,15 +35,21 @@ BoundaryEventHandler.prototype.generate = function(context) {
   var self = this;
 
   var element = context.element,
-      parentProcessInstanceId = context.parentProcessInstanceId;
+      processInstanceId = context.processInstanceId;
+//      parentProcessInstanceId = context.parentProcessInstanceId;
+	  
+
 
   var outgoingSequenceFlows = element.outgoing.filter(function(outgoing) {
     return is(outgoing, 'bpmn:SequenceFlow') || is(outgoing, 'bpmn:MessageFlow') ;
   });
+  
+
 
   // create new process instance
-  var parent = element.parent,
-      processInstanceId = this._processInstances.create(parent, parentProcessInstanceId);
+//  var parent = element.parent,
+//      processInstanceId = this._processInstances.create(parent, parentProcessInstanceId);
+      
 
       var innerScope = false,
       hasStartEvent = false,
