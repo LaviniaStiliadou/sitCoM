@@ -1,5 +1,8 @@
-# Situationsabhängige Choreographie Modellierung
-This example uses [bpmn-js](https://github.com/bpmn-io/bpmn-js), [bpmn-js-custom-elements](https://github.com/bpmn-io/bpmn-js-custom-elements) and [bpmn-js-properties-panel](https://github.com/bpmn-io/bpmn-js-properties-panel). 
+# Situation-Awareness Nodeling with Camunda
+
+This project uses the examples [bpmn-js-custom-meta-model](https://github.com/bpmn-io/bpmn-js-custom-meta-model}, [bpmn-js-token-simulator](https://github.com/bpmn-io/bpmn-js-token-simulator), [bpmn-js-custom-elements](https://github.com/bpmn-io/bpmn-js-custom-elements) and 
+[bpmn-js-properties-panel](https://github.com/bpmn-io/bpmn-js-properties-panel).
+
 
 ## Building the Example
 
@@ -29,17 +32,29 @@ Serve the application locally or via a web server (nginx, apache, embedded).
 
 http://localhost:9013/ in your web browser.
 
-## New Features
+
+## Integrate the simulation
+
+Before the simulation can be started, the ElementHandler must be moved from the handler folder to \node_modules\bpmn-js-token-simulation\lib\util and the remaining files must be moved to the \node_modules\bpmn-js-token-simulation\lib\features\token-simulation-behavior\handler folder.
+
+
+## Features
+
+* Situation-Awareness Modeling and Simulation!
 
 * Displaying colored conditional objects
-* Priority Setting
+* Priority Setting of situations and scopes
 * Advanced Property Panel (violation, priority)
-* new types with a specific score
+* New custom rules
+* Custom icons
+* Extended types
+* Situation-dependent communication with multiple participants
 
-''ANIMATIONS OF NEW FEATURES SOON HERE''
+
 
 ## About
 
 This example is a node-style web application that builds a user interface around the bpmn-js BPMN 2.0 modeler.
+The project is compatible with popular browsers such as Edge, Firefox and Chrome. For full user experience, we recommend using Google Chrome as well as Firefox.
 
 ![new screenshot](https://github.com/LaviniaStiliadou/sitCoM/blob/lbranch/docs/screenshot.png)

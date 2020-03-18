@@ -75,9 +75,9 @@ export default class CustomRenderer extends BaseRenderer {
     
 
 		if (is(element, 'bpmn:BoundaryEvent')) {
-      shape.nextSibling.attributes[0].nodeValue = "fill: none; stroke: none; stroke-width: 1px";
+      //shape.nextSibling.attributes[0].nodeValue = "fill: none; stroke: none; stroke-width: 1px";
       shape.nextSibling.attributes[3].nodeValue = "fill: none; stroke: none; stroke-width: 1px";
-      console.log(element.businessObject.eventDefinitions);
+      //console.log(element.businessObject.eventDefinitions);
       if(element.businessObject.eventDefinitions != undefined){
         if(element.businessObject.eventDefinitions[0].$type == 'bpmn:SignalEventDefinition'){
           //shape.parentNode.children[2].attributes[0] = 'M {mx},2{my} l {e.x0},-{e.y0} l -{e.x1},2 Z'+
@@ -96,7 +96,7 @@ export default class CustomRenderer extends BaseRenderer {
         }
     }
       
-      console.log(shape);
+      //console.log(shape);
 			const circle2 = drawCircle(parentNode, element.width, element.height);
 			//const circle = drawCircleI(circle2, 28, 28);
 			
