@@ -244,8 +244,35 @@ export default function(group, element) {
             }
             }
           }
+          }
         }
-        }
+		if (element.parent.children[kind].businessObject.$attrs.participant != undefined){
+		    var sourceParticipant;
+			var sourceScope;
+			var reg = /^InnerScope_[0-9]+/;
+			var myArray = reg.exec(element.parent.children[kind].id);
+			var sourceScopeString = myArray[0];
+				
+			for(var s = 0; s < element.parent.parent.parent.children.length; s++){
+				if(element.parent.parent.parent.children[s].type == 'bpmn:Participant' && element.parent.children[kind].businessObject.$attrs.participant == element.parent.parent.parent.children[s].id){
+					sourceParticipant = element.parent.parent.parent.children[s];
+				}
+			}
+
+			for(var x = 0; x < sourceParticipant.children.length; x++){
+				for(var z = 0; z < sourceParticipant.children[x].children.length; z++){
+				    if (sourceParticipant.children[x].children[z].id == sourceScopeString){
+				       sourceScope = sourceParticipant.children[x].children[z];
+					}
+				}
+			}
+			for(var y = 0; y < sourceScope.attachers.length; y++){
+				if (sourceScope.attachers[y].businessObject.suitable == element.businessObject.suitable){
+					var violation = sourceScope.attachers[y].businessObject.$attrs.akkuCheckbox;
+					element.businessObject.$attrs.akkuCheckbox = sourceScope.attachers[y].businessObject.$attrs.akkuCheckbox;
+				}
+			}
+		}
 
         var onlyChild = false;
         //console.log("length"+ element.parent.children.length);
@@ -324,6 +351,33 @@ export default function(group, element) {
           }
         }
         }
+		if (element.parent.children[kind].businessObject.$attrs.participant != undefined){
+		    var sourceParticipant;
+			var sourceScope;
+			var reg = /^InnerScope_[0-9]+/;
+			var myArray = reg.exec(element.parent.children[kind].id);
+			var sourceScopeString = myArray[0];
+				
+			for(var s = 0; s < element.parent.parent.parent.children.length; s++){
+				if(element.parent.parent.parent.children[s].type == 'bpmn:Participant' && element.parent.children[kind].businessObject.$attrs.participant == element.parent.parent.parent.children[s].id){
+					sourceParticipant = element.parent.parent.parent.children[s];
+				}
+			}
+
+			for(var x = 0; x < sourceParticipant.children.length; x++){
+				for(var z = 0; z < sourceParticipant.children[x].children.length; z++){
+				    if (sourceParticipant.children[x].children[z].id == sourceScopeString){
+				       sourceScope = sourceParticipant.children[x].children[z];
+					}
+				}
+			}
+			for(var y = 0; y < sourceScope.attachers.length; y++){
+				if (sourceScope.attachers[y].businessObject.suitable == element.businessObject.suitable){
+					var violation = sourceScope.attachers[y].businessObject.$attrs.spinneCheckbox;
+					element.businessObject.$attrs.spinneCheckbox = sourceScope.attachers[y].businessObject.$attrs.spinneCheckbox;
+				}
+			}
+		}
 
         var onlyChild = false;
         //console.log("length"+ element.parent.children.length);
@@ -402,6 +456,33 @@ export default function(group, element) {
           }
         }
         }
+		if (element.parent.children[kind].businessObject.$attrs.participant != undefined){
+		    var sourceParticipant;
+			var sourceScope;
+			var reg = /^InnerScope_[0-9]+/;
+			var myArray = reg.exec(element.parent.children[kind].id);
+			var sourceScopeString = myArray[0];
+				
+			for(var s = 0; s < element.parent.parent.parent.children.length; s++){
+				if(element.parent.parent.parent.children[s].type == 'bpmn:Participant' && element.parent.children[kind].businessObject.$attrs.participant == element.parent.parent.parent.children[s].id){
+					sourceParticipant = element.parent.parent.parent.children[s];
+				}
+			}
+
+			for(var x = 0; x < sourceParticipant.children.length; x++){
+				for(var z = 0; z < sourceParticipant.children[x].children.length; z++){
+				    if (sourceParticipant.children[x].children[z].id == sourceScopeString){
+				       sourceScope = sourceParticipant.children[x].children[z];
+					}
+				}
+			}
+			for(var y = 0; y < sourceScope.attachers.length; y++){
+				if (sourceScope.attachers[y].businessObject.suitable == element.businessObject.suitable){
+					var violation = sourceScope.attachers[y].businessObject.$attrs.menschCheckbox;
+					element.businessObject.$attrs.menschCheckbox = sourceScope.attachers[y].businessObject.$attrs.menschCheckbox;
+				}
+			}
+		}
 
         var onlyChild = false;
         //console.log("length"+ element.parent.children.length);
@@ -480,6 +561,33 @@ export default function(group, element) {
           }
         }
         }
+		if (element.parent.children[kind].businessObject.$attrs.participant != undefined){
+		    var sourceParticipant;
+			var sourceScope;
+			var reg = /^InnerScope_[0-9]+/;
+			var myArray = reg.exec(element.parent.children[kind].id);
+			var sourceScopeString = myArray[0];
+				
+			for(var s = 0; s < element.parent.parent.parent.children.length; s++){
+				if(element.parent.parent.parent.children[s].type == 'bpmn:Participant' && element.parent.children[kind].businessObject.$attrs.participant == element.parent.parent.parent.children[s].id){
+					sourceParticipant = element.parent.parent.parent.children[s];
+				}
+			}
+
+			for(var x = 0; x < sourceParticipant.children.length; x++){
+				for(var z = 0; z < sourceParticipant.children[x].children.length; z++){
+				    if (sourceParticipant.children[x].children[z].id == sourceScopeString){
+				       sourceScope = sourceParticipant.children[x].children[z];
+					}
+				}
+			}
+			for(var y = 0; y < sourceScope.attachers.length; y++){
+				if (sourceScope.attachers[y].businessObject.suitable == element.businessObject.suitable){
+					var violation = sourceScope.attachers[y].businessObject.$attrs.kameraCheckbox;
+					element.businessObject.$attrs.kameraCheckbox = sourceScope.attachers[y].businessObject.$attrs.kameraCheckbox;
+				}
+			}
+		}
 
         var onlyChild = false;
         //console.log("length"+ element.parent.children.length);
@@ -558,6 +666,33 @@ export default function(group, element) {
           }
         }
         }
+		if (element.parent.children[kind].businessObject.$attrs.participant != undefined){
+		    var sourceParticipant;
+			var sourceScope;
+			var reg = /^InnerScope_[0-9]+/;
+			var myArray = reg.exec(element.parent.children[kind].id);
+			var sourceScopeString = myArray[0];
+				
+			for(var s = 0; s < element.parent.parent.parent.children.length; s++){
+				if(element.parent.parent.parent.children[s].type == 'bpmn:Participant' && element.parent.children[kind].businessObject.$attrs.participant == element.parent.parent.parent.children[s].id){
+					sourceParticipant = element.parent.parent.parent.children[s];
+				}
+			}
+
+			for(var x = 0; x < sourceParticipant.children.length; x++){
+				for(var z = 0; z < sourceParticipant.children[x].children.length; z++){
+				    if (sourceParticipant.children[x].children[z].id == sourceScopeString){
+				       sourceScope = sourceParticipant.children[x].children[z];
+					}
+				}
+			}
+			for(var y = 0; y < sourceScope.attachers.length; y++){
+				if (sourceScope.attachers[y].businessObject.suitable == element.businessObject.suitable){
+					var violation = sourceScope.attachers[y].businessObject.$attrs.updateCheckbox;
+					element.businessObject.$attrs.updateCheckbox = sourceScope.attachers[y].businessObject.$attrs.updateCheckbox;
+				}
+			}
+		}
 
         var onlyChild = false;
         //console.log("length"+ element.parent.children.length);
@@ -647,6 +782,38 @@ export default function(group, element) {
           }
         }
         }
+		if (element.parent.children[kind].businessObject.$attrs.participant != undefined){
+		    var sourceParticipant;
+			var sourceScope;
+			var reg = /^InnerScope_[0-9]+/;
+			var reg2 = /[A-Za-z]/;
+			var suffixmitzahlen = element.parent.children[kind].id.substring(11);
+			var myArray = reg.exec(element.parent.children[kind].id);
+			var myArray2 = reg2.exec(suffixmitzahlen);
+			var suffix = myArray2[0];
+			var sourceScopeString = myArray[0];
+			
+				
+			for(var s = 0; s < element.parent.parent.parent.children.length; s++){
+				if(element.parent.parent.parent.children[s].type == 'bpmn:Participant' && element.parent.children[kind].businessObject.$attrs.participant == element.parent.parent.parent.children[s].id){
+					sourceParticipant = element.parent.parent.parent.children[s];
+				}
+			}
+
+			for(var x = 0; x < sourceParticipant.children.length; x++){
+				for(var z = 0; z < sourceParticipant.children[x].children.length; z++){
+				    if (sourceParticipant.children[x].children[z].id == sourceScopeString){
+				       sourceScope = sourceParticipant.children[x].children[z];
+					}
+				}
+			}
+			for(var y = 0; y < sourceScope.attachers.length; y++){
+				if (sourceScope.attachers[y].businessObject.suitable == element.businessObject.suitable){
+					var violation = sourceScope.attachers[y].businessObject.$attrs.violation + suffix;
+					element.businessObject.$attrs.violation = sourceScope.attachers[y].businessObject.$attrs.violation + suffix;
+				}
+			}
+		}
 
         //console.log(element.parent.children[0].attachers[0].host.id);
         //console.log(element.parent.children.length);
@@ -856,6 +1023,33 @@ export default function(group, element) {
               }
             }
             }
+			if (element.parent.children[kind].businessObject.$attrs.participant != undefined){
+		        var sourceParticipant;
+			    var sourceScope;
+			    var reg = /^InnerScope_[0-9]+/;
+			    var myArray = reg.exec(element.parent.children[kind].id);
+			    var sourceScopeString = myArray[0];
+				
+			    for(var s = 0; s < element.parent.parent.parent.children.length; s++){
+				    if(element.parent.parent.parent.children[s].type == 'bpmn:Participant' && element.parent.children[kind].businessObject.$attrs.participant == element.parent.parent.parent.children[s].id){
+					    sourceParticipant = element.parent.parent.parent.children[s];
+				    }
+			    }
+
+			    for(var x = 0; x < sourceParticipant.children.length; x++){
+				    for(var z = 0; z < sourceParticipant.children[x].children.length; z++){
+				        if (sourceParticipant.children[x].children[z].id == sourceScopeString){
+				           sourceScope = sourceParticipant.children[x].children[z];
+					    }
+				    }
+			    }
+			    for(var y = 0; y < sourceScope.attachers.length; y++){
+				    if (sourceScope.attachers[y].businessObject.suitable == element.businessObject.suitable){
+					    var prioritaet = sourceScope.attachers[y].businessObject.$attrs.prioritaet;
+					    element.businessObject.$attrs.prioritaet = sourceScope.attachers[y].businessObject.$attrs.prioritaet;
+				    }
+			    }
+		    }
 
         var onlyChild = false;
         if(element.parent.children.length-1 == 1){
@@ -930,6 +1124,40 @@ export default function(group, element) {
         }
       }
       }
+	  if (element.parent.children[kind].businessObject.$attrs.participant != undefined){
+		    var sourceParticipant;
+			var sourceScope;
+			var reg = /^InnerScope_[0-9]+/;
+			var reg2 = /[A-Za-z]/;
+			var suffixmitzahlen = element.parent.children[kind].id.substring(11);
+			console.log(suffixmitzahlen);
+			var myArray = reg.exec(element.parent.children[kind].id);
+			var myArray2 = reg2.exec(suffixmitzahlen);
+			console.log(myArray2);
+			var suffix = myArray2[0];
+			var sourceScopeString = myArray[0];
+			
+				
+			for(var s = 0; s < element.parent.parent.parent.children.length; s++){
+				if(element.parent.parent.parent.children[s].type == 'bpmn:Participant' && element.parent.children[kind].businessObject.$attrs.participant == element.parent.parent.parent.children[s].id){
+					sourceParticipant = element.parent.parent.parent.children[s];
+				}
+			}
+
+			for(var x = 0; x < sourceParticipant.children.length; x++){
+				for(var z = 0; z < sourceParticipant.children[x].children.length; z++){
+				    if (sourceParticipant.children[x].children[z].id == sourceScopeString){
+				       sourceScope = sourceParticipant.children[x].children[z];
+					}
+				}
+			}
+			for(var y = 0; y < sourceScope.attachers.length; y++){
+				if (sourceScope.attachers[y].businessObject.suitable == element.businessObject.suitable){
+					var violation2 = sourceScope.attachers[y].businessObject.$attrs.violation2 + suffix;
+					element.businessObject.$attrs.violation2 = sourceScope.attachers[y].businessObject.$attrs.violation2 + suffix;
+				}
+			}
+		}
 
       //console.log(element.parent.children[0].attachers[0].host.id);
       //console.log(element.parent.children.length);
@@ -1139,6 +1367,33 @@ export default function(group, element) {
           }
         }
         }
+		if (element.parent.children[kind].businessObject.$attrs.participant != undefined){
+		        var sourceParticipant;
+			    var sourceScope;
+			    var reg = /^InnerScope_[0-9]+/;
+			    var myArray = reg.exec(element.parent.children[kind].id);
+			    var sourceScopeString = myArray[0];
+				
+			    for(var s = 0; s < element.parent.parent.parent.children.length; s++){
+				    if(element.parent.parent.parent.children[s].type == 'bpmn:Participant' && element.parent.children[kind].businessObject.$attrs.participant == element.parent.parent.parent.children[s].id){
+					    sourceParticipant = element.parent.parent.parent.children[s];
+				    }
+			    }
+
+			    for(var x = 0; x < sourceParticipant.children.length; x++){
+				    for(var z = 0; z < sourceParticipant.children[x].children.length; z++){
+				        if (sourceParticipant.children[x].children[z].id == sourceScopeString){
+				           sourceScope = sourceParticipant.children[x].children[z];
+					    }
+				    }
+			    }
+			    for(var y = 0; y < sourceScope.attachers.length; y++){
+				    if (sourceScope.attachers[y].businessObject.suitable == element.businessObject.suitable){
+					    var prioritaet2 = sourceScope.attachers[y].businessObject.$attrs.prioritaet2;
+					    element.businessObject.$attrs.prioritaet2 = sourceScope.attachers[y].businessObject.$attrs.prioritaet2;
+				    }
+			    }
+		    }
 
         
         var onlyChild = false;
@@ -1214,6 +1469,40 @@ export default function(group, element) {
         }
       }
       }
+	  if (element.parent.children[kind].businessObject.$attrs.participant != undefined){
+		    var sourceParticipant;
+			var sourceScope;
+			var reg = /^InnerScope_[0-9]+/;
+			var reg2 = /[A-Za-z]/;
+			var suffixmitzahlen = element.parent.children[kind].id.substring(11);
+			console.log(suffixmitzahlen);
+			var myArray = reg.exec(element.parent.children[kind].id);
+			var myArray2 = reg2.exec(suffixmitzahlen);
+			console.log(myArray2);
+			var suffix = myArray2[0];
+			var sourceScopeString = myArray[0];
+			
+				
+			for(var s = 0; s < element.parent.parent.parent.children.length; s++){
+				if(element.parent.parent.parent.children[s].type == 'bpmn:Participant' && element.parent.children[kind].businessObject.$attrs.participant == element.parent.parent.parent.children[s].id){
+					sourceParticipant = element.parent.parent.parent.children[s];
+				}
+			}
+
+			for(var x = 0; x < sourceParticipant.children.length; x++){
+				for(var z = 0; z < sourceParticipant.children[x].children.length; z++){
+				    if (sourceParticipant.children[x].children[z].id == sourceScopeString){
+				       sourceScope = sourceParticipant.children[x].children[z];
+					}
+				}
+			}
+			for(var y = 0; y < sourceScope.attachers.length; y++){
+				if (sourceScope.attachers[y].businessObject.suitable == element.businessObject.suitable){
+					var violation3 = sourceScope.attachers[y].businessObject.$attrs.violation3 + suffix;
+					element.businessObject.$attrs.violation3 = sourceScope.attachers[y].businessObject.$attrs.violation3 + suffix;
+				}
+			}
+		}
 
       //console.log(element.parent.children[0].attachers[0].host.id);
       //console.log(element.parent.children.length);
@@ -1421,6 +1710,33 @@ export default function(group, element) {
           }
         }
         }
+		if (element.parent.children[kind].businessObject.$attrs.participant != undefined){
+		        var sourceParticipant;
+			    var sourceScope;
+			    var reg = /^InnerScope_[0-9]+/;
+			    var myArray = reg.exec(element.parent.children[kind].id);
+			    var sourceScopeString = myArray[0];
+				
+			    for(var s = 0; s < element.parent.parent.parent.children.length; s++){
+				    if(element.parent.parent.parent.children[s].type == 'bpmn:Participant' && element.parent.children[kind].businessObject.$attrs.participant == element.parent.parent.parent.children[s].id){
+					    sourceParticipant = element.parent.parent.parent.children[s];
+				    }
+			    }
+
+			    for(var x = 0; x < sourceParticipant.children.length; x++){
+				    for(var z = 0; z < sourceParticipant.children[x].children.length; z++){
+				        if (sourceParticipant.children[x].children[z].id == sourceScopeString){
+				           sourceScope = sourceParticipant.children[x].children[z];
+					    }
+				    }
+			    }
+			    for(var y = 0; y < sourceScope.attachers.length; y++){
+				    if (sourceScope.attachers[y].businessObject.suitable == element.businessObject.suitable){
+					    var prioritaet3 = sourceScope.attachers[y].businessObject.$attrs.prioritaet3;
+					    element.businessObject.$attrs.prioritaet3 = sourceScope.attachers[y].businessObject.$attrs.prioritaet3;
+				    }
+			    }
+		    }
 
         
         var onlyChild = false;
@@ -1495,6 +1811,40 @@ group.entries.push(entryFactory.textField({
       }
     }
     }
+	if (element.parent.children[kind].businessObject.$attrs.participant != undefined){
+		    var sourceParticipant;
+			var sourceScope;
+			var reg = /^InnerScope_[0-9]+/;
+			var reg2 = /[A-Za-z]/;
+			var suffixmitzahlen = element.parent.children[kind].id.substring(11);
+			console.log(suffixmitzahlen);
+			var myArray = reg.exec(element.parent.children[kind].id);
+			var myArray2 = reg2.exec(suffixmitzahlen);
+			console.log(myArray2);
+			var suffix = myArray2[0];
+			var sourceScopeString = myArray[0];
+			
+				
+			for(var s = 0; s < element.parent.parent.parent.children.length; s++){
+				if(element.parent.parent.parent.children[s].type == 'bpmn:Participant' && element.parent.children[kind].businessObject.$attrs.participant == element.parent.parent.parent.children[s].id){
+					sourceParticipant = element.parent.parent.parent.children[s];
+				}
+			}
+
+			for(var x = 0; x < sourceParticipant.children.length; x++){
+				for(var z = 0; z < sourceParticipant.children[x].children.length; z++){
+				    if (sourceParticipant.children[x].children[z].id == sourceScopeString){
+				       sourceScope = sourceParticipant.children[x].children[z];
+					}
+				}
+			}
+			for(var y = 0; y < sourceScope.attachers.length; y++){
+				if (sourceScope.attachers[y].businessObject.suitable == element.businessObject.suitable){
+					var violation4 = sourceScope.attachers[y].businessObject.$attrs.violation4 + suffix;
+					element.businessObject.$attrs.violation4 = sourceScope.attachers[y].businessObject.$attrs.violation4 + suffix;
+				}
+			}
+		}
 
     //console.log(element.parent.children[0].attachers[0].host.id);
     //console.log(element.parent.children.length);
@@ -1704,6 +2054,33 @@ group.entries.push(entryFactory.textField({
           }
         }
         }
+		if (element.parent.children[kind].businessObject.$attrs.participant != undefined){
+		        var sourceParticipant;
+			    var sourceScope;
+			    var reg = /^InnerScope_[0-9]+/;
+			    var myArray = reg.exec(element.parent.children[kind].id);
+			    var sourceScopeString = myArray[0];
+				
+			    for(var s = 0; s < element.parent.parent.parent.children.length; s++){
+				    if(element.parent.parent.parent.children[s].type == 'bpmn:Participant' && element.parent.children[kind].businessObject.$attrs.participant == element.parent.parent.parent.children[s].id){
+					    sourceParticipant = element.parent.parent.parent.children[s];
+				    }
+			    }
+
+			    for(var x = 0; x < sourceParticipant.children.length; x++){
+				    for(var z = 0; z < sourceParticipant.children[x].children.length; z++){
+				        if (sourceParticipant.children[x].children[z].id == sourceScopeString){
+				           sourceScope = sourceParticipant.children[x].children[z];
+					    }
+				    }
+			    }
+			    for(var y = 0; y < sourceScope.attachers.length; y++){
+				    if (sourceScope.attachers[y].businessObject.suitable == element.businessObject.suitable){
+					    var prioritaet4 = sourceScope.attachers[y].businessObject.$attrs.prioritaet4;
+					    element.businessObject.$attrs.prioritaet4 = sourceScope.attachers[y].businessObject.$attrs.prioritaet4;
+				    }
+			    }
+		    }
 
         
         var onlyChild = false;
@@ -1779,6 +2156,40 @@ group.entries.push(entryFactory.textField({
       }
     }
     }
+	if (element.parent.children[kind].businessObject.$attrs.participant != undefined){
+		    var sourceParticipant;
+			var sourceScope;
+			var reg = /^InnerScope_[0-9]+/;
+			var reg2 = /[A-Za-z]/;
+			var suffixmitzahlen = element.parent.children[kind].id.substring(11);
+			console.log(suffixmitzahlen);
+			var myArray = reg.exec(element.parent.children[kind].id);
+			var myArray2 = reg2.exec(suffixmitzahlen);
+			console.log(myArray2);
+			var suffix = myArray2[0];
+			var sourceScopeString = myArray[0];
+			
+				
+			for(var s = 0; s < element.parent.parent.parent.children.length; s++){
+				if(element.parent.parent.parent.children[s].type == 'bpmn:Participant' && element.parent.children[kind].businessObject.$attrs.participant == element.parent.parent.parent.children[s].id){
+					sourceParticipant = element.parent.parent.parent.children[s];
+				}
+			}
+
+			for(var x = 0; x < sourceParticipant.children.length; x++){
+				for(var z = 0; z < sourceParticipant.children[x].children.length; z++){
+				    if (sourceParticipant.children[x].children[z].id == sourceScopeString){
+				       sourceScope = sourceParticipant.children[x].children[z];
+					}
+				}
+			}
+			for(var y = 0; y < sourceScope.attachers.length; y++){
+				if (sourceScope.attachers[y].businessObject.suitable == element.businessObject.suitable){
+					var violation5 = sourceScope.attachers[y].businessObject.$attrs.violation5 + suffix;
+					element.businessObject.$attrs.violation5 = sourceScope.attachers[y].businessObject.$attrs.violation5 + suffix;
+				}
+			}
+		}
 
     //console.log(element.parent.children[0].attachers[0].host.id);
     //console.log(element.parent.children.length);
@@ -1988,6 +2399,33 @@ group.entries.push(entryFactory.textField({
           }
         }
         }
+		if (element.parent.children[kind].businessObject.$attrs.participant != undefined){
+		        var sourceParticipant;
+			    var sourceScope;
+			    var reg = /^InnerScope_[0-9]+/;
+			    var myArray = reg.exec(element.parent.children[kind].id);
+			    var sourceScopeString = myArray[0];
+				
+			    for(var s = 0; s < element.parent.parent.parent.children.length; s++){
+				    if(element.parent.parent.parent.children[s].type == 'bpmn:Participant' && element.parent.children[kind].businessObject.$attrs.participant == element.parent.parent.parent.children[s].id){
+					    sourceParticipant = element.parent.parent.parent.children[s];
+				    }
+			    }
+
+			    for(var x = 0; x < sourceParticipant.children.length; x++){
+				    for(var z = 0; z < sourceParticipant.children[x].children.length; z++){
+				        if (sourceParticipant.children[x].children[z].id == sourceScopeString){
+				           sourceScope = sourceParticipant.children[x].children[z];
+					    }
+				    }
+			    }
+			    for(var y = 0; y < sourceScope.attachers.length; y++){
+				    if (sourceScope.attachers[y].businessObject.suitable == element.businessObject.suitable){
+					    var prioritaet5 = sourceScope.attachers[y].businessObject.$attrs.prioritaet5;
+					    element.businessObject.$attrs.prioritaet5 = sourceScope.attachers[y].businessObject.$attrs.prioritaet5;
+				    }
+			    }
+		    }
 
         
         var onlyChild = false;
