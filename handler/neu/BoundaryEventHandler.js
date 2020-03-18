@@ -5,7 +5,8 @@ var is = require('../../../util/ElementHelper').is;
 var events = require('../../../util/EventHelper'),
     CONSUME_TOKEN_EVENT = events.CONSUME_TOKEN_EVENT,
     GENERATE_TOKEN_EVENT = events.GENERATE_TOKEN_EVENT,
-    UPDATE_ELEMENTS_EVENT = events.UPDATE_ELEMENTS_EVENT;
+    UPDATE_ELEMENTS_EVENT = events.UPDATE_ELEMENTS_EVENT,
+	UPDATE_ELEMENT_EVENT = events.UPDATE_ELEMENT_EVENT;
 
 function BoundaryEventHandler(animation, eventBus, elementRegistry, processInstances) {
   this._animation = animation;
@@ -126,6 +127,10 @@ BoundaryEventHandler.prototype.generate = function(context) {
         element: startEvent,
         parentProcessInstanceId: processInstanceId
         });
+	  // open context-pad of new innerscope
+      self._eventBus.fire(UPDATE_ELEMENT_EVENT, {
+        element: startEvent.parent
+      });
       
       var outgoingSequenceFlows = element.outgoing.filter(function(outgoing) {
         return is(outgoing, 'bpmn:SequenceFlow');
