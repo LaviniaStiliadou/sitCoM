@@ -1,5 +1,5 @@
 import {
-  reduce
+  filter
 } from 'min-dash';
 
 import inherits from 'inherits';
@@ -42,32 +42,47 @@ CustomRules.prototype.init = function() {
   function canCreate(shape, target, source, position) {
     var businessObject = shape.businessObject;
     var targetBusinessObject = target.businessObject;
+
+	// one StartEvent in OuterScope is allowed for the default innerScope
+    if (is(shape, 'bpmn:StartEvent') && is(target, 'bpmn:SubProcess') && (targetBusinessObject.suitable == 200)) {
+      var startEvent;
+	  // check if there is already a StartEvent in OuterScope
+      startEvent = target.children.filter(function(child) {
+        return is(child, 'bpmn:StartEvent');
+      })[0];
+	  if(!startEvent) {
+        return true;
+	  }
+	  return false;
+    }
 	
-    // SubProcess 100 darf nur in SubProcess 200 erzeugt werden 
+    // InnerScope (100) is only allowed to be created in OuterScope (200) 
     if (is(shape, 'bpmn:SubProcess') && businessObject.suitable == 100) {
 	    return (is(target, 'bpmn:SubProcess') && targetBusinessObject.suitable == 200);
     }
 
-    // SubProcess 200 darf nicht in SubProcess 200 erzeugt werden 
+    // OuterScope (200) is not allowed to be created in OuterScope (200)
     if (is(shape, 'bpmn:SubProcess') && businessObject.suitable == 200 && (is(target, 'bpmn:SubProcess') && targetBusinessObject.suitable == 200)){
 	    return false;
     }
 
-    // SubProcess 200 darf nicht in SubProcess 100 erzeugt werden
+    // OuterScope (200) is not allowed to be created in InnerScope (100)
     if (is(shape, 'bpmn:SubProcess') && (businessObject.suitable == 200) && is(target, 'bpmn:SubProcess') &&
     (targetBusinessObject.suitable == 100)) {
 	    return false;
     }
 
-    // Es darf außer SubProcess 200 kein anderes Objekt frei erzeugt werden
+    // Not any object is allowed to be created in any area except for OuterScope
     if (!is(shape, 'bpmn:SubProcess') && (targetBusinessObject.suitable == 200)) {
 	    return false;
     }
+
+    // Normal SubProcess is not allowed to be created in OuterScope (200)
     if (is(shape, 'bpmn:SubProcess')  && (businessObject.suitable != 200)  && (businessObject.suitable != 100)&& (targetBusinessObject.suitable == 200)) {
 	    return false;
     }
 
-    // SituationsEvents dürfen nicht frei erzeugt werden
+    // SituationsEvent is not allowed to be created in any area
     if (isAny(shape, ['bpmn:IntermediateThrowEvent','bpmn:IntermediateCatchEvent',
      'bpmn:BoundaryEvent']) && (businessObject.suitable == 100 ||
       businessObject.suitable == 50 || businessObject.suitable == 25)) {
@@ -75,9 +90,6 @@ CustomRules.prototype.init = function() {
     }
   }
 
-  // verbietet das Verbinden von Situationskreisen 
-  // verbietet das Verbinden von inner Rects mit Score = 100
-  // verbietet Verbinden von Intermediate zu Situationskreisen und umgekehrt
   function canConnect(source, target) {
 	if(target == null){
 		return false;
@@ -86,44 +98,65 @@ CustomRules.prototype.init = function() {
     var businessObject = source.businessObject;
     var targetBusinessObject = target.businessObject;
 
-    // keine Verbindung von nicht Subprocessen mit Score != 100 zu Situationskreisen
-    if ((is(target, 'bpmn:IntermediateThrowEvent')) && (!is(source, 'bpmn:SubProcess'))
+    // no connection is allowed from everything except InnerScope (100) to SituationEvents
+    if ((!is(source, 'bpmn:SubProcess')) && (is(target, 'bpmn:IntermediateThrowEvent'))
     && businessObject.suitable != 100 && targetBusinessObject.suitable > 0){
       return false;
     }
 
-    // keine Verbindung von nicht Subprocessen mit Score != 100 zu Situationskreisen
-    if ((is(target, 'bpmn:IntermediateThrowEvent')) && (is(source, 'bpmn:SubProcess'))
-    && businessObject.suitable == 200 && targetBusinessObject.suitable > 0){
-      return false;
-    }
-
+    // no connection from SituationEvents
     if ((is(source, 'bpmn:IntermediateThrowEvent')) &&  businessObject.suitable >0){
       return false;
     }
 
+    // no connection from SituationEvents
     if ((is(source, 'bpmn:BoundaryEvent')) && businessObject.suitable >0){
       return false;
     }
 
-    // damit Rect mit Score = 200 nicht mit Score = 100 verbunden werden duerfen
-    if (!is(target, 'bpmn:IntermediateThrowEvent') &&
-     (is(source, 'bpmn:SubProcess')) && businessObject.suitable == 200
-      && targetBusinessObject.suitable == 100){
+    // no connection from OuterScope (200) to InnerScope (100)
+    if (is(source, 'bpmn:SubProcess') && businessObject.suitable == 200
+      && is(target, 'bpmn:SubProcess') && targetBusinessObject.suitable == 100){
       return false;
     }
+
+	// no connection from InnerScope (100)
+	if(is(source, 'bpmn:SubProcess') && businessObject.suitable == 100) {
+	  return false;
+	}
 	
-	// keine Verbindung von Scope 100 / 200 aus
+	// In OuterScope one connection from StartEvent to default InnerScope (100)
+	if(is(source, 'bpmn:StartEvent') && is(target, 'bpmn:SubProcess') && targetBusinessObject.suitable == 100) {
+      var sequenceFlow;
+	  // check if OuterScope has already a sequenceFlow
+      sequenceFlow = target.parent.children.filter(function(child) {
+        return is(child, 'bpmn:SequenceFlow');
+      })[0];
+	  // if no sequenceFlow exist yet
+	  if(!sequenceFlow) {
+        return;
+	  }
+	  return false;
+	}
+
+	// no connection to InnerScope (100) / OuterScope (200)
+    if ((is(target, 'bpmn:SubProcess')) && targetBusinessObject.suitable == 100){
+      return false;
+    }
+
+/*
+	// no connection from InnerScope (100) /  OuterScope (200)
 	if(is(source, 'bpmn:SubProcess') && (businessObject.suitable == 200 || businessObject.suitable == 100)) {
 	  return false;
 	}
 
-	// keine Verbindung zu Scope 100 / 200 hin
+
+	// no connection to InnerScope (100) / OuterScope (200)
     if ((is(target, 'bpmn:SubProcess')) && (targetBusinessObject.suitable == 200 || targetBusinessObject.suitable == 100)){
       return false;
     }
-
-    // damit Rect mit Score = 100 nicht mit Score = 200 verbunden werden duerfen
+*/
+    // no connection from InnerScope (100) to OuterScope (200)
     if (is(target, 'bpmn:SubProcess') &&
      (is(source, 'bpmn:SubProcess')) && businessObject.suitable == 100
       && targetBusinessObject.suitable == 200){
@@ -144,62 +177,62 @@ CustomRules.prototype.init = function() {
         position = context.position;
     var businessObject = context.shapes[0].businessObject;
 	
-    console.log(context.shapes[0]);
-    if(target != undefined){
+	
+    if(target != undefined) {
       var targetBusinessObject = target.businessObject;
+	
+	// OuterScope (200) can not be moved into another OuterScope (200)
     if((is(context.shapes[0], 'bpmn:SubProcess')) && (businessObject.suitable == 200) &&
-      ((is(target, 'bpmn:SubProcess') && targetBusinessObject.suitable ==200 && businessObject.suitable!=100))){
+      ((is(target, 'bpmn:SubProcess') && targetBusinessObject.suitable == 200 && businessObject.suitable!=100))){
         return false;
       }
-    // damit Rect 100 sowie 200 nicht in 100 reingezogen werden
+	  
+    // Neither InnerScope (100) or OuterScope (200) can be moved into an InnerScope (100)
     if((is(context.shapes[0], 'bpmn:SubProcess')) && (is(target, 'bpmn:SubProcess')) && (targetBusinessObject.suitable == 100) 
     && businessObject.suitable > 0 ){
       return false;
     }
 
-    // damit normale Subprocesse nicht in Rect 200 reingezogen werden
+    // normal SubProcesses can not be moved into OuterScope (200)
     if((is(context.shapes[0], 'bpmn:SubProcess')) && (is(target, 'bpmn:SubProcess')) && (targetBusinessObject.suitable == 200) 
     && (businessObject.suitable != 100 && businessObject.suitable !=200 )){
       return false;
     }
 
-   // damit Rect mit 100 nicht rausgezogen werden 
-   // damit Rect 100 nicht in normale Subprocesse reingezogen wird
+    // InnerScope (100) can not be moved into InnerScopes (100) or normal SubProcesses
     if((is(context.shapes[0], 'bpmn:SubProcess')) && (businessObject.suitable == 100) &&
     (!is(target,'bpmn:SubProcess') || (is(target, 'bpmn:SubProcess') && targetBusinessObject.suitable!=200))){
       return false;
     }
 	
-	// Rect 100 darf in Rect 200 bewegt werden
+	// InnerScope can be moved inside an OuterScope
 	if((is(context.shapes[0], 'bpmn:SubProcess')) && (businessObject.suitable == 100) &&
     (is(target,'bpmn:SubProcess')) && (targetBusinessObject.suitable == 200)){
       return true;
     }
 
-    // damit Situationskreise nicht rausgezogen werden  
+    // SituationEvents can not be moved outside  
     if((isAny(context.shapes[0], ['bpmn:IntermediateThrowEvent','bpmn:IntermediateCatchEvent',
      'bpmn:BoundaryEvent'])) && (businessObject.suitable > 0) &&
     ((!is(target, 'bpmn:SubProcess')) || (is(target, 'bpmn:SubProcess')) && (targetBusinessObject.suitable != 100 || targetBusinessObject.suitable == 200))){
       return false;
     }
 	
-    // SituationsEvents können innerhalb des Rects 100 überall erzeugt werden, werden jedoch der Border zugewiesen
+    // SituationEvents can be moved everywhere on the boundary of an InnerScope
     if((isAny(context.shapes[0], ['bpmn:IntermediateThrowEvent','bpmn:IntermediateCatchEvent',
      'bpmn:BoundaryEvent']))
     && (is(target, 'bpmn:SubProcess') && (targetBusinessObject.suitable == 100) && businessObject.suitable > 0) && (position && !isBoundaryAttachment(position, target))){
       return false;
     }
 
-
-	// normale IntermediateEvents dürfen in Rect 100 bewegt werden
+	// normal IntermediateEvents can be moved inside an InnerScope
 	if((isAny(context.shapes[0], ['bpmn:IntermediateThrowEvent','bpmn:IntermediateCatchEvent',
      'bpmn:BoundaryEvent']))
     && (is(target, 'bpmn:SubProcess')) && (businessObject.suitable !=25 && businessObject.suitable != 50 && businessObject.suitable != 100) && (targetBusinessObject.suitable == 100)){
-      //console.log(target.id);
       return true;
     }
 
-    // normale IntermediateEvents dürfen NICHT in Rect 200 bewegt werden
+    // normal IntermediateEvents can not be moved inside OuterScope
     if((isAny(context.shapes[0], ['bpmn:IntermediateThrowEvent','bpmn:IntermediateCatchEvent',
      'bpmn:BoundaryEvent']))
     && (is(target, 'bpmn:SubProcess')) && (businessObject.suitable !=25 && businessObject.suitable != 50 && businessObject.suitable != 100) && (targetBusinessObject.suitable == 200)){
@@ -223,9 +256,6 @@ CustomRules.prototype.init = function() {
     return canCreate(shape, target, source, position);
   });
   
-  // ist fuer das erste Drankleben aus der Palette
-  // damit Situationsintermediateevents nie an Task oder normale Subprocess geklebt werden 
-  // damit IntermediateEvents nicht an Situationsscopes geklebt werden 
   this.addRule('shape.attach', HIGH_PRIORITY, function(context) {
     var shape = context.shape,
       target = context.target,
@@ -233,69 +263,55 @@ CustomRules.prototype.init = function() {
     var businessObject = shape.businessObject;
     var targetBusinessObject = target.businessObject;
 
-/*
-    // Bei Create können die SituationsEvents überall innerhalb des Rect 100 erzeugt werden, werden aber der Border zugewiesen
-    if (isAny(shape, [
-    'bpmn:IntermediateThrowEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent'])  &&
-    (businessObject.suitable == 100 || businessObject.suitable == 50 || 
-    businessObject.suitable == 25) &&
-    (is(target, 'bpmn:SubProcess')) &&
-    (targetBusinessObject.suitable == 100)) {
-        return 'attach';
+    // no BoundaryEvents on OuterScope (200)
+    if(is(target, 'bpmn:SubProcess') && is(shape, 'bpmn:SubProcess') && businessObject.suitable == 200 
+    && targetBusinessObject.suitable == 200){
+      return false;
     }
-*/  
-   if(is(target, 'bpmn:SubProcess') && is(shape, 'bpmn:SubProcess') && businessObject.suitable ==200 
-   && targetBusinessObject.suitable ==200){
-     return false;
-   }
-	
+
+    // SituationEvents are not allowed on normal SubProcess or Tasks
     if (isAny(shape, [
     'bpmn:IntermediateThrowEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent'])  &&
     (businessObject.suitable == 100 || businessObject.suitable == 50 || 
     businessObject.suitable == 25) &&
     (is(target, 'bpmn:SubProcess') ||  is(target, 'bpmn:Task')) &&
     (targetBusinessObject.suitable != 100)) {
-        return false;
+      return false;
     }
 
+    // Only allowed one type of SituationEvent attached to the border of an InnerScope (100)
     if (isAny(shape, [
-      'bpmn:IntermediateThrowEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent'])  &&
-      (businessObject.suitable == 100 || businessObject.suitable == 50 || 
-      businessObject.suitable == 25) &&
-      (is(target, 'bpmn:SubProcess') &&
-      (targetBusinessObject.suitable == 100)) && (position && isBoundaryAttachment(position, target))) {
-          //console.log("hier");
-     var find;
-     var allowed = true;
-     //console.log(shape);
-    for(var i = 0; i< target.attachers.length; i++){
-      //console.log(shape);
-          if(target.attachers[i].businessObject.suitable == shape.businessObject.suitable){
-            //console.log('gleich');
-            allowed = false;
-            return false;
-          }
+    'bpmn:IntermediateThrowEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent'])  &&
+    (businessObject.suitable == 100 || businessObject.suitable == 50 || 
+    businessObject.suitable == 25) &&
+    (is(target, 'bpmn:SubProcess') &&
+    (targetBusinessObject.suitable == 100)) && (position && isBoundaryAttachment(position, target))) {
+      var find;
+      var allowed = true;
+      for(var i = 0; i< target.attachers.length; i++){
+        if(target.attachers[i].businessObject.suitable == shape.businessObject.suitable){
+          allowed = false;
+          return false;
+        }
       }
       return true;
-      
-      }
+    }
 
-    // damit normale IntermediateEvents nicht an Situationsscopes geklebt werden duerfen
+    // normal IntermediateEvents can not be attached on InnerScope (100)
     if (isAny(shape, [
     'bpmn:IntermediateThrowEvent', 'bpmn:IntermediateCatchEvent', 'bpmn:BoundaryEvent'])  &&
     (businessObject.suitable != 100 && businessObject.suitable != 50 &&
     businessObject.suitable != 25) &&
     (is(target, 'bpmn:SubProcess') &&
     (targetBusinessObject.suitable == 100 || targetBusinessObject.suitable == 200))) {
-        return false;
+      return false;
     }
-
   });
 
     this.addRule('connection.create', HIGH_PRIORITY, function(context) {
       let source = context.source,
-        target = context.target;
-  
+          target = context.target;
+
       return canConnect(source, target);
   
     });
