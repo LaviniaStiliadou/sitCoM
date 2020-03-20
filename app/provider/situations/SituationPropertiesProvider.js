@@ -58,7 +58,7 @@ function createSituationTabGroups(element) {
   // Create a group called "Eigenschaften".
   var situationGroup = {
     id: 'properties',
-    label: 'Eigenschaften',
+    label: 'Properties',
     entries: []
   };
 
