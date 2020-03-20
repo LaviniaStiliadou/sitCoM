@@ -35,7 +35,9 @@ http://localhost:9013/ in your web browser.
 
 ## Integrate the simulation
 
-Before the simulation can be started, the ElementHandler must be moved from the handler folder to \node_modules\bpmn-js-token-simulation\lib\util and the remaining files must be moved to the \node_modules\bpmn-js-token-simulation\lib\features\token-simulation-behavior\handler folder.
+Before the simulation can be started, the ElementHandler must be moved from the handler folder to \node_modules\bpmn-js-token-simulation\lib\util. The content of the context-pad folder (in handler) must be moved to \node_modules\bpmn-js-token-simulation\lib\features\context-pads\handler and the content of the pause-simulation folder (in handler) must be moved to \node_modules\bpmn-js-token-simulation\lib\features\pause-simulation.
+The remaining files must be moved to the \node_modules\bpmn-js-token-simulation\lib\features\token-simulation-behavior\handler folder.
+
 
 
 ## Features
@@ -57,4 +59,4 @@ Before the simulation can be started, the ElementHandler must be moved from the 
 This example is a node-style web application that builds a user interface around the bpmn-js BPMN 2.0 modeler.
 The project is compatible with popular browsers such as Edge, Firefox and Chrome. For full user experience, we recommend using Google Chrome as well as Firefox.
 
-![new screenshot](https://github.com/LaviniaStiliadou/sitCoM/blob/lbranch/docs/screenshot.png)
+![new screenshot](https://github.com/LaviniaStiliadou/sitCoM/blob/lbranch3/docs/screenshot.PNG)
