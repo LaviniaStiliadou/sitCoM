@@ -64,13 +64,11 @@ BoundaryEventHandler.prototype.generate = function(context) {
 
   // if element is situationEvent
   if (element.businessObject.suitable == 25 || element.businessObject.suitable == 50 || element.businessObject.suitable == 100) {
-    console.log("heir");
     var outgoingSequenceFlows = element.outgoing.filter(function(outgoing) {
       return is(outgoing, 'bpmn:SequenceFlow');
     });
     var violationArray = [];
           
-    console.log(element.businessObject.$attrs.violation);
     if(element.businessObject.$attrs.violation != null){
       setViolation1 = true;
       count++;
@@ -97,28 +95,18 @@ BoundaryEventHandler.prototype.generate = function(context) {
       violationArray.push(element.businessObject.$attrs.violation5);
     }
     if(count != 0){
-      var x = Math.floor((Math.random() * count) + 1);
-      console.log(violationArray);
-      console.log(x);
-      console.log(violationArray[x-1]);
-
-
-    
+      var x = Math.floor((Math.random() * count) + 1);   
     
     for(var i=0; i< element.parent.children.length; i++){
       if(element.parent.children[i].businessObject.$type == 'bpmn:SubProcess'){
-        if(element.businessObject.$attrs != null){
-          
-          
-          
-        if(element.parent.children[i].businessObject.suitable == 100 && element.parent.children[i].businessObject.id == violationArray[x-1]){
-               temp = element.parent.children[i];
+        if(element.businessObject.$attrs != null){         
+          if(element.parent.children[i].businessObject.suitable == 100 && element.parent.children[i].businessObject.id == violationArray[x-1]){
+            temp = element.parent.children[i];
+          }
         }
-      }
       }
     }
 
-    console.log(temp);
     if(temp != null){
       var startEvent = temp.children.filter(function(child) {
         return is(child, 'bpmn:StartEvent');
