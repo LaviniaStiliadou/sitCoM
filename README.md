@@ -36,7 +36,7 @@ http://localhost:9013/ in your web browser.
 ## Integrate the simulation
 
 Before using the Token Simulator some files have to be integrated:
-Move the token-simulator-files/[lib](token-simulation/lib) folder into
+Move the token-simulator-files/[lib](token-simulation-files/lib) folder into
 ```
 \node_modules\bpmn-js-token-simulation\lib\
 ```
