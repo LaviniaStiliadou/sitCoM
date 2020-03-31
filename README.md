@@ -1,6 +1,6 @@
 # Situation-Awareness Nodeling with Camunda
 
-This project uses the examples [bpmn-js-custom-meta-model](https://github.com/bpmn-io/bpmn-js-custom-meta-model}, [bpmn-js-token-simulator](https://github.com/bpmn-io/bpmn-js-token-simulator), [bpmn-js-custom-elements](https://github.com/bpmn-io/bpmn-js-custom-elements) and 
+This project uses the examples [bpmn-js-custom-meta-model](https://github.com/bpmn-io/bpmn-js-custom-meta-model), [bpmn-js-token-simulator](https://github.com/bpmn-io/bpmn-js-token-simulator), [bpmn-js-custom-elements](https://github.com/bpmn-io/bpmn-js-custom-elements) and 
 [bpmn-js-properties-panel](https://github.com/bpmn-io/bpmn-js-properties-panel).
 
 
@@ -35,9 +35,35 @@ http://localhost:9013/ in your web browser.
 
 ## Integrate the simulation
 
-Before the simulation can be started, the ElementHandler must be moved from the handler folder to \node_modules\bpmn-js-token-simulation\lib\util. The content of the context-pad folder (in handler) must be moved to \node_modules\bpmn-js-token-simulation\lib\features\context-pads\handler and the content of the pause-simulation folder (in handler) must be moved to \node_modules\bpmn-js-token-simulation\lib\features\pause-simulation.
-The remaining files must be moved to the \node_modules\bpmn-js-token-simulation\lib\features\token-simulation-behavior\handler folder.
+Before using the Token Simulator some files have to be integrated:
+Move the token-simulator-files/[lib](token-simulation/lib) folder into
+```
+\node_modules\bpmn-js-token-simulation\lib\
+```
+and overwrite all existing files (12 files).
 
+<!--
+Or as a step to step explanation:
+Move the [Elementhandler.js](token-simulator-files/lib/util/Elementhandler.js) into
+```
+\node_modules\bpmn-js-token-simulation\lib\util
+```
+The content of the [context-pad folder](token-simulator-files/lib/features/context-pads/handler)
+(atm just [BoundaryEventHandler.js](handler/context-pads/BoundaryEventHandler.js)) into
+```
+\node_modules\bpmn-js-token-simulation\lib\features\context-pads\handler
+```
+and the content of the pause-simulation folder [pause-simulation](handler/pause-simulation/)
+[PauseSimulation.js](handler/pause-simulation/PauseSimulation.js)
+```
+\node_modules\bpmn-js-token-simulation\lib\features\pause-simulation
+```
+
+The remaining files must be moved to the 
+```
+\node_modules\bpmn-js-token-simulation\lib\features\token-simulation-behavior\handler
+```
+-->
 
 
 ## Features
