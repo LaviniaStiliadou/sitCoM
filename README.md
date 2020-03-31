@@ -85,3 +85,4 @@ The remaining files must be moved to the
 This example is a node-style web application that builds a user interface around the bpmn-js BPMN 2.0 modeler.
 The project is compatible with popular browsers such as Edge, Firefox and Chrome. For full user experience, we recommend using Google Chrome as well as Firefox.
 
+![new screenshot](https://github.com/LaviniaStiliadou/sitCoM/lbranch3/resources/screenshot.PNG)
