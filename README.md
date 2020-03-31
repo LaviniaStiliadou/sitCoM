@@ -1,4 +1,4 @@
-# Situation-Awareness Nodeling with Camunda
+# Situation-Awareness Modeling with Camunda
 
 This project uses the examples [bpmn-js-custom-meta-model](https://github.com/bpmn-io/bpmn-js-examples/tree/master/custom-meta-model), [bpmn-js-token-simulator](https://github.com/bpmn-io/bpmn-js-token-simulation), [bpmn-js-custom-elements](https://github.com/bpmn-io/bpmn-js-examples/tree/master/custom-elements) and 
 [bpmn-js-properties-panel](https://github.com/bpmn-io/bpmn-js-properties-panel).
